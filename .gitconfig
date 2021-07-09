@@ -1,0 +1,8 @@
+[user]
+	email = mail@rubensibon.nl
+	name = Ruben J. Sibon
+[core]
+	editor = vim
+[pull]
+	rebase = false
+

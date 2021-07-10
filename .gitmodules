@@ -1,3 +1,6 @@
 [submodule ".antigen"]
 	path = .antigen
 	url = https://github.com/zsh-users/antigen.git
+[submodule "/home/ruben/.vim/bundle/Vundle.vim"]
+	path = /home/ruben/.vim/bundle/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git

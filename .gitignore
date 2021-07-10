@@ -4,6 +4,8 @@
 !.gitignore
 !.gitmodules
 !.readme.md
+!.vim
+!.vim/bundle
 !.vim/bundle/Vundle.vim
 !.vimrc
 !.zshrc

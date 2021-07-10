@@ -1,1 +1,7 @@
-.dotfiles
+*
+!.antigen
+!.gitconfig
+!.gitignore
+!.gitmodules
+!.readme.md
+!.zshrc

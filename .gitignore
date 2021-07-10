@@ -4,6 +4,7 @@
 !.gitignore
 !.gitmodules
 !.readme.md
+!.scripts
 !.scripts/*
 !.vim
 !.vim/bundle

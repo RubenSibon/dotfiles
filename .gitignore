@@ -3,6 +3,7 @@
 !.gitconfig
 !.gitignore
 !.gitmodules
+!.hyper.js
 !.readme.md
 !.scripts
 !.scripts/*

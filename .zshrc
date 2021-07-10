@@ -16,7 +16,7 @@ antigen bundle git
 antigen bundle ssh-agent
 antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autocomplete
+antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 
 # Theme

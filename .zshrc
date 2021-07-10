@@ -1,11 +1,9 @@
-if [[ -f "/boot/dietpi" ]]; then
-    export PATH=/usr/bin:/boot/dietpi:/bin:/usr/sbin:/sbin:$PATH
+# Make DietPi distro play nice with zsh as it relies on bash
+# Comment out or remove below two lines if you do not use DietPi
+source $HOME/.scripts/_misc.zsh
+enable_on_dietpi
 
-    if [[ -f "/etc/bashrc.d/dietpi.bash" ]]; then
-        source /etc/bashrc.d/dietpi.bash
-    fi
-fi
-
+# Antigen plugin manager
 source $HOME/.antigen/antigen.zsh
 
 # Use oh-my-zsh
@@ -22,6 +20,10 @@ antigen bundle zsh-users/zsh-autosuggestions
 # Theme
 antigen theme ys
 
+# Apply Antigen configuration
+antigen apply
+
+# General zsh configuration
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -33,8 +35,5 @@ zstyle :compinstall filename "${HOME}/.zshrc"
 autoload -Uz compinit
 compinit
 
-if command -v git > /dev/null; then
-    alias config="/usr/bin/git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}"
-fi
-
-antigen apply
+# Allow git operations on select dotfiles in user's home
+alias config="/usr/bin/git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}"

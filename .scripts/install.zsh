@@ -7,8 +7,8 @@ cd
 if ! [[ -d ".dotfiles" ]]; then
   git clone --bare --recursive https://github.com/RubenSibon/.dotfiles.git $HOME/.dotfiles
 else
-  echo ".dotfiles directory already exists. Not cloning repository."
-  exit 0
+  echo ".dotfiles directory already exists. Not cloning the repository again."
+  echo "Continuing to update the configuration..."
 fi
 
 zsh ~/.scripts/update.zsh

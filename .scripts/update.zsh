@@ -12,4 +12,10 @@ config pull
 
 config submodule update --init --recursive
 
+if command -v vim > /dev/null; then
+    vim +PluginInstall +qall
+else
+    echo "Vim is not installed. Not installing Vundle plugins."
+fi
+
 source $HOME/.zshrc

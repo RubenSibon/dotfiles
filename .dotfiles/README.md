@@ -48,7 +48,7 @@ You're done!
 
 1. Clone the repository:
 
-`git clone --bare git@github.com:RubenSibon/dotfiles.git $HOME/.dotfiles`
+`git clone --bare git@github.com:RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo`
 
 2. Check out the cloned bare branch:
 

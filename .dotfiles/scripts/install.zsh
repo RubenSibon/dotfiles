@@ -8,5 +8,6 @@ else
 fi
 
 /usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD --force
+/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
 
 zsh ~/.dotfiles/scripts/update.zsh

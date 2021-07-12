@@ -34,7 +34,15 @@ These configurations represent my personal preferences. I sync them between the 
 
 The git configration and setup methods are based on the following tutorial: [Simplest Way to Sync Dotfiles and Config Using Git by Victor Augusteo](https://medium.com/@augusteo/simplest-way-to-sync-dotfiles-and-config-using-git-14051af8703a)
 
-### Preparation
+Choose **one (A or B)** of the following setup options:
+
+### A) Automatic setup with script
+
+Run the install script:
+
+`curl -o- https://github.com/RubenSibon/.dotfiles/scripts/install.zsh | zsh`
+
+### B) Manual setup
 
 1. Clone the repository:
 
@@ -44,29 +52,19 @@ The git configration and setup methods are based on the following tutorial: [Sim
 
 `/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout HEAD --force`
 
-### Choose one of the setup options:
-
-#### A) Automatic setup with script
-
-Run the install script:
-
-`zsh ~/.scripts/install.zsh`
-
-#### B) Manual setup
-
-1. Pull the submodules:
+3. Pull the submodules:
 
 `/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME submodule update --init --recursive`
 
-2. (optional) Install the vim plugins with Vundle:
+4. (optional) Install the vim plugins with Vundle:
 
 `vim +PluginInstall +qall`
 
-3. Source the zsh config or reload the environment:
+5. Source the zsh config or reload the environment:
 
 `source ~/.zshrc && zsh`
 
-4. (optional) Install Node and Yarn using NVM:
+6. (optional) Install Node and Yarn using NVM:
 
 ```
 nvm install node

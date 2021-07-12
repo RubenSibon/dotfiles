@@ -1,7 +1,3 @@
-# Exit out of script if git binary does not exist
-source $(dirname "$0")/_checks.zsh
-check_for_git
-
 # Pulling and checking out repository and submodule updates
 alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
 

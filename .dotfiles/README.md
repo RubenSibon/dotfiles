@@ -40,7 +40,7 @@ Choose **one (A or B)** of the following setup options:
 
 Run the install script:
 
-`curl -o- https://github.com/RubenSibon/dotfiles/scripts/install.zsh | zsh`
+`curl -o- https://github.com/RubenSibon/dotfiles/.dotfiles/scripts/install.zsh | zsh`
 
 You're done!
 

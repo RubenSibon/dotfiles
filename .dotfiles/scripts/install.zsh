@@ -11,7 +11,7 @@ alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${
 
 cd
 
-dotfiles checkout HEAD
+dotfiles checkout HEAD --force
 
 dotfiles pull
 

@@ -1,13 +1,9 @@
+cd $HOME
+
 # Pulling and checking out repository and submodule updates
-alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
-
-cd
-
-dotfiles checkout HEAD
-
-dotfiles pull
-
-dotfiles submodule update --init --recursive
+/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} checkout HEAD
+/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} pull
+/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} submodule update --init --recursive
 
 # Install Vim plugins
 if command -v vim > /dev/null; then

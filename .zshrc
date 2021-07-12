@@ -37,4 +37,7 @@ autoload -Uz compinit
 compinit
 
 # Allow git operations on select dotfiles in user's home
-alias config="/usr/bin/git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}"
+alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}"
+
+# Update dotfiles
+alias dotfiles-update='~/.scripts/update.zsh'

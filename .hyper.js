@@ -135,7 +135,7 @@ module.exports = {
 
     // Whether to use the WebGL renderer. Set it to false to use canvas-based
     // rendering (slower, but supports transparent backgrounds)
-    webGLRenderer: true,
+    webGLRenderer: false,
 
     // for advanced config flags please refer to https://hyper.is/#cfg
   },
@@ -146,7 +146,13 @@ module.exports = {
   //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: ["hypercwd", "hyper-pane", "verminal", "hyper-named-css-colors"],
+  plugins: [
+    "hypercwd",
+    "hyper-pane",
+    "verminal",
+    "hyper-named-css-colors",
+    "hyper-font-ligatures"
+  ],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here

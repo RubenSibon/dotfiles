@@ -3,7 +3,7 @@ source $(dirname "$0")/_checks.zsh
 check_for_git
 
 # Pulling and checking out repository and submodule updates
-alias config="/usr/bin/git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}"
+alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}"
 
 cd
 

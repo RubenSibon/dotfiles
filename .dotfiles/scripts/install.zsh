@@ -1,4 +1,4 @@
-cd
+cd $HOME
 
 if [ ! -d ".dotfiles" ] && [ ! -d ".dotfiles/.gitrepo" ]; then
   git clone --bare --recursive git@github.com:RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo
@@ -7,12 +7,10 @@ else
   echo "Continuing to update the configuration..."
 fi
 
-alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
-
 cd
 
-dotfiles checkout HEAD --force
+/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} checkout HEAD --force
 
-dotfiles pull
+zsh
 
-zsh ~/.dotfiles/scripts/update.zsh
+zsh $HOME/.dotfiles/scripts/update.zsh

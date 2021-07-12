@@ -1,10 +1,12 @@
 # Make DietPi distro play nice with zsh as it relies on bash
 # Comment out or remove below two lines if you do not use DietPi
-source $HOME/.scripts/_misc.zsh
+source $HOME/.dotfiles/scripts/_misc.zsh
 enable_on_dietpi
 
 # Antigen plugin manager
 source $HOME/.antigen/antigen.zsh
+# Fix for: https://www.gitmemory.com/issue/zsh-users/antigen/697/573852397
+source $HOME/.antigen/bin/antigen.zsh
 
 # Use oh-my-zsh
 antigen use oh-my-zsh
@@ -37,7 +39,7 @@ autoload -Uz compinit
 compinit
 
 # Allow git operations on select dotfiles in user's home
-alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}"
+alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
 
 # Update dotfiles
-alias dotfiles-update='~/.scripts/update.zsh'
+alias dotfiles-update='~/.dotfiles/scripts/update.zsh'

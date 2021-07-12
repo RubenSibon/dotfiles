@@ -40,13 +40,13 @@ Choose **one (A or B)** of the following setup options:
 
 Run the install script:
 
-`curl -o- https://github.com/RubenSibon/.dotfiles/scripts/install.zsh | zsh`
+`curl -o- https://github.com/RubenSibon/dotfiles/scripts/install.zsh | zsh`
 
 ### B) Manual setup
 
 1. Clone the repository:
 
-`git clone --bare git@github.com:RubenSibon/.dotfiles.git $HOME/.dotfiles`
+`git clone --bare git@github.com:RubenSibon/dotfiles.git $HOME/.dotfiles`
 
 2. Check out the cloned bare branch:
 

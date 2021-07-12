@@ -3,15 +3,15 @@ source $(dirname "$0")/_checks.zsh
 check_for_git
 
 # Pulling and checking out repository and submodule updates
-alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}"
+alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
 
 cd
 
-config checkout HEAD
+dotfiles checkout HEAD
 
-config pull
+dotfiles pull
 
-config submodule update --init --recursive
+dotfiles submodule update --init --recursive
 
 # Install Vim plugins
 if command -v vim > /dev/null; then

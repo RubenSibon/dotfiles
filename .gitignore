@@ -1,12 +1,13 @@
 *
 !.antigen
+!.dotfiles
+!.dotfiles/scripts
+!.dotfiles/scripts/*
 !.gitconfig
 !.gitignore
 !.gitmodules
 !.hyper.js
 !.readme.md
-!.scripts
-!.scripts/*
 !.vim
 !.vim/bundle
 !.vim/bundle/Vundle.vim

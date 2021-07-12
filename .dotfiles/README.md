@@ -2,7 +2,7 @@
 
 ## About these dotfiles
 
-This repository represents the [configuration (dotfiles)](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory) for the following tools:
+This repository contains [configuration (dotfiles)](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory) for the following tools:
 
 - zsh (shell)
 - antigen (zsh plugin manager)
@@ -10,7 +10,7 @@ This repository represents the [configuration (dotfiles)](https://en.wikipedia.o
 - Vundle (vim plugin manager)
 - hyper.js (terminal emulator)
 
-This project also installs:
+This project's install and update scripts also install:
 
 - Node Version Manager (nvm)
 - Node (current)
@@ -21,7 +21,7 @@ This projects is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-li
 
 ## Author's note
 
-These configurations represent my personal preferences. I sync them between the various machines I use. MacOS and Arch Linux tend to be the main operating systems on those machines. If this setup is to your liking, feel free to use it as a starting point for your own config. I've tried to keep everything as generic and environment-agnostic as possible.
+These configurations represent my personal preferences. I sync them between the various machines I use. MacOS, Arch Linux and the occasional Debian-based distro tend to be the main operating systems on those machines. If this setup is to your liking, feel free to use it as a starting point for your own config. I've tried to keep everything as generic and environment-agnostic as possible.
 
 ## Requirements
 
@@ -42,6 +42,8 @@ Run the install script:
 
 `curl -o- https://github.com/RubenSibon/dotfiles/scripts/install.zsh | zsh`
 
+You're done!
+
 ### B) Manual setup
 
 1. Clone the repository:
@@ -50,11 +52,11 @@ Run the install script:
 
 2. Check out the cloned bare branch:
 
-`/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout HEAD --force`
+`/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD --force`
 
 3. Pull the submodules:
 
-`/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME submodule update --init --recursive`
+`/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive`
 
 4. (optional) Install the vim plugins with Vundle:
 
@@ -71,9 +73,12 @@ nvm install node
 npm install --global yarn
 ```
 
+You're done!
+
 ## Update
 
 Run the update script:
 
-`zsh ~/.scripts/update.zsh`
+`zsh ~/.dotfiles/scripts/update.zsh`
 
+Everything should be up-to-date.

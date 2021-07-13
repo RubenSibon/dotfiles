@@ -2,8 +2,6 @@
 
 { # this ensures the entire script is downloaded #
 
-echo "Hello world"
-
 cd $HOME
 
 if [ ! -d ".dotfiles" ] && [ ! -d ".dotfiles/.gitrepo" ]; then

@@ -7,10 +7,6 @@ else
   echo "Continuing to update the configuration..."
 fi
 
-cd
-
 /usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} checkout HEAD --force
 
-zsh
-
-zsh $HOME/.dotfiles/scripts/update.zsh
+./$HOME/.dotfiles/scripts/update.zsh

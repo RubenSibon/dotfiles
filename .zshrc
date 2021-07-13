@@ -4,7 +4,7 @@ source $HOME/.dotfiles/scripts/_misc.zsh
 enable_on_dietpi
 
 # Antigen plugin manager
-source $HOME/.antigen/antigen.zsh
+# source $HOME/.antigen/antigen.zsh
 source $HOME/.antigen/bin/antigen.zsh
 
 # Use oh-my-zsh

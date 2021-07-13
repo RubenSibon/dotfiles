@@ -1,9 +1,9 @@
 #!/usr/bin/env zsh
 
 # Pulling and checking out repository and submodule updates
-/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} checkout HEAD
-/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} pull
-/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} submodule update --init --recursive
+/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD
+/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
+/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
 
 # Install Vim plugins
 if command -v vim > /dev/null; then
@@ -22,13 +22,13 @@ if command -v nvm > /dev/null; then
     # Install and use Node (latest)
     nvm install node
 
-    zsh
+    source $HOME/.zshrc
 
     # Install Yarn
     npm install --global yarn
 
     if command -v yarn > /dev/null; then
-	echo "Installed yarn:"
-	yarn -v
+        echo "Installed yarn:"
+        yarn -v
     fi
 fi

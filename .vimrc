@@ -10,7 +10,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
 Plugin 'L9'
-#Plugin 'git://git.wincent.com/command-t.git'
+" Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'wakatime/vim-wakatime'
 

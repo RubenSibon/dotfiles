@@ -40,7 +40,7 @@ Choose **one (A or B)** of the following setup options:
 
 Run the install script:
 
-`curl -o- https://github.com/RubenSibon/dotfiles/.dotfiles/scripts/install.zsh | zsh`
+`curl -o- https://raw.githubusercontent.com/RubenSibon/dotfiles/master/.dotfiles/scripts/install.zsh | zsh`
 
 You're done!
 
@@ -48,7 +48,7 @@ You're done!
 
 1. Clone the repository:
 
-`git clone --bare git@github.com:RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo`
+`git clone --bare --recursive git@github.com:RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo`
 
 2. Check out the cloned bare branch:
 

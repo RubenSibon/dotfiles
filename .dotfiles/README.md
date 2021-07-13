@@ -48,27 +48,27 @@ You're done!
 
 1. Clone the repository:
 
-`git clone --bare --recursive git@github.com:RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo`
+    `git clone --bare --recursive git@github.com:RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo`
 
 2. Check out the cloned bare branch:
 
-`/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD --force`
+    `/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD --force`
 
 3. Pull the submodules:
 
-`/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive`
+    `/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive`
 
 4. (optional) Install the vim plugins with Vundle:
 
-`vim +PluginInstall +qall`
+    `vim +PluginInstall +qall`
 
 5. Source the zsh config or reload the environment:
 
-`source ~/.zshrc && zsh`
+    `source ~/.zshrc && zsh`
 
 6. (optional) Install Node and Yarn using NVM:
 
-```
+```sh
 nvm install node
 npm install --global yarn
 ```

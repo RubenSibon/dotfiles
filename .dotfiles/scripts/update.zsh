@@ -12,8 +12,6 @@ else
     echo "Vim is not installed. Not installing Vundle plugins."
 fi
 
-source $HOME/.zshrc
-
 # Install latest Node, latest Node LTS and yarn
 if command -v nvm > /dev/null; then
     # Install and use Node LTS
@@ -21,8 +19,6 @@ if command -v nvm > /dev/null; then
 
     # Install and use Node (latest)
     nvm install node
-
-    source $HOME/.zshrc
 
     # Install Yarn
     npm install --global yarn
@@ -32,3 +28,5 @@ if command -v nvm > /dev/null; then
         yarn -v
     fi
 fi
+
+zsh

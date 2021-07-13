@@ -5,6 +5,8 @@ cd $HOME
 /usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} pull
 /usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} submodule update --init --recursive
 
+source $HOME/.zshrc
+
 # Install Vim plugins
 if command -v vim > /dev/null; then
     vim +PluginInstall +qall
@@ -12,7 +14,7 @@ else
     echo "Vim is not installed. Not installing Vundle plugins."
 fi
 
-source $HOME/.zshrc
+zsh
 
 # Install latest Node, latest Node LTS and yarn
 if command -v nvm > /dev/null; then

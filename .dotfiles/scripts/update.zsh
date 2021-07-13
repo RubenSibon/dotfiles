@@ -29,4 +29,4 @@ if command -v nvm > /dev/null; then
     fi
 fi
 
-zsh
+source $HOME/.zshrc

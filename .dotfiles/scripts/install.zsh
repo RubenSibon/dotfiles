@@ -1,3 +1,7 @@
+#!/usr/bin/env zsh
+
+{ # this ensures the entire script is downloaded #
+
 cd $HOME
 
 if [ ! -d ".dotfiles" ] && [ ! -d ".dotfiles/.gitrepo" ]; then
@@ -10,3 +14,5 @@ fi
 /usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} checkout HEAD --force
 
 $HOME/.dotfiles/scripts/update.zsh
+
+} # this ensures the entire script is downloaded #

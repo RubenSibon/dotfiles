@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 cd $HOME
 
 # Pulling and checking out repository and submodule updates

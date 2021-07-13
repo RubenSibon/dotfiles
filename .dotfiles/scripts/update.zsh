@@ -29,4 +29,4 @@ if command -v nvm > /dev/null; then
     fi
 fi
 
-source $HOME/.zshrc
+echo "\nDotfiles install/update is done! Please restart your terminal emulator."

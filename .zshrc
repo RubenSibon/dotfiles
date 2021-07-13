@@ -4,9 +4,7 @@ source $HOME/.dotfiles/scripts/_misc.zsh
 enable_on_dietpi
 
 # Antigen plugin manager
-source $HOME/.antigen/antigen.zsh
-# Fix for: https://www.gitmemory.com/issue/zsh-users/antigen/697/573852397
-alias _ANTIGEN_INSTALL_DIR=$HOME/.antigen
+source $HOME/.antigen/bin/antigen.zsh
 
 # Use oh-my-zsh
 antigen use oh-my-zsh

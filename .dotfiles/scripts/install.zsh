@@ -2,7 +2,7 @@
 
 { # this ensures the entire script is downloaded #
 
-ehco "Hello world"
+echo "Hello world"
 
 cd $HOME
 

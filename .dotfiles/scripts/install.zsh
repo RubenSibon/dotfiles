@@ -9,4 +9,4 @@ fi
 
 /usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} checkout HEAD --force
 
-./$HOME/.dotfiles/scripts/update.zsh
+$HOME/.dotfiles/scripts/update.zsh

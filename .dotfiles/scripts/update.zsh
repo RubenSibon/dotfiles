@@ -5,7 +5,7 @@ cd $HOME
 /usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} pull
 /usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME} submodule update --init --recursive
 
-source $HOME/.zshrc
+zsh
 
 # Install Vim plugins
 if command -v vim > /dev/null; then

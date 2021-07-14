@@ -59,9 +59,9 @@ You're done!
 
     `vim +PluginInstall +qall`
 
-5. Source the zsh config or reload the environment:
+5. Source the zsh config (or start a new terminal emulator):
 
-    `source ~/.zshrc && zsh`
+    `source ~/.zshrc`
 
 ## Post-setup (optional)
 

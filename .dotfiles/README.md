@@ -13,9 +13,6 @@ This repository contains [configuration (dotfiles)](https://en.wikipedia.org/wik
 This project's install and update scripts also install:
 
 - Node Version Manager (nvm)
-- Node (current)
-- Node (LTS)
-- Yarn
 
 This projects is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-like) systems such as Linux or macOS.
 
@@ -62,18 +59,18 @@ You're done!
 
     `vim +PluginInstall +qall`
 
-5. Source the zsh config or reload the environment:
+5. Source the zsh config (or start a new terminal emulator):
 
-    `source ~/.zshrc && zsh`
+    `source ~/.zshrc`
 
-6. (optional) Install Node and Yarn using NVM:
+## Post-setup (optional)
+
+### Use NVM that came with Antigen to install Node and Yarn
 
 ```sh
 nvm install node
 npm install --global yarn
 ```
-
-You're done!
 
 ## Update
 

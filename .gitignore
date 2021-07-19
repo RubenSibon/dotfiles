@@ -7,7 +7,6 @@
 !.gitignore
 !.gitmodules
 !.hyper.js
-!.readme.md
 !.vim
 !.vim/bundle
 !.vim/bundle/Vundle.vim

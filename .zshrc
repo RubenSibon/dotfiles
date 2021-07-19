@@ -18,6 +18,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle lukechilds/zsh-nvm
+antigen bundle chrisands/zsh-yarn-completions
 
 # Theme
 antigen theme ys

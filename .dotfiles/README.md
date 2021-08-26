@@ -76,6 +76,11 @@ npm install --global yarn
 
 Run the update script:
 
+`cd ~ && dotfiles-update`
+
+Or:
+
 `zsh ~/.dotfiles/scripts/update.zsh`
 
 Everything should be up-to-date.
+

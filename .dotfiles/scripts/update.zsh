@@ -12,4 +12,4 @@ else
     echo "Vim is not installed. Not installing Vundle plugins."
 fi
 
-echo "\nDotfiles install/update is done! Please restart your terminal emulator."
+echo "\nDotfiles install/update is done!\n\nYou might have to restart your terminal emulator."

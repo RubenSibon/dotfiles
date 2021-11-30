@@ -14,15 +14,15 @@ This project's install and update scripts also install:
 
 - Node Version Manager (nvm)
 
-This projects is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-like) systems such as Linux or macOS.
+This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-like) systems such as Linux or macOS.
 
 ## Author's note
 
-These configurations represent my personal preferences. I sync them between the various machines I use. MacOS, Arch Linux and the occasional Debian-based distro tend to be the main operating systems on those machines. If this setup is to your liking, feel free to use it as a starting point for your own config. I've tried to keep everything as generic and environment-agnostic as possible.
+These configurations represent my personal preferences. I sync them between the various machines I use. MacOS, Arch Linux (Yes, I use Arch, btw) and the occasional Debian-based distro tend to be the main operating systems on those machines. If this setup is to your liking, feel free to use it as a starting point for your own config. I've tried to keep everything as generic and environment-agnostic as possible.
 
 ## Requirements
 
-- Linux or macOS
+- Linux, macOS or any other Unix-like environment that can run Shell/Bash/Zsh
 - Git (see: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - Zsh (see: https://wiki.archlinux.org/title/zsh)
 - cURL (see: https://curl.se/)
@@ -65,7 +65,7 @@ You're done!
 
 ## Post-setup (optional)
 
-### Use NVM that came with Antigen to install Node and Yarn
+### Use [NVM](https://github.com/nvm-sh/nvm) that came with Antigen to install [Node.js](https://nodejs.org/) and then use [NPM](https://www.npmjs.com/) to install [Yarn](https://yarnpkg.com/)
 
 ```sh
 nvm install node
@@ -74,13 +74,12 @@ npm install --global yarn
 
 ## Update
 
-Run the update script:
+The update script can be run with a handy alias:
 
 `cd ~ && dotfiles-update`
 
-Or:
+Or directly:
 
 `zsh ~/.dotfiles/scripts/update.zsh`
 
 Everything should be up-to-date.
-

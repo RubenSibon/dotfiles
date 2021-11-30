@@ -65,7 +65,9 @@ You're done!
 
 ## Post-setup (optional)
 
-### Use [NVM](https://github.com/nvm-sh/nvm) that came with Antigen to install [Node.js](https://nodejs.org/) and then use [NPM](https://www.npmjs.com/) to install [Yarn](https://yarnpkg.com/)
+### Install Node, NPM and Yarn
+
+Use [NVM](https://github.com/nvm-sh/nvm) that came with Antigen to install [Node.js](https://nodejs.org/) and then use [NPM](https://www.npmjs.com/) to install [Yarn](https://yarnpkg.com/).
 
 ```sh
 nvm install node

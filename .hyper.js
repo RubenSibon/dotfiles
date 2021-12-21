@@ -20,12 +20,6 @@ module.exports = {
     // font weight for bold characters: 'normal' or 'bold'
     fontWeightBold: 'bold',
 
-    // line height as a relative unit
-    lineHeight: 1,
-
-    // letter spacing as a relative unit
-    letterSpacing: 0,
-
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
     cursorColor: 'rgba(248,28,229,0.8)',
 
@@ -36,7 +30,7 @@ module.exports = {
     cursorShape: 'BLOCK',
 
     // set to `true` (without backticks and without quotes) for blinking cursor
-    cursorBlink: false,
+    cursorBlink: true,
 
     // color of the text
     foregroundColor: '#fff',
@@ -53,18 +47,6 @@ module.exports = {
 
     // custom CSS to embed in the main window
     css: '',
-
-    // custom CSS to embed in the terminal window
-    termCSS: '',
-
-    // if you're using a Linux setup which show native menus, set to false
-    // default: `true` on Linux, `true` on Windows, ignored on macOS
-    showHamburgerMenu: '',
-
-    // set to `false` (without backticks and without quotes) if you want to hide the minimize, maximize and close buttons
-    // additionally, set to `'left'` if you want them on the left, like in Ubuntu
-    // default: `true` (without backticks and without quotes) on Windows and Linux, ignored on macOS
-    showWindowControls: '',
 
     // custom padding (CSS format, i.e.: `top right bottom left`)
     padding: '12px 14px',
@@ -112,32 +94,39 @@ module.exports = {
     // for environment variables
     env: {},
 
-    // set to `false` for no bell
-    bell: 'SOUND',
+    // default width/height in pixels of a new window
+    windowSize: [540, 380],
+
+    // number of rows to be persisted in terminal buffer for scrolling
+    scrollback: 1000,
 
     // if `true` (without backticks and without quotes), selected text will automatically be copied to the clipboard
     copyOnSelect: false,
-
-    // if `true` (without backticks and without quotes), hyper will be set as the default protocol client for SSH
-    defaultSSHApp: true,
 
     // if `true` (without backticks and without quotes), on right click selected text will be copied or pasted if no
     // selection is present (`true` by default on Windows and disables the context menu feature)
     quickEdit: false,
 
-    // choose either `'vertical'`, if you want the column mode when Option key is hold during selection (Default)
-    // or `'force'`, if you want to force selection regardless of whether the terminal is in mouse events mode
-    // (inside tmux or vim with mouse mode enabled for example).
-    macOptionSelectionMode: 'vertical',
+    // if `true` (without backticks and without quotes), hyper will be set as the default protocol client for SSH
+    defaultSSHApp: true,
 
-    // URL to custom bell
-    // bellSoundURL: 'http://example.com/bell.mp3',
+    // change the behaviour of modifier keys to act as meta key
+    modifierKeys: {},
 
-    // Whether to use the WebGL renderer. Set it to false to use canvas-based
-    // rendering (slower, but supports transparent backgrounds)
-    webGLRenderer: false,
+    // if you're using a Linux setup which show native menus, set to false
+    // default: `true` on Linux, `true` on Windows, ignored on macOS
+    showHamburgerMenu: true,
+
+    // set to `false` (without backticks and without quotes) if you want to hide the minimize, maximize and close buttons
+    // additionally, set to `'left'` if you want them on the left, like in Ubuntu
+    // default: `true` (without backticks and without quotes) on Windows and Linux, ignored on macOS
+    showWindowControls: true,
 
     // for advanced config flags please refer to https://hyper.is/#cfg
+
+    hypercwd: {
+      initialWorkingDirectory: '~'
+    },
   },
 
   // a list of plugins to fetch and install from npm

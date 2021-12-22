@@ -95,7 +95,7 @@ module.exports = {
     env: {},
 
     // default width/height in pixels of a new window
-    windowSize: [540, 380],
+    windowSize: [640, 420],
 
     // number of rows to be persisted in terminal buffer for scrolling
     scrollback: 1000,

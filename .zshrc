@@ -19,6 +19,7 @@ antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle lukechilds/zsh-nvm
 antigen bundle chrisands/zsh-yarn-completions
+antigen bundle pip
 
 # Theme
 antigen theme ys
@@ -28,8 +29,14 @@ antigen apply
 
 # General zsh configuration
 HISTFILE=~/.histfile
-HISTSIZE=1000
+HISTSIZE=2000
 SAVEHIST=1000
+
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY_TIME
+setopt EXTENDED_HISTORY
 
 bindkey -v
 

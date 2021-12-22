@@ -10,9 +10,13 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
 Plugin 'L9'
-" Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'wakatime/vim-wakatime'
 
 call vundle#end()
 filetype plugin indent on
+
+" Disable folding "
+let g:vim_markdown_folding_disabled=1

@@ -11,6 +11,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'L9'
 Plugin 'godlygeek/tabular'
+Plugin 'junegunn/fzf'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'wakatime/vim-wakatime'

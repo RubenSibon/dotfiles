@@ -3,6 +3,7 @@
 !.dotfiles
 !.dotfiles/scripts
 !.dotfiles/scripts/*
+!.fzf
 !.gitconfig
 !.gitignore
 !.gitmodules

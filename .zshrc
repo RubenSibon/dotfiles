@@ -50,3 +50,5 @@ alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${
 
 # Update dotfiles
 alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

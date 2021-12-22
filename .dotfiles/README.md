@@ -80,8 +80,46 @@ The update script can be run with a handy alias:
 
 `cd ~ && dotfiles-update`
 
-Or directly:
+**_Or_** directly:
 
 `zsh ~/.dotfiles/scripts/update.zsh`
 
 Everything should be up-to-date.
+
+## Usage
+
+`dotfiles` is an alias for `git` in the user's home directory (`~`). It should be used instead of the `git` command to make changes to the dotfiles' git repository.
+
+The alias is needed because this repository's `.git/` directory does not exist in the working directory (`~`), but in `~/.dotfiles/` instead as `.gitrepo/`.
+
+Check your `.zshrc` for the alias.
+
+### Example
+
+1. Go to your home folder:
+
+    ```zsh
+    cd ~
+    ```
+
+2. Update the repo to make sure that you have the latest changes.
+This also pulls in the latest changes from the git server (i.e. GitHub):
+
+    ```zsh
+    dotfiles-update
+    ```
+
+3. Edit a dotfile, such as this README for example.
+
+4. Save your changes and commit them:
+
+    ```zsh
+    dotfiles status		# Make sure that everything is correct.
+    dotfiles add .		# Add the changes to git's staging area.
+    dotfiles commit		# Commit the changes.
+    dotfiles push		# Push the changes to the git server.
+    ```
+
+That's how you can use these dotfiles.
+
+Enjoy!

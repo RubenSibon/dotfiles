@@ -5,6 +5,9 @@
 /usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
 /usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
 
+# Install fzf (fuzzy finder)
+~/.fzf/install
+
 # Install Vim plugins
 if command -v vim > /dev/null; then
     vim +PluginInstall +qall

@@ -2,7 +2,7 @@
 
 ## About these dotfiles
 
-This repository contains [configuration (dotfiles)](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory) for the following tools:
+This repository contains the [user configuration (i.e. "dotfiles")](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory) for the following tools:
 
 - zsh (shell)
 - antigen (zsh plugin manager)
@@ -10,7 +10,7 @@ This repository contains [configuration (dotfiles)](https://en.wikipedia.org/wik
 - Vundle (vim plugin manager)
 - hyper.js (terminal emulator)
 
-This project's install and update scripts also install:
+The install and update scripts also install:
 
 - Node Version Manager (nvm)
 
@@ -29,6 +29,8 @@ These configurations represent my personal preferences. I sync them between the 
 
 ## Setup
 
+> **Protip**: Try these scripts out in a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or [suitable Docker image](https://hub.docker.com/_/ubuntu) first.
+
 The git configration and setup methods are based on the following tutorial: [Simplest Way to Sync Dotfiles and Config Using Git by Victor Augusteo](https://medium.com/@augusteo/simplest-way-to-sync-dotfiles-and-config-using-git-14051af8703a)
 
 Choose **one (A or B)** of the following setup options:
@@ -45,7 +47,7 @@ You're done!
 
 1. Clone the repository:
 
-    `git clone --bare --recursive git@github.com:RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo`
+    `git clone --bare --recursive https://github.com/RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo`
 
 2. Check out the cloned bare branch:
 
@@ -59,9 +61,9 @@ You're done!
 
     `vim +PluginInstall +qall`
 
-5. Source the zsh config (or start a new terminal emulator):
+5. Start a new terminal emulator with Zsh:
 
-    `source ~/.zshrc`
+    `zsh`
 
 ## Post-setup (optional)
 

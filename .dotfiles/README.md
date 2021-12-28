@@ -4,12 +4,12 @@
 
 This repository contains the [user configuration (i.e. "dotfiles")](https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory) for the following tools:
 
-- zsh (shell)
-- antigen (zsh plugin manager)
-- fzf (fuzzy finder)
-- vim (text editor)
-- Vundle (vim plugin manager)
-- hyper.js (terminal emulator)
+- [zsh](https://wiki.archlinux.org/title/zsh) (shell)
+- [antigen](https://github.com/zsh-users/antigen) (zsh plugin manager)
+- [fzf](https://github.com/junegunn/fzf) (fuzzy finder)
+- [vim](https://www.vim.org/) (text editor)
+- [Vundle](https://github.com/VundleVim/Vundle.vim) (vim plugin manager)
+- [hyper.js](https://hyper.is/) (terminal emulator)
 
 The install and update scripts also install:
 
@@ -19,7 +19,7 @@ This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-lik
 
 ## Author's note
 
-These configurations represent my personal preferences. I sync them between the various machines I use. MacOS, Arch Linux (Yes, I use Arch, btw) and the occasional Debian-based distro tend to be the main operating systems on those machines. If this setup is to your liking, feel free to use it as a starting point for your own config. I've tried to keep everything as generic and environment-agnostic as possible.
+These configurations represent my personal preferences. I sync them between the various machines I use. MacOS, Arch Linux (Yes, I use Arch, btw) and the occasional Debian-based distro tend to be the main operating systems on those machines. If this setup is to your liking, feel free to use it as a starting point for your own config. Because these dotfiles have to work on both macOS and various Linux distros, they are quite generic and environment-agnostic.
 
 ## Requirements
 
@@ -93,7 +93,7 @@ Everything should be up-to-date.
 
 `dotfiles` is an alias for `git` in the user's home directory (`~`). It should be used instead of the `git` command to make changes to the dotfiles' git repository.
 
-The alias is needed because this repository's `.git/` directory does not exist in the working directory (`~`), but in `~/.dotfiles/` instead as `.gitrepo/`.
+The alias is needed because this repository's `.git/` directory does not exist in the working directory (`~`), but in `~/.dotfiles/` as `.gitrepo/` instead.
 
 Check your `.zshrc` for the alias.
 

@@ -6,6 +6,7 @@ This repository contains the [user configuration (i.e. "dotfiles")](https://en.w
 
 - zsh (shell)
 - antigen (zsh plugin manager)
+- fzf (fuzzy finder)
 - vim (text editor)
 - Vundle (vim plugin manager)
 - hyper.js (terminal emulator)

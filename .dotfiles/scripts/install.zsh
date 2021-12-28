@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 if [ ! -d ".dotfiles/.gitrepo" ]; then
-    git clone --bare --recursive git@github.com:RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo
+    git clone --bare --recursive https://github.com/RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo
 else
     echo "'~/.dotfiles/.gitrepo/' already exists."
     echo "Continuing to update the configuration..."

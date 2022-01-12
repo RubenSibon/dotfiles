@@ -1,11 +1,12 @@
 # Make DietPi distro play nice with zsh as it relies on bash
 # Comment out or remove below two lines if you do not use DietPi
-source $HOME/.dotfiles/scripts/_misc.zsh
-enable_on_dietpi
+# @todo Add if-clause to check for DietPi
+#source $HOME/.dotfiles/scripts/_misc.zsh
+#enable_on_dietpi
 
 # Antigen plugin manager
-# source $HOME/.antigen/antigen.zsh
-source $HOME/.antigen/bin/antigen.zsh
+source $HOME/.antigen/antigen.zsh
+#source $HOME/.antigen/bin/antigen.zsh
 
 # Use oh-my-zsh
 antigen use oh-my-zsh

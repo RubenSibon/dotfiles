@@ -9,12 +9,15 @@ source $HOME/.antigen/antigen.zsh
 antigen use oh-my-zsh
 
 # Bundles
-antigen bundle git
+# -- essential
 antigen bundle ssh-agent
 antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
+# -- development
+antigen bundle git
+antigen bundle greymd/docker-zsh-completion
 antigen bundle lukechilds/zsh-nvm
 antigen bundle chrisands/zsh-yarn-completions
 antigen bundle pip

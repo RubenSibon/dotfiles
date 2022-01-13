@@ -140,7 +140,8 @@ module.exports = {
     "hyper-pane",
     "verminal",
     "hyper-named-css-colors",
-    "hyper-font-ligatures"
+    "hyper-font-ligatures",
+    "hyper-one-dark"
   ],
 
   // in development, you can create a directory under

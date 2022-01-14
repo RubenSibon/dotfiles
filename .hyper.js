@@ -138,10 +138,9 @@ module.exports = {
   plugins: [
     "hypercwd",
     "hyper-pane",
-    "verminal",
     "hyper-named-css-colors",
     "hyper-font-ligatures",
-    "hyper-one-dark"
+    "verminal"
   ],
 
   // in development, you can create a directory under

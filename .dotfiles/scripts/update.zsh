@@ -18,3 +18,5 @@ fi
 source ~/.zshrc
 
 echo "\nDotfiles install/update is done!\n\nYou might have to restart your terminal emulator."
+
+chsh -s $(which zsh)

@@ -46,6 +46,9 @@ zstyle :compinstall filename "${HOME}/.zshrc"
 autoload -Uz compinit
 compinit
 
+# Aliases
+alias rm="echo 'Consider using \"gio trash\" instead of \"rm\" to be able to restore files.' && rm -i"
+
 # Allow git operations on select dotfiles in user's home
 alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
 

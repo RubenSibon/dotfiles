@@ -13,7 +13,7 @@ antigen use oh-my-zsh
 antigen bundle ssh-agent
 antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions
+antigen bundle clarketm/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 # -- development
 antigen bundle git

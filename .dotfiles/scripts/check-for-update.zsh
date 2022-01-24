@@ -1,4 +1,5 @@
-LAST_CHECKED_FILE=".dotfiles/scripts/.last_checked"
+WORK_DIR="${HOME}/.dotfiles/scripts"
+LAST_CHECKED_FILE="${WORK_DIR}/.last_checked"
 NOW=$(date +%s)
 LAST_CHECKED=$NOW
 
@@ -11,12 +12,12 @@ fi
 if [[ $LAST_CHECKED -lt `expr $NOW - 72 \* 60` ]]; then
     CHANGED=0
 
+    echo $(date +%s) > $LAST_CHECKED_FILE
+    
     /usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME remote update && /usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME status -uno | grep -q 'Your branch is behind' && CHANGED=1
     
-    echo $(date +%s) > .last-checked
-
     if [ $CHANGED = 1 ]; then
-        ./update.zsh
+        $WORK_DIR/update.zsh
     else
         echo "Dotfiles are up-to-date."
     fi

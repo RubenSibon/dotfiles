@@ -140,7 +140,6 @@ module.exports = {
     "hypercwd",
     "hyper-pane",
     "hyper-named-css-colors",
-    "hyper-font-ligatures"
   ],
 
   // in development, you can create a directory under

@@ -3,7 +3,7 @@
 !.dotfiles
 !.dotfiles/scripts
 !.dotfiles/scripts/*
-!.dotfiles/scripts/.last_checked
+.dotfiles/scripts/.last_checked
 !.fzf
 !.gitconfig
 !.gitignore

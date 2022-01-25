@@ -10,7 +10,7 @@ if [ -f $LAST_CHECKED_FILE ]; then
     LAST_CHECKED=`cat $LAST_CHECKED_FILE`
 fi
 
-if [[ $LAST_CHECKED -lt `expr $NOW - $COOLDOWN_HOURS \* 60` ]]; then
+if [[ $LAST_CHECKED -lt `expr $NOW - $COOLDOWN_HOURS \* 60 \* 60` ]]; then
     echo "It seems that the dotfiles repo has not been checked for updates in the last ${COOLDOWN_HOURS} hours."
     read -k 1 "DO_CHECK?Do you want to check for dotfile updates? (y/[n]) "
     echo

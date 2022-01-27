@@ -177,12 +177,8 @@ nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
-" Start NERDTree when Vim is opened and leave the cursor in it.
-autocmd VimEnter * NERDTree
-
 " Start NERDTree when Vim is opened and put the cursor back in the other window.
-autocmd VimEnter * NERDTree | wincmd p
-
+"autocmd VimEnter * NERDTree | wincmd p
 
 " Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * silent NERDTreeMirror

@@ -41,6 +41,4 @@ if [[ $DO_CHECK =~ ^[Yy]$ ]]; then
     else
         echo "Dotfiles are up-to-date."
     fi
-else
-    echo "Not asking again to update dotfiles for 72 hours."
 fi

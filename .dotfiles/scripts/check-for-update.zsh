@@ -12,14 +12,15 @@ fi
 
 if [[ $LAST_CHECKED -lt `expr $NOW - $COOLDOWN_HOURS \* 60 \* 60` ]]; then
     echo "It seems that the dotfiles repo has not been checked for updates in the last ${COOLDOWN_HOURS} hours."
-    read -k 1 "DO_CHECK?Do you want to check for dotfile updates? (y/[n]) "
+    read -k 1 "DO_CHECK?Do you want to check for dotfile updates? [y/N] "
     echo
-fi 
+fi
+
+echo $NOW > $LAST_CHECKED_FILE
 
 if [[ $DO_CHECK =~ ^[Yy]$ ]]; then
     CHANGED=0
     
-    echo $NOW > $LAST_CHECKED_FILE
     echo "Checking for updates..."
     
     # Fetch changes from remote and check if dotfiles branch is behind; set CHANGED to 1 if so.
@@ -27,7 +28,7 @@ if [[ $DO_CHECK =~ ^[Yy]$ ]]; then
     
     if [ $CHANGED = 1 ]; then
         echo "Your dotfiles need to be updated."
-        read -k 1 "REPLY?Do you wish to update the dotfiles? (y/[n]) "
+        read -k 1 "REPLY?Do you wish to update the dotfiles? [y/N] "
         echo
         
         if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -40,4 +41,6 @@ if [[ $DO_CHECK =~ ^[Yy]$ ]]; then
     else
         echo "Dotfiles are up-to-date."
     fi
+else
+    echo "Not asking again to update dotfiles for 72 hours."
 fi

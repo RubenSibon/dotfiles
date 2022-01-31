@@ -9,7 +9,7 @@ module.exports = {
     updateChannel: 'stable',
 
     // default font size in pixels for all tabs
-    fontSize: 12,
+    fontSize: 14,
 
     // font family with optional fallbacks
     fontFamily: '"Fira Code", "FiraCode", Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
@@ -21,7 +21,7 @@ module.exports = {
     fontWeightBold: 'bold',
 
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
-    cursorColor: 'rgba(248,28,229,0.8)',
+    cursorColor: '#eeeeec',
 
     // terminal text color under BLOCK cursor
     cursorAccentColor: '#000',
@@ -33,17 +33,18 @@ module.exports = {
     cursorBlink: true,
 
     // color of the text
-    foregroundColor: '#fff',
+    foregroundColor: '#d3d7cf',
 
     // terminal background color
     // opacity is only supported on macOS
-    backgroundColor: '#000',
+    // backgroundColor: '#181818',
+    backgroundColor: '#300a24',
 
     // terminal selection color
-    selectionColor: 'rgba(248,28,229,0.3)',
+    selectionColor: '#773F72',
 
     // border color (window, tabs)
-    borderColor: 'rgba(248,28,229,0.3)',
+    borderColor: '#e95420',
 
     // custom CSS to embed in the main window
     css: '',
@@ -55,22 +56,22 @@ module.exports = {
     // including the 6 x 6 color cubes and the grayscale map, just provide
     // an array here instead of a color map object
     colors: {
-      black: '#000000',
-      red: '#C51E14',
-      green: '#1DC121',
-      yellow: '#C7C329',
-      blue: '#0A2FC4',
-      magenta: '#C839C5',
-      cyan: '#20C5C6',
-      white: '#C7C7C7',
-      lightBlack: '#686868',
-      lightRed: '#FD6F6B',
-      lightGreen: '#67F86F',
-      lightYellow: '#FFFA72',
-      lightBlue: '#6A76FB',
-      lightMagenta: '#FD7CFC',
-      lightCyan: '#68FDFE',
-      lightWhite: '#FFFFFF',
+      black: '#2e3436',
+      red: '#cc0000',
+      green: '#4e9a06',
+      yellow: '#c4a000',
+      blue: '#3465a4',
+      magenta: '#75507b',
+      cyan: '#06989a',
+      white: '#d3d7cf',
+      lightBlack: '#555753',
+      lightRed: '#ef2929',
+      lightGreen: '#8ae234',
+      lightYellow: '#fce94f',
+      lightBlue: '#729fcf',
+      lightMagenta: '#ad7fa8',
+      lightCyan: '#34e2e2',
+      lightWhite: '#eeeeec'
     },
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
@@ -139,8 +140,6 @@ module.exports = {
     "hypercwd",
     "hyper-pane",
     "hyper-named-css-colors",
-    "hyper-font-ligatures",
-    "verminal"
   ],
 
   // in development, you can create a directory under

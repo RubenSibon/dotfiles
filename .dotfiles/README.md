@@ -23,7 +23,7 @@ These configurations represent my personal preferences. I sync them between the 
 
 ## Requirements
 
-- Linux, macOS or any other Unix-like environment that can run Shell/Bash/Zsh
+- Linux, macOS or any other [POSIX-compliant operating system](https://en.wikipedia.org/wiki/POSIX) that can run Shell/Bash/Zsh
 - Git (see: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - Zsh (see: https://wiki.archlinux.org/title/zsh)
 - cURL (see: https://curl.se/)

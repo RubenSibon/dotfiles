@@ -1,3 +1,6 @@
+# Check if remote has updates if 24 hours have passed since last check
+source $HOME/.dotfiles/scripts/check-for-update.zsh
+
 # Miscellaneous scripts (check its contents for relevance)
 source $HOME/.dotfiles/scripts/_misc.zsh
 
@@ -13,7 +16,7 @@ antigen use oh-my-zsh
 antigen bundle ssh-agent
 antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions
+antigen bundle clarketm/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 # -- development
 antigen bundle git
@@ -45,6 +48,10 @@ zstyle :compinstall filename "${HOME}/.zshrc"
 
 autoload -Uz compinit
 compinit
+
+# Aliases
+alias rm="echo 'Consider using \"gio trash\" instead of \"rm\" to be able to restore files.'; rm -i"
+alias "rm -Rf"="rm"
 
 # Allow git operations on select dotfiles in user's home
 alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"

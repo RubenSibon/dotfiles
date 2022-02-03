@@ -1,4 +1,4 @@
-# Check if remote has updates if 24 hours have passed since last check
+# Check for updates if a certain number of hours have passed
 source $HOME/.dotfiles/scripts/check-for-update.zsh
 
 # Miscellaneous scripts (check its contents for relevance)
@@ -51,7 +51,6 @@ compinit
 
 # Aliases
 alias rm="echo 'Consider using \"gio trash\" instead of \"rm\" to be able to restore files.'; rm -i"
-alias "rm -Rf"="rm"
 
 # Allow git operations on select dotfiles in user's home
 alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"

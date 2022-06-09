@@ -1,9 +1,9 @@
 [user]
 	name = Ruben J. Sibon
-	email = mail@rubensibon.nl
+	email = r.sibon@amsterdam.nl
 [core]
 	editor = vim
 [pull]
 	rebase = false
 [init]
-	defaultBranch = master
+	defaultBranch = main

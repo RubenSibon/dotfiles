@@ -22,7 +22,6 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle git
 antigen bundle greymd/docker-zsh-completion
 antigen bundle lukechilds/zsh-nvm
-antigen bundle sobolevn/wakatime-zsh-plugin
 antigen bundle chrisands/zsh-yarn-completions
 antigen bundle pip
 

@@ -10,6 +10,7 @@ This repository contains the [user configuration (i.e. "dotfiles")](https://en.w
 - [vim](https://www.vim.org/) (text editor)
 - [Vundle](https://github.com/VundleVim/Vundle.vim) (vim plugin manager)
 - [hyper.js](https://hyper.is/) (terminal emulator)
+- [WakaTime](https://wakatime.com/) (track time spent programming)
 
 The install and update scripts also install:
 

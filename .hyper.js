@@ -54,24 +54,24 @@ module.exports = {
     // the full list. if you're going to provide the full color palette,
     // including the 6 x 6 color cubes and the grayscale map, just provide
     // an array here instead of a color map object
-    // colors: {
-    //   black: '#2e3436',
-    //   red: '#cc0000',
-    //   green: '#4e9a06',
-    //   yellow: '#c4a000',
-    //   blue: '#3465a4',
-    //   magenta: '#75507b',
-    //   cyan: '#06989a',
-    //   white: '#d3d7cf',
-    //   lightBlack: '#555753',
-    //   lightRed: '#ef2929',
-    //   lightGreen: '#8ae234',
-    //   lightYellow: '#fce94f',
-    //   lightBlue: '#729fcf',
-    //   lightMagenta: '#ad7fa8',
-    //   lightCyan: '#34e2e2',
-    //   lightWhite: '#eeeeec'
-    // },
+    /* colors: {
+      black: '#2e3436',
+      red: '#cc0000',
+      green: '#4e9a06',
+      yellow: '#c4a000',
+      blue: '#3465a4',
+      magenta: '#75507b',
+      cyan: '#06989a',
+      white: '#d3d7cf',
+      lightBlack: '#555753',
+      lightRed: '#ef2929',
+      lightGreen: '#8ae234',
+      lightYellow: '#fce94f',
+      lightBlue: '#729fcf',
+      lightMagenta: '#ad7fa8',
+      lightCyan: '#34e2e2',
+      lightWhite: '#eeeeec'
+    }, */
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
     // if left empty, your system's login shell will be used by default
@@ -139,7 +139,7 @@ module.exports = {
     "hypercwd",
     "hyper-pane",
     "hyper-named-css-colors",
-    "hyper-breeze-theme"
+    "hyper-breeze-theme",
   ],
 
   // in development, you can create a directory under

@@ -6,7 +6,6 @@ source $HOME/.dotfiles/scripts/_misc.zsh
 
 # Antigen plugin manager
 source $HOME/.antigen/antigen.zsh
-#source $HOME/.antigen/bin/antigen.zsh
 
 # Use oh-my-zsh
 antigen use oh-my-zsh
@@ -62,3 +61,6 @@ alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
 
 export PNPM_HOME="/Users/rubenjs/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+
+# Docker Desktop (automatically added by Docker Desktop for macOS)
+source .docker/init-zsh.sh || true

@@ -10,6 +10,7 @@ This repository contains the [user configuration (i.e. "dotfiles")](https://en.w
 - [vim](https://www.vim.org/) (text editor)
 - [Vundle](https://github.com/VundleVim/Vundle.vim) (vim plugin manager)
 - [hyper.js](https://hyper.is/) (terminal emulator)
+- [WakaTime](https://wakatime.com/) (track time spent programming)
 
 The install and update scripts also install:
 
@@ -24,9 +25,9 @@ These configurations represent my personal preferences. I sync them between the 
 ## Requirements
 
 - Linux, macOS or any other [POSIX-compliant operating system](https://en.wikipedia.org/wiki/POSIX) that can run Shell/Bash/Zsh
-- Git (see: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- Zsh (see: https://wiki.archlinux.org/title/zsh)
-- cURL (see: https://curl.se/)
+- Git (see: <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>)
+- Zsh (see: <https://wiki.archlinux.org/title/zsh>)
+- cURL (see: <https://curl.se/>)
 
 ## Setup
 
@@ -117,10 +118,10 @@ This also pulls in the latest changes from the git server (i.e. GitHub):
 4. Save your changes and commit them:
 
     ```zsh
-    dotfiles status		# Make sure that everything is correct.
-    dotfiles add .		# Add the changes to git's staging area.
-    dotfiles commit		# Commit the changes.
-    dotfiles push		# Push the changes to the git server.
+    dotfiles status  # Make sure that everything is correct.
+    dotfiles add .  # Add the changes to git's staging area.
+    dotfiles commit  # Commit the changes.
+    dotfiles push  # Push the changes to the git server.
     ```
 
 That's how you can use these dotfiles.

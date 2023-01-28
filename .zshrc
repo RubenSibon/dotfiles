@@ -50,7 +50,7 @@ autoload -Uz compinit
 compinit
 
 # Aliases
-alias rm="echo 'Use \"gio trash\" instead of \"rm\" to be able to restore files.'; rm -i"
+alias rm="echo 'Use \"gio trash\" instead of \"rm\" to be able to restore files.'; rm -iv"
 
 # Allow git operations on select dotfiles in user's home
 alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"

@@ -63,4 +63,4 @@ export PNPM_HOME="/Users/rubenjs/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
 # Docker Desktop (automatically added by Docker Desktop for macOS)
-source .docker/init-zsh.sh || true
+#source .docker/init-zsh.sh || true

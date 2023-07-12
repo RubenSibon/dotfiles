@@ -20,7 +20,7 @@ This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-lik
 
 ## Author's note
 
-These configurations represent my personal preferences. I sync them between the various machines I use. MacOS, Arch Linux (Yes, I use Arch, btw) and the occasional Debian-based distro tend to be the main operating systems on those machines. If this setup is to your liking, feel free to use it as a starting point for your own config. Because these dotfiles have to work on both macOS and various Linux distros, they are quite generic and environment-agnostic.
+These configurations represent my personal preferences. I sync them between the various machines I use. MacOS, Arch Linux (Yes, I use Arch, btw) and the occasional Debian-based distro tend to be the main operating systems on those devices. If this setup is to your liking, feel free to use it as a starting point for your own config. Because these dotfiles have to work on both macOS and various Linux distros they are quite generic and environment-agnostic.
 
 ## Requirements
 
@@ -120,10 +120,10 @@ This also pulls in the latest changes from the git server (i.e. GitHub):
 4. Save your changes and commit them:
 
     ```zsh
-    dotfiles status  # Make sure that everything is correct.
-    dotfiles add .  # Add the changes to git's staging area.
-    dotfiles commit  # Commit the changes.
-    dotfiles push  # Push the changes to the git server.
+    dotfiles status    # Make sure that everything is correct.
+    dotfiles add .     # Add the changes to git's staging area.
+    dotfiles commit    # Commit the changes.
+    dotfiles push      # Push the changes to the git server.
     ```
 
 That's how you can use these dotfiles.

@@ -60,8 +60,10 @@ alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PNPM_HOME="/Users/rubenjs/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+export POSTGRES_HOME="/usr/local/opt/postgresql@15/bin"
+export PATH="$PNPM_HOME:$POSTGRES_HOME:$PATH"
 
 # Docker Desktop (automatically added by Docker Desktop for macOS)
-source ~/.docker/init-zsh.sh || true
-export PATH="/usr/local/opt/postgresql@15/bin:$PATH"
+if [[ $OSTYPE == 'darwin'* ]]; then
+    source ~/.docker/init-zsh.sh || true
+fi

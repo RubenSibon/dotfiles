@@ -1,8 +1,8 @@
 # Check for updates if a certain number of hours have passed
 source $HOME/.dotfiles/scripts/check-for-update.zsh
 
-# Miscellaneous scripts (check its contents for relevance)
-source $HOME/.dotfiles/scripts/_misc.zsh
+# Specific sources for DietPi (a Linux OS for RaspberryPi)
+source $HOME/.dotfiles/scripts/_dietPi.zsh
 
 # Antigen plugin manager
 source $HOME/.antigen/antigen.zsh

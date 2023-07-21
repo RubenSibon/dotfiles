@@ -9,7 +9,7 @@
 ~/.fzf/install
 
 # Install Vim plugins
-if [ command -v vim > /dev/null ]; then
+if command -v vim > /dev/null; then
     vim +PluginInstall +qall
 else
     echo "Vim is not installed. Not installing Vundle plugins."
@@ -19,7 +19,7 @@ fi
 curl https://get.volta.sh | bash
 
 # Update Homebrew on macOS
-if [ $OSTYPE == 'darwin'* ]; then
+if [[ $OSTYPE == 'darwin'* ]]; then
     brew update && brew upgrade
 fi
 

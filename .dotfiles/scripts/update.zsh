@@ -15,6 +15,9 @@ else
     echo "Vim is not installed. Not installing Vundle plugins."
 fi
 
+# Install Volta, the hassle-free JavaScript Tool Manager
+curl https://get.volta.sh | bash
+
 source ~/.zshrc
 
 echo "\nDotfiles install/update is done!\n\nYou might have to restart your terminal emulator."

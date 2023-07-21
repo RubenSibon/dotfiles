@@ -20,7 +20,6 @@ antigen bundle zsh-users/zsh-autosuggestions
 # -- development
 antigen bundle git
 antigen bundle greymd/docker-zsh-completion
-antigen bundle lukechilds/zsh-nvm
 antigen bundle chrisands/zsh-yarn-completions
 antigen bundle pip
 
@@ -61,6 +60,9 @@ alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
 
 export PNPM_HOME="/Users/rubenjs/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
 
 # Docker Desktop (automatically added by Docker Desktop for macOS)
-source .docker/init-zsh.sh || true
+#source .docker/init-zsh.sh || true
+

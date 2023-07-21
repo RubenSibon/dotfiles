@@ -3,6 +3,7 @@
 	email = mail@rubensibon.nl
 [core]
 	editor = vim
+	excludesFile = /Users/rubenjs/.dotfiles/.gitignore_global
 [pull]
 	rebase = false
 [init]

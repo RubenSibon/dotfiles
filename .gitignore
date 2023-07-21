@@ -1,6 +1,7 @@
 *
 !.antigen
 !.dotfiles
+!.dotfiles/*
 !.dotfiles/scripts
 !.dotfiles/scripts/*
 .dotfiles/scripts/.last_checked

@@ -1,8 +1,8 @@
 # Check for updates if a certain number of hours have passed
 source $HOME/.dotfiles/scripts/check-for-update.zsh
 
-# Miscellaneous scripts (check its contents for relevance)
-source $HOME/.dotfiles/scripts/_misc.zsh
+# Specific sources for DietPi (a Linux OS for RaspberryPi)
+source $HOME/.dotfiles/scripts/_dietPi.zsh
 
 # Antigen plugin manager
 source $HOME/.antigen/antigen.zsh
@@ -59,10 +59,11 @@ alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PNPM_HOME="/Users/rubenjs/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+export POSTGRES_HOME="/usr/local/opt/postgresql@15/bin"
 export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+export PATH="$PNPM_HOME:$POSTGRES_HOME:$VOLTA_HOME/bin:$PATH"
 
-# Docker Desktop (automatically added by Docker Desktop for macOS)
-#source .docker/init-zsh.sh || true
+if [[ $OSTYPE == 'darwin'* ]]; then
+    source ~/.docker/init-zsh.sh || true
+fi
 

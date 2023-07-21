@@ -20,7 +20,7 @@ This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-lik
 
 ## Author's note
 
-These configurations represent my personal preferences. I sync them between the various machines I use. MacOS, Arch Linux (Yes, I use Arch, btw) and the occasional Debian-based distro tend to be the main operating systems on those machines. If this setup is to your liking, feel free to use it as a starting point for your own config. Because these dotfiles have to work on both macOS and various Linux distros, they are quite generic and environment-agnostic.
+These configurations represent my personal preferences. I sync them between the various machines I use. MacOS, Arch Linux (Yes, I use Arch, btw) and the occasional Debian-based distro tend to be the main operating systems on those devices. If this setup is to your liking, feel free to use it as a starting point for your own config. Because these dotfiles have to work on both macOS and various Linux distros they are quite generic and environment-agnostic.
 
 ## Requirements
 
@@ -34,6 +34,8 @@ These configurations represent my personal preferences. I sync them between the 
 > **Protip**: Try these scripts out in a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or [suitable Docker image](https://hub.docker.com/_/ubuntu) first.
 
 The git configration and setup methods are based on the following tutorial: [Simplest Way to Sync Dotfiles and Config Using Git by Victor Augusteo](https://medium.com/@augusteo/simplest-way-to-sync-dotfiles-and-config-using-git-14051af8703a)
+
+> **Note**: Make sure that zsh is [set as your default shell](https://wiki.archlinux.org/title/Command-line_shell#Changing_your_default_shell).
 
 Choose **one (A or B)** of the following setup options:
 
@@ -118,10 +120,10 @@ This also pulls in the latest changes from the git server (i.e. GitHub):
 4. Save your changes and commit them:
 
     ```zsh
-    dotfiles status  # Make sure that everything is correct.
-    dotfiles add .  # Add the changes to git's staging area.
-    dotfiles commit  # Commit the changes.
-    dotfiles push  # Push the changes to the git server.
+    dotfiles status    # Make sure that everything is correct.
+    dotfiles add .     # Add the changes to git's staging area.
+    dotfiles commit    # Commit the changes.
+    dotfiles push      # Push the changes to the git server.
     ```
 
 That's how you can use these dotfiles.

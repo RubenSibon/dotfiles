@@ -3,7 +3,10 @@
 	email = mail@rubensibon.nl
 [core]
 	editor = vim
+	excludesFile = /Users/rubenjs/.dotfiles/.gitignore_global
 [pull]
 	rebase = false
 [init]
-	defaultBranch = master
+	defaultBranch = main
+[push]
+	autoSetupRemote = true

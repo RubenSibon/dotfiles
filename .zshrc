@@ -1,12 +1,11 @@
-# Check if remote has updates if 24 hours have passed since last check
+# Check for updates if a certain number of hours have passed
 source $HOME/.dotfiles/scripts/check-for-update.zsh
 
-# Miscellaneous scripts (check its contents for relevance)
-source $HOME/.dotfiles/scripts/_misc.zsh
+# Specific sources for DietPi (a Linux OS for RaspberryPi)
+source $HOME/.dotfiles/scripts/_dietPi.zsh
 
 # Antigen plugin manager
 source $HOME/.antigen/antigen.zsh
-#source $HOME/.antigen/bin/antigen.zsh
 
 # Use oh-my-zsh
 antigen use oh-my-zsh
@@ -21,7 +20,6 @@ antigen bundle zsh-users/zsh-autosuggestions
 # -- development
 antigen bundle git
 antigen bundle greymd/docker-zsh-completion
-antigen bundle lukechilds/zsh-nvm
 antigen bundle chrisands/zsh-yarn-completions
 antigen bundle pip
 
@@ -50,8 +48,7 @@ autoload -Uz compinit
 compinit
 
 # Aliases
-alias rm="echo 'Consider using \"gio trash\" instead of \"rm\" to be able to restore files.'; rm -i"
-alias "rm -Rf"="rm"
+alias rm="echo 'Use \"gio trash\" instead of \"rm\" to be able to restore files.'; rm -iv"
 
 # Allow git operations on select dotfiles in user's home
 alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
@@ -60,3 +57,13 @@ alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${
 alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PNPM_HOME="/Users/rubenjs/Library/pnpm"
+export POSTGRES_HOME="/usr/local/opt/postgresql@15/bin"
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$PNPM_HOME:$POSTGRES_HOME:$VOLTA_HOME/bin:$PATH"
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+    source ~/.docker/init-zsh.sh || true
+fi
+

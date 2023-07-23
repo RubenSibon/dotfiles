@@ -21,10 +21,10 @@ module.exports = {
     fontWeightBold: 'bold',
 
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
-    cursorColor: '#eeeeec',
+    // cursorColor: '#eeeeec',
 
     // terminal text color under BLOCK cursor
-    cursorAccentColor: '#000',
+    // cursorAccentColor: '#000',
 
     // `'BEAM'` for |, `'UNDERLINE'` for _, `'BLOCK'` for █
     cursorShape: 'BLOCK',
@@ -33,18 +33,17 @@ module.exports = {
     cursorBlink: true,
 
     // color of the text
-    foregroundColor: '#d3d7cf',
+    // foregroundColor: '#d3d7cf',
 
     // terminal background color
     // opacity is only supported on macOS
     // backgroundColor: '#181818',
-    backgroundColor: '#300a24',
 
     // terminal selection color
-    selectionColor: '#773F72',
+    // selectionColor: '#773F72',
 
     // border color (window, tabs)
-    borderColor: '#e95420',
+    // borderColor: '#e95420',
 
     // custom CSS to embed in the main window
     css: '',
@@ -55,7 +54,7 @@ module.exports = {
     // the full list. if you're going to provide the full color palette,
     // including the 6 x 6 color cubes and the grayscale map, just provide
     // an array here instead of a color map object
-    colors: {
+    /* colors: {
       black: '#2e3436',
       red: '#cc0000',
       green: '#4e9a06',
@@ -72,7 +71,7 @@ module.exports = {
       lightMagenta: '#ad7fa8',
       lightCyan: '#34e2e2',
       lightWhite: '#eeeeec'
-    },
+    }, */
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
     // if left empty, your system's login shell will be used by default
@@ -140,6 +139,7 @@ module.exports = {
     "hypercwd",
     "hyper-pane",
     "hyper-named-css-colors",
+    "hyper-breeze-theme",
   ],
 
   // in development, you can create a directory under

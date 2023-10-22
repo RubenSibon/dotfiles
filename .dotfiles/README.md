@@ -35,7 +35,7 @@ These configurations represent my personal preferences. I sync them between the 
 
 The git configration and setup methods are based on the following tutorial: [Simplest Way to Sync Dotfiles and Config Using Git by Victor Augusteo](https://medium.com/@augusteo/simplest-way-to-sync-dotfiles-and-config-using-git-14051af8703a)
 
-> **Note**: Make sure that zsh is [set as your default shell](https://wiki.archlinux.org/title/Command-line_shell#Changing_your_default_shell).
+> **Note**: Make sure that zsh is installed and [set as your default shell](https://wiki.archlinux.org/title/Command-line_shell#Changing_your_default_shell).
 
 Choose **one (A or B)** of the following setup options:
 
@@ -73,11 +73,12 @@ You're done!
 
 ### Install Node, NPM and Yarn
 
-Use [NVM](https://github.com/nvm-sh/nvm) that came with Antigen to install [Node.js](https://nodejs.org/) and then use [NPM](https://www.npmjs.com/) to install [Yarn](https://yarnpkg.com/).
+Use [Volta]([https://github.com/nvm-sh/nvm](https://volta.sh/)) that came with Antigen to install [Node.js](https://nodejs.org/) and then use [NPM](https://www.npmjs.com/) to install [Yarn](https://yarnpkg.com/).
 
 ```sh
-nvm install node
-npm install --global yarn
+volta install node
+volta install pnpm
+volta install yarn
 ```
 
 ## Update

@@ -1,6 +1,6 @@
 [user]
-	name = Ruben J. Sibon
-	email = mail@rubensibon.nl
+	name = Ruben Sibon
+	email = r.sibon@amsterdam.nl
 [core]
 	editor = vim
 	excludesFile = /Users/rubenjs/.dotfiles/.gitignore_global

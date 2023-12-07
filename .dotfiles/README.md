@@ -14,7 +14,7 @@ This repository contains the [user configuration (i.e. "dotfiles")](https://en.w
 
 The install and update scripts also install:
 
-- Node Version Manager (nvm)
+- [Volta](https://volta.sh/) (JavaScript tool manager)
 
 This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-like) systems such as Linux or macOS.
 
@@ -73,11 +73,10 @@ You're done!
 
 ### Install Node, NPM and Yarn
 
-Use [Volta]([https://github.com/nvm-sh/nvm](https://volta.sh/)) that came with Antigen to install [Node.js](https://nodejs.org/) and then use [NPM](https://www.npmjs.com/) to install [Yarn](https://yarnpkg.com/).
+Use [Volta]([https://github.com/nvm-sh/nvm](https://volta.sh/)) that came installed with the scripts to install [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/) globally:
 
 ```sh
 volta install node
-volta install pnpm
 volta install yarn
 ```
 

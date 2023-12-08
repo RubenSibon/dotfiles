@@ -69,6 +69,10 @@ You're done!
 
     `zsh`
 
+6. (optional) Try an update to see if you get more changes
+
+   `cd ~ && dotfiles-update`
+
 ## Post-setup (optional)
 
 ### Install Node, NPM and Yarn

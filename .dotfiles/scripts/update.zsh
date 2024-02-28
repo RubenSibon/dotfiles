@@ -26,7 +26,7 @@ echo "✔ done installing/updating Volta.\n"
 
 # Update Homebrew on macOS
 if [[ $OSTYPE == 'darwin'* ]]; then
-    if [ ! -f "`which brew`" ]; then
+    if ! [ -f "`which brew`" ]; then
         echo "🤖 Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         echo "✔ done installing Homebrew.\n"
@@ -35,6 +35,13 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     echo "🤖 Updating Homebrew..."
     brew update && brew upgrade
     echo "✔ done updating Homebrew.\n"
+fi
+
+if ! [ command -v "git hist" > /dev/null ]; then
+    echo "'git hist' command does not exist. Installing..."
+    git config --global alias.hist "log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(red)%s %C(bold red){{%an}}%C(reset) %C(blue)%d%C(reset)' --graph --date=short"
+else
+    echo "'git hist' command already exists."
 fi
 
 source ~/.zshrc

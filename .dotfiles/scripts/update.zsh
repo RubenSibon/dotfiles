@@ -19,10 +19,10 @@ else
     echo "Vim is not installed. Not installing Vundle plugins."
 fi
 
-# Install Volta, the hassle-free JavaScript Tool Manager
-echo "🤖 Installing/updating Volta..."
-curl https://get.volta.sh | bash
-echo "✔ done installing/updating Volta.\n"
+# Install PNPM
+echo "🤖 Installing/updating PNPM (Performant Node Package Manager)..."
+curl -fsSL https://get.pnpm.io/install.sh | sh -
+echo "✔ done installing/updating PNPM.\n"
 
 # Update Homebrew on macOS
 if [[ $OSTYPE == 'darwin'* ]]; then

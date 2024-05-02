@@ -58,12 +58,23 @@ alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PNPM_HOME="/Users/rubenjs/Library/pnpm"
-export POSTGRES_HOME="/usr/local/opt/postgresql@15/bin"
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$PNPM_HOME:$POSTGRES_HOME:$VOLTA_HOME/bin:$PATH"
-
 if [[ $OSTYPE == 'darwin'* ]]; then
     source ~/.docker/init-zsh.sh || true
 fi
+
+if [ -e /home/rubenjs/.nix-profile/etc/profile.d/nix.sh ]; then
+    . /home/rubenjs/.nix-profile/etc/profile.d/nix.sh
+fi
+
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+export POSTGRES_HOME="/usr/local/opt/postgresql@15/bin"
+export PATH="$POSTGRES_HOME:$PATH"
+
+export PNPM_HOME="/home/rubenjs/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 

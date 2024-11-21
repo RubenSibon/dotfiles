@@ -9,12 +9,11 @@ This repository contains the [user configuration (i.e. "dotfiles")](https://en.w
 - [fzf](https://github.com/junegunn/fzf) (fuzzy finder)
 - [vim](https://www.vim.org/) (text editor)
 - [Vundle](https://github.com/VundleVim/Vundle.vim) (vim plugin manager)
-- [hyper.js](https://hyper.is/) (terminal emulator)
 - [WakaTime](https://wakatime.com/) (track time spent programming)
 
-The install and update scripts also install:
+On macOS, the install and update scripts also install:
 
-- [Volta](https://volta.sh/) (JavaScript tool manager)
+- [Homebrew](https://brew.sh/) (package manager for macOS)
 
 This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-like) systems such as Linux or macOS.
 
@@ -74,15 +73,6 @@ You're done!
    `cd ~ && dotfiles-update`
 
 ## Post-setup (optional)
-
-### Install Node, NPM and Yarn
-
-Use [Volta]([https://github.com/nvm-sh/nvm](https://volta.sh/)) that came installed with the scripts to install [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/) globally:
-
-```sh
-volta install node
-volta install yarn
-```
 
 ## Update
 

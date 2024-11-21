@@ -37,7 +37,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     echo "✔ done updating Homebrew.\n"
 fi
 
-if ! [ command -v "git hist" > /dev/null ]; then
+if ! command -v "git hist" > /dev/null; then
     echo "'git hist' command does not exist. Installing..."
     git config --global alias.hist "log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(red)%s %C(bold red){{%an}}%C(reset) %C(blue)%d%C(reset)' --graph --date=short"
 else

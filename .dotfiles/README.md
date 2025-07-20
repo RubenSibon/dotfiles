@@ -32,6 +32,8 @@ These configurations represent my personal preferences. I sync them between the 
 
 > **Protip**: Try these scripts out in a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or [suitable Docker image](https://hub.docker.com/_/ubuntu) first.
 
+> **Protip**: First fork this repo if you want to use it as the basis for your own dotfiles and replace the username in all commands and the `dotfiles/scripts/install.zsh` script with your own.
+
 The git configration and setup methods are based on the following tutorial: [Simplest Way to Sync Dotfiles and Config Using Git by Victor Augusteo](https://medium.com/@augusteo/simplest-way-to-sync-dotfiles-and-config-using-git-14051af8703a)
 
 > **Note**: Make sure that zsh is installed and [set as your default shell](https://wiki.archlinux.org/title/Command-line_shell#Changing_your_default_shell): `chsh -s $(which zsh)`

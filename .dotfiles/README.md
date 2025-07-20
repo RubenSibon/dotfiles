@@ -9,7 +9,20 @@ This repository contains the [user configuration (i.e. "dotfiles")](https://en.w
 - [fzf](https://github.com/junegunn/fzf) (fuzzy finder)
 - [vim](https://www.vim.org/) (text editor)
 - [Vundle](https://github.com/VundleVim/Vundle.vim) (vim plugin manager)
-- [WakaTime](https://wakatime.com/) (track time spent programming)
+
+For VIM/Vundle it installs the following plugins:
+
+- 'bling/vim-airline'
+- 'godlygeek/tabular'
+- 'junegunn/fzf'
+- 'L9'
+- 'mattn/emmet-vim'
+- 'plasticboy/vim-markdown'
+- 'rstacruz/sparkup', {'rtp': 'vim/'}
+- 'Syntastic'
+- 'scrooloose/nerdtree'
+- 'tpope/vim-fugitive'
+- 'wakatime/vim-wakatime' - [WakaTime](https://wakatime.com/) (track time spent programming, you'll need an API-key for this)
 
 On macOS, the install and update scripts also install:
 
@@ -85,6 +98,22 @@ The update script can be run with a handy alias:
 `zsh ~/.dotfiles/scripts/update.zsh`
 
 Everything should be up-to-date.
+
+## Undo & uninstall
+
+To undo and remove these dotfiles:
+
+`rm -Rf .dotfiles`
+
+You may want to remove the git files pulled by this repo, but be sure to check the contents before you do:
+
+`rm -Rf .gitmodules .gitignore`
+
+Then remove what you no longer want to use like Antigen/Vundle for Vim and more. Look online for instructions on how to do that.
+
+After that you may want to reset the `.zshrc` and `.vimrec` files to their defaults or at least remove references to the things that have been removed.
+
+To uninstall Homebrew follow the [instructions in their frequently asked questions](https://github.com/homebrew/install?tab=readme-ov-file#uninstall-homebrew).
 
 ## Usage
 

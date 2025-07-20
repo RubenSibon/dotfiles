@@ -109,6 +109,8 @@ You may want to remove the git files pulled by this repo, but be sure to check t
 
 `rm -Rf .gitmodules .gitignore`
 
+And edit your `.gitconfig` file: be sure to remove references the `.dotfiles`  directory and this repo.
+
 Then remove what you no longer want to use like Antigen/Vundle for Vim and more. Look online for instructions on how to do that.
 
 After that you may want to reset the `.zshrc` and `.vimrc` files to their defaults or at least remove references to the things that have been removed.

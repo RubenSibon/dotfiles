@@ -12,17 +12,17 @@ This repository contains the [user configuration (i.e. "dotfiles")](https://en.w
 
 For VIM/Vundle it installs the following plugins:
 
-- 'bling/vim-airline'
-- 'godlygeek/tabular'
-- 'junegunn/fzf'
-- 'L9'
-- 'mattn/emmet-vim'
-- 'plasticboy/vim-markdown'
-- 'rstacruz/sparkup', {'rtp': 'vim/'}
-- 'Syntastic'
-- 'scrooloose/nerdtree'
-- 'tpope/vim-fugitive'
-- 'wakatime/vim-wakatime' - [WakaTime](https://wakatime.com/) (track time spent programming, you'll need an API-key for this)
+- bling/vim-airline
+- godlygeek/tabular
+- junegunn/fzf
+- L9
+- mattn/emmet-vim
+- plasticboy/vim-markdown
+- rstacruz/sparkup
+- Syntastic
+- scrooloose/nerdtree
+- tpope/vim-fugitive
+- wakatime/vim-wakatime - [WakaTime](https://wakatime.com/) (track time spent programming, you'll need an API-key for this)
 
 On macOS, the install and update scripts also install:
 

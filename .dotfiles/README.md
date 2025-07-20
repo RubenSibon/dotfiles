@@ -111,7 +111,7 @@ You may want to remove the git files pulled by this repo, but be sure to check t
 
 Then remove what you no longer want to use like Antigen/Vundle for Vim and more. Look online for instructions on how to do that.
 
-After that you may want to reset the `.zshrc` and `.vimrec` files to their defaults or at least remove references to the things that have been removed.
+After that you may want to reset the `.zshrc` and `.vimrc` files to their defaults or at least remove references to the things that have been removed.
 
 To uninstall Homebrew follow the [instructions in their frequently asked questions](https://github.com/homebrew/install?tab=readme-ov-file#uninstall-homebrew).
 

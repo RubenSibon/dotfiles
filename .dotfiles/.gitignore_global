@@ -111,6 +111,7 @@ tags
 ## Visual Studio Code
 ###
 
+*.code-workspace
 .vscode
 
 # Local History for Visual Studio Code

@@ -22,6 +22,8 @@ fi
 # Install PNPM
 echo "🤖 Installing/updating PNPM (Performant Node Package Manager)..."
 curl -fsSL https://get.pnpm.io/install.sh | sh -
+echo "🤖 Setting PNPM to use the latest LTS version of Node.js..."
+pnpm env use --global lts
 echo "✔ done installing/updating PNPM.\n"
 
 # Update Homebrew on macOS

@@ -53,15 +53,17 @@ alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${
 # Update dotfiles
 alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-if [[ $OSTYPE == 'darwin'* ]]; then
-    source ~/.docker/init-zsh.sh || true
-fi
-
-if [ -e /home/rubenjs/.nix-profile/etc/profile.d/nix.sh ]; then
-    . /home/rubenjs/.nix-profile/etc/profile.d/nix.sh
-fi
+#
+# Export constants and add to PATH
+#
 
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
+
+# pnpm
+export PNPM_HOME="/home/rubenjs/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

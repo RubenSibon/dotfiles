@@ -65,14 +65,3 @@ fi
 
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
-
-export POSTGRES_HOME="/usr/local/opt/postgresql@15/bin"
-export PATH="$POSTGRES_HOME:$PATH"
-
-# pnpm
-export PNPM_HOME="/home/rubenjs/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end

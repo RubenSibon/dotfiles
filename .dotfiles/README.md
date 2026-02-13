@@ -7,10 +7,10 @@ This repository contains the [user configuration (i.e. "dotfiles")](https://en.w
 - [zsh](https://wiki.archlinux.org/title/zsh) (shell)
 - [antigen](https://github.com/zsh-users/antigen) (zsh plugin manager)
 - [fzf](https://github.com/junegunn/fzf) (fuzzy finder)
-- [vim](https://www.vim.org/) (text editor)
+- [Vim](https://www.vim.org/) (text editor)*
 - [Vundle](https://github.com/VundleVim/Vundle.vim) (vim plugin manager)
 
-For VIM/Vundle it installs the following plugins:
+For Vim/Vundle it installs the following plugins:
 
 - bling/vim-airline
 - godlygeek/tabular
@@ -23,6 +23,8 @@ For VIM/Vundle it installs the following plugins:
 - scrooloose/nerdtree
 - tpope/vim-fugitive
 - wakatime/vim-wakatime - [WakaTime](https://wakatime.com/) (track time spent programming, you'll need an API-key for this)
+
+(*) Currently I'm transitioning to [Neovim](https://neovim.io/) and will be updating the configuration to default to Neovim in the future. For now, Vim is still the default editor and its configuration is still included in this repository but is not being updated anymore.
 
 On macOS, the install and update scripts also install:
 

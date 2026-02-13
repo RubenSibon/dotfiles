@@ -1,5 +1,6 @@
 *
 !.antigen/
+!.config/nvim/
 !.dotfiles.code-workspace
 !.dotfiles/
 !.fzf/

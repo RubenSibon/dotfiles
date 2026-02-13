@@ -19,7 +19,7 @@ else
     echo "Vim is not installed. Not installing Vundle plugins."
 fi
 
-# Install PNPM
+# Install PNPM and Node.js LTS version using PNPM
 echo "🤖 Installing/updating PNPM (Performant Node Package Manager)..."
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 echo "🤖 Setting PNPM to use the latest LTS version of Node.js..."

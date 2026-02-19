@@ -79,11 +79,3 @@ alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
 
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
-
-# pnpm
-export PNPM_HOME="/home/rubenjs/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end

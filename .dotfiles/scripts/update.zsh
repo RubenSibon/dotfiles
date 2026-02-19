@@ -1,9 +1,9 @@
 #!/usr/bin/env zsh
 
 # Pulling and checking out repository and submodule updates
-/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD
-/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
-/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
+$(which git) --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD
+$(which git) --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
+$(which git) --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
 
 # Install fzf (fuzzy finder)
 echo "\n🤖 Installing/updating fuzzy finder (fzf)..."

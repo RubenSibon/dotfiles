@@ -71,7 +71,7 @@ You're done!
 
 2. Check out the cloned bare branch:
 
-    `git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD --force`
+    `git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD`
 
 3. Pull the submodules:
 

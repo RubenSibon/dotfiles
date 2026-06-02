@@ -64,14 +64,34 @@ fi
 # Aliases
 #
 
-# Warn users to use "gio trash" instead of "rm" to be able to restore files.
-alias rm="echo 'Use \"gio trash\" instead of \"rm\" to be able to restore files.'; rm -iv"
-
 # Allow git operations on select dotfiles in user's home
 alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
 
 # Update dotfiles
 alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
+
+# Git
+alias git-checkout-develop='git checkout develop'
+alias git-checkout-prev='git checkout -'
+alias git-clean-ignored='git clean -d -X -f'
+alias git-gc-prune-now='git gc --prune=now'
+alias git-log-3='git log -3'
+alias git-log-oneline-decorate-10='git log --oneline --decorate -n 10'
+alias git-prune-merged-branches='git branch --merged | grep -v "\*" | grep -Ev "(\*|main|develop)" | xargs -n 1 git branch -d'
+alias git-pull-and-merge-develop='git pull && git pull origin develop'
+alias git-pull-develop-and-push='git pull origin develop && git push'
+alias git-pull-rebase='git pull --rebase'
+alias git-push='git push'
+alias git-push-force-with-lease='git push origin --force-with-lease'
+alias git-rebase-abort='git rebase --abort'
+alias git-rebase-continue='git rebase --continue'
+alias git-rebase-develop='git rebase develop'
+alias git-remote-prune-origin='git remote prune origin'
+alias git-status='git status'
+alias git-sync='git fetch --prune; git pull'
+
+# Zed
+alias zed="WAYLAND_DISPLAY= zed"
 
 #
 # Export constants and add to PATH
@@ -83,7 +103,10 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 # pnpm
 export PNPM_HOME="/home/rubenjs/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
+
+export PATH="$HOME/.local/bin:$PATH"
+export ZED_ALLOW_EMULATED_GPU=1

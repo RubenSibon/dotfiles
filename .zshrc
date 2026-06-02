@@ -65,7 +65,7 @@ fi
 #
 
 # Allow git operations on select dotfiles in user's home
-alias dotfiles="/usr/bin/git --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
+alias dotfiles="$(which git) --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
 
 # Update dotfiles
 alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
@@ -110,3 +110,4 @@ esac
 
 export PATH="$HOME/.local/bin:$PATH"
 export ZED_ALLOW_EMULATED_GPU=1
+

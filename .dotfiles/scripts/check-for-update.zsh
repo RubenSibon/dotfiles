@@ -24,7 +24,7 @@ if [[ $DO_CHECK =~ ^[Yy]$ ]]; then
     echo "Checking for updates..."
     
     # Fetch changes from remote and check if dotfiles branch is behind; set CHANGED to 1 if so.
-    /usr/bin/git --git-dir=$GITDIR --work-tree=$HOME remote update && /usr/bin/git --git-dir=$GITDIR --work-tree=$HOME status -uno | grep -q 'Your branch is behind' && CHANGED=1
+    $(which git) --git-dir=$GITDIR --work-tree=$HOME remote update && $(which git) --git-dir=$GITDIR --work-tree=$HOME status -uno | grep -q 'Your branch is behind' && CHANGED=1
     
     if [ $CHANGED = 1 ]; then
         echo "Your dotfiles need to be updated."

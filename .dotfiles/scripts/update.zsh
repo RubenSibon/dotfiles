@@ -1,9 +1,9 @@
 #!/usr/bin/env zsh
 
 # Pulling and checking out repository and submodule updates
-/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD
-/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
-/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
+$(which git) --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD
+$(which git) --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
+$(which git) --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
 
 # Install fzf (fuzzy finder)
 echo "\n🤖 Installing/updating fuzzy finder (fzf)..."
@@ -18,13 +18,6 @@ if command -v vim > /dev/null; then
 else
     echo "Vim is not installed. Not installing Vundle plugins."
 fi
-
-# Install PNPM and Node.js LTS version using PNPM
-echo "🤖 Installing/updating PNPM (Performant Node Package Manager)..."
-curl -fsSL https://get.pnpm.io/install.sh | sh -
-echo "🤖 Setting PNPM to use the latest LTS version of Node.js..."
-pnpm env use --global lts
-echo "✔ done installing/updating PNPM.\n"
 
 # Update Homebrew on macOS
 if [[ $OSTYPE == 'darwin'* ]]; then

@@ -81,13 +81,11 @@ alias git-prune-merged-branches='git branch --merged | grep -v "\*" | grep -Ev "
 alias git-pull-and-merge-develop='git pull && git pull origin develop'
 alias git-pull-develop-and-push='git pull origin develop && git push'
 alias git-pull-rebase='git pull --rebase'
-alias git-push='git push'
 alias git-push-force-with-lease='git push origin --force-with-lease'
 alias git-rebase-abort='git rebase --abort'
 alias git-rebase-continue='git rebase --continue'
 alias git-rebase-develop='git rebase develop'
 alias git-remote-prune-origin='git remote prune origin'
-alias git-status='git status'
 alias git-sync='git fetch --prune; git pull'
 
 # Zed

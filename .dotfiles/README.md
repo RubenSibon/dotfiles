@@ -71,11 +71,11 @@ You're done!
 
 2. Check out the cloned bare branch:
 
-    `/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD --force`
+    `git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD`
 
 3. Pull the submodules:
 
-    `/usr/bin/git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive`
+    `git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive`
 
 4. (optional) Install the vim plugins with Vundle:
 

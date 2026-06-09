@@ -88,9 +88,6 @@ alias git-rebase-develop='git rebase develop'
 alias git-remote-prune-origin='git remote prune origin'
 alias git-sync='git fetch --prune; git pull'
 
-# Zed
-alias zed="WAYLAND_DISPLAY= zed"
-
 #
 # Export constants and add to PATH
 #
@@ -107,5 +104,4 @@ esac
 # pnpm end
 
 export PATH="$HOME/.local/bin:$PATH"
-export ZED_ALLOW_EMULATED_GPU=1
 

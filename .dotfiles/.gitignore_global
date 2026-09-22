@@ -121,6 +121,25 @@ tags
 *.vsix
 
 ###
+## Zed
+###
+
+.zed/
+#!.zed/settings.json
+#!.zed/tasks.json
+#!.zed/debug.json
+
+###
+## AI agents and assistants
+###
+
+# Claude Code
+#.claude/*.local.json
+#.claude/**/*.log
+CLAUDE.local.md
+.claude/
+
+###
 ## Other
 ###
 

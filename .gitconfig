@@ -3,7 +3,7 @@
 	email = r.sibon@amsterdam.nl
 [core]
 	editor = vim
-	excludesFile = /Users/rubenjs/.dotfiles/.gitignore_global
+	excludesfile = ~/.dotfiles/.gitignore_global
 	fsmonitor = true
         untrackedCache = true
 [init]

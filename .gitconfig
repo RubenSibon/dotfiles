@@ -25,9 +25,8 @@
 	process = git-lfs filter-process
 	required = true
 
-[includeIf "gitdir:~/projects/Webricolage"]
-	path = ~/Projects/.gitconfig
-[includeIf "gitdir:~/projects/RubenSibon"]
-        path = ~/Projects/.gitconfig
-[includeIf "gitdir:~/projects/Amsterdam"]
-        path = ~/Projects/Amsterdam/.gitconfig
+[includeIf "gitdir:~/Projecten/Amsterdam/"]
+        path = ~/Projecten/Amsterdam/.gitconfig
+[includeIf "gitdir:~/Projecten/Webricolage/"]
+	path = ~/Projecten/Webricolage/.gitconfig
+

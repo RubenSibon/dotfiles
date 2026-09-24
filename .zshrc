@@ -94,6 +94,7 @@ alias git-sync='git fetch --prune; git pull'
 
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
+export ZED_ALLOW_EMULATED_GPU=1
 
 # pnpm
 export PNPM_HOME="/home/rubenjs/.local/share/pnpm"

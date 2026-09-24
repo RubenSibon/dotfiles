@@ -1,21 +1,22 @@
 [user]
-	name = Ruben Sibon
-	email = r.sibon@amsterdam.nl
+	name = Ruben J. Sibon
+	email = mail+git@rubensibon.nl
 [core]
 	editor = vim
-	excludesfile = ~/.dotfiles/.gitignore_global
+	excludesFile = ~/.dotfiles/.gitignore_global
 	fsmonitor = true
         untrackedCache = true
+
 [init]
 	defaultBranch = main
-
 [pull]
 	rebase = false
 [push]
-        autoSetupRemote = true
+    autoSetupRemote = true
 [rerere]
 	enabled = true
 	autoUpdate = true
+
 [alias]
 	hist = log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(red)%s %C(bold red){{%an}}%C(reset) %C(blue)%d%C(reset)' --graph --date=short
 [filter "lfs"]
@@ -23,10 +24,10 @@
 	smudge = git-lfs smudge -- %r
 	process = git-lfs filter-process
 	required = true
-[includeIf "gitdir:~/projects/Webricolage"]
-        path = ~/Projects/.gitconfig
-[includeIf "gitdir:~/projects/RubenSibon"]
-        path = ~/Projects/.gitconfig
-[includeIf "gitdir:~/projects/Amsterdam"]
-        path = ~/Projects/Amsterdam/.gitconfig
 
+[includeIf "gitdir:~/projects/Webricolage"]
+	path = ~/Projects/.gitconfig
+[includeIf "gitdir:~/projects/RubenSibon"]
+    path = ~/Projects/.gitconfig
+[includeIf "gitdir:~/projects/Amsterdam"]
+    path = ~/Projects/Amsterdam/.gitconfig

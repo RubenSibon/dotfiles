@@ -12,7 +12,7 @@
 [pull]
 	rebase = false
 [push]
-    autoSetupRemote = true
+        autoSetupRemote = true
 [rerere]
 	enabled = true
 	autoUpdate = true
@@ -28,6 +28,6 @@
 [includeIf "gitdir:~/projects/Webricolage"]
 	path = ~/Projects/.gitconfig
 [includeIf "gitdir:~/projects/RubenSibon"]
-    path = ~/Projects/.gitconfig
+        path = ~/Projects/.gitconfig
 [includeIf "gitdir:~/projects/Amsterdam"]
-    path = ~/Projects/Amsterdam/.gitconfig
+        path = ~/Projects/Amsterdam/.gitconfig

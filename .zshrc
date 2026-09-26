@@ -96,6 +96,17 @@ esac
 
 export PATH="$HOME/.local/bin:$PATH"
 
+if command -v nvim >/dev/null 2>&1; then
+  export EDITOR=nvim
+  export VISUAL=nvim
+elif command -v vim >/dev/null 2>&1; then
+  export EDITOR=vim
+  export VISUAL=vim
+elif command -v nano >/dev/null 2>&1; then
+  export EDITOR=nano
+  export VISUAL=nano
+fi
+
 # Machine-specific configuration, not tracked in the dotfiles repo
 if [[ -r ~/.zshrc.local ]]; then
   source ~/.zshrc.local

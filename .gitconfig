@@ -2,7 +2,6 @@
 	name = Ruben J. Sibon
 	email = mail+git@rubensibon.nl
 [core]
-	editor = vim
 	excludesFile = ~/.dotfiles/.gitignore_global
 	fsmonitor = true
         untrackedCache = true

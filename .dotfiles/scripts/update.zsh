@@ -1,14 +1,17 @@
 #!/usr/bin/env zsh
 
-# Pulling and checking out repository and submodule updates
-$(which git) --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD
-$(which git) --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
-$(which git) --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
+# Pulling repository and submodule updates
+git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
+git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
 
 # Install fzf (fuzzy finder)
-echo "\n🤖 Installing/updating fuzzy finder (fzf)..."
-~/.fzf/install
-echo "✔ done installing/updating fzf.\n"
+if [ -x ~/.fzf/install ]; then
+    echo "\n🤖 Installing/updating fuzzy finder (fzf)..."
+    ~/.fzf/install --key-bindings --completion --no-update-rc
+    echo "✔ done installing/updating fzf.\n"
+else
+    echo "fzf is not checked out. Not installing fzf."
+fi
 
 # Install Vim plugins
 if command -v vim > /dev/null; then
@@ -35,15 +38,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     echo "✔ done updating Homebrew.\n"
 fi
 
-if ! command -v "git hist" > /dev/null; then
-    echo "'git hist' command does not exist. Installing..."
-    git config --global alias.hist "log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(red)%s %C(bold red){{%an}}%C(reset) %C(blue)%d%C(reset)' --graph --date=short"
-else
-    echo "'git hist' command already exists."
-fi
+echo "🤖 Dotfiles install/update is done!\n\nOpen a new terminal or run 'exec zsh' to load the changes."
 
-source ~/.zshrc
-
-echo "🤖 Dotfiles install/update is done!\n\nYou might have to restart your terminal emulator."
-
-chsh -s $(which zsh)
+# Make zsh the login shell, unless it already is
+[[ $SHELL == */zsh ]] || chsh -s $(command -v zsh)

@@ -34,13 +34,11 @@ fi
 
 # General zsh configuration
 HISTFILE=~/.histfile
-HISTSIZE=2000
-SAVEHIST=1000
 
+# oh-my-zsh sets the history size and shares history between terminals (SHARE_HISTORY)
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_REDUCE_BLANKS
-setopt INC_APPEND_HISTORY_TIME
 setopt EXTENDED_HISTORY
 
 bindkey -v

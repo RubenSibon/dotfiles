@@ -5,30 +5,32 @@ source $HOME/.dotfiles/scripts/check-for-update.zsh
 # ZSH configuration with Antigen plugin manager.
 #
 
-# Antigen plugin manager
-source $HOME/.antigen/antigen.zsh
+# Antigen plugin manager (a git submodule; skipped when it is not checked out)
+if [[ -r $HOME/.antigen/antigen.zsh ]]; then
+  source $HOME/.antigen/antigen.zsh
 
-# Use oh-my-zsh
-antigen use oh-my-zsh
+  # Use oh-my-zsh
+  antigen use oh-my-zsh
 
-# ZSH Bundles
-# -- essential
-antigen bundle ssh-agent
-antigen bundle command-not-found
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle clarketm/zsh-completions
-antigen bundle zsh-users/zsh-autosuggestions
-# -- development
-antigen bundle git
-antigen bundle greymd/docker-zsh-completion
-antigen bundle chrisands/zsh-yarn-completions
-antigen bundle pip
+  # ZSH Bundles
+  # -- essential
+  antigen bundle ssh-agent
+  antigen bundle command-not-found
+  antigen bundle zsh-users/zsh-syntax-highlighting
+  antigen bundle clarketm/zsh-completions
+  antigen bundle zsh-users/zsh-autosuggestions
+  # -- development
+  antigen bundle git
+  antigen bundle greymd/docker-zsh-completion
+  antigen bundle chrisands/zsh-yarn-completions
+  antigen bundle pip
 
-# Theme
-antigen theme ys
+  # Theme
+  antigen theme ys
 
-# Apply Antigen configuration (this also runs compinit, at the first prompt)
-antigen apply
+  # Apply Antigen configuration (this also runs compinit, at the first prompt)
+  antigen apply
+fi
 
 # General zsh configuration
 HISTFILE=~/.histfile

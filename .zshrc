@@ -62,7 +62,7 @@ fi
 #
 
 # Allow git operations on select dotfiles in user's home
-alias dotfiles="$(which git) --git-dir=${HOME}/.dotfiles/.gitrepo --work-tree=${HOME}"
+alias dotfiles='git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME'
 
 # Update dotfiles
 alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
@@ -94,7 +94,7 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 export ZED_ALLOW_EMULATED_GPU=1
 
 # pnpm
-export PNPM_HOME="/home/rubenjs/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME/bin:"*) ;;
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;

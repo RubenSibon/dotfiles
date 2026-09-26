@@ -27,7 +27,7 @@ antigen bundle pip
 # Theme
 antigen theme ys
 
-# Apply Antigen configuration
+# Apply Antigen configuration (this also runs compinit, at the first prompt)
 antigen apply
 
 # General zsh configuration
@@ -42,11 +42,6 @@ setopt INC_APPEND_HISTORY_TIME
 setopt EXTENDED_HISTORY
 
 bindkey -v
-
-zstyle :compinstall filename "${HOME}/.zshrc"
-
-autoload -Uz compinit
-compinit
 
 #
 # Custom configurations

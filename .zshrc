@@ -52,11 +52,6 @@ bindkey -v
 # Source fzf configuration if it exists
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Source Docker configuration if it exists (only on macOS)
-if [[ $OSTYPE == 'darwin'* ]]; then
-    source ~/.docker/init-zsh.sh || true
-fi
-
 #
 # Aliases
 #
@@ -101,5 +96,13 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# OS-specific configuration
+[[ $OSTYPE == darwin* ]] && source ~/.dotfiles/zsh/macos.zsh
+[[ -f /etc/debian_version ]] && source ~/.dotfiles/zsh/debian.zsh
+
 export PATH="$HOME/.local/bin:$PATH"
 
+# Machine-specific configuration, not tracked in the dotfiles repo
+if [[ -r ~/.zshrc.local ]]; then
+  source ~/.zshrc.local
+fi

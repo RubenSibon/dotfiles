@@ -82,9 +82,6 @@ alias git-sync='git fetch --prune; git pull'
 # Export constants and add to PATH
 #
 
-export DOCKER_BUILDKIT=1
-export COMPOSE_DOCKER_CLI_BUILD=1
-
 # pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in

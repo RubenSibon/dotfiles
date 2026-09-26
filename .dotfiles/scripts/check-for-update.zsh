@@ -1,3 +1,6 @@
+# Only ask in a terminal; editors and other tools also start zsh, without one
+[[ -t 0 ]] || return
+
 WORKDIR="${HOME}/.dotfiles/scripts"
 GITDIR="${HOME}/.dotfiles/.gitrepo"
 LAST_CHECKED_FILE="${WORKDIR}/.last_checked"
@@ -11,20 +14,21 @@ if [ -f $LAST_CHECKED_FILE ]; then
 fi
 
 if [[ $LAST_CHECKED -lt `expr $NOW - $COOLDOWN_HOURS \* 60 \* 60` ]]; then
+    echo $NOW > $LAST_CHECKED_FILE
     echo "It seems that the dotfiles repo has not been checked for updates in the last ${COOLDOWN_HOURS} hours."
     read -k 1 "DO_CHECK?Do you want to check for dotfile updates? [y/N] "
     echo
 fi
-
-echo $NOW > $LAST_CHECKED_FILE
 
 if [[ $DO_CHECK =~ ^[Yy]$ ]]; then
     CHANGED=0
     
     echo "Checking for updates..."
     
-    # Fetch changes from remote and check if dotfiles branch is behind; set CHANGED to 1 if so.
-    $(which git) --git-dir=$GITDIR --work-tree=$HOME remote update && $(which git) --git-dir=$GITDIR --work-tree=$HOME status -uno | grep -q 'Your branch is behind' && CHANGED=1
+    # Fetch the remote's default branch; set CHANGED to 1 if it has commits that HEAD lacks.
+    # (A bare clone has no remote-tracking branch, so `git status` cannot tell.)
+    git --git-dir=$GITDIR fetch --quiet origin HEAD &&
+        [[ $(git --git-dir=$GITDIR rev-list --count HEAD..FETCH_HEAD) -gt 0 ]] && CHANGED=1
     
     if [ $CHANGED = 1 ]; then
         echo "Your dotfiles need to be updated."

@@ -21,11 +21,14 @@ fi
 
 # Update Homebrew on macOS
 if [[ $OSTYPE == 'darwin'* ]]; then
-    if ! [ -f "`which brew`" ]; then
+    if ! command -v brew > /dev/null && [ ! -x /opt/homebrew/bin/brew ]; then
         echo "🤖 Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         echo "✔ done installing Homebrew.\n"
     fi
+
+    # On Apple Silicon, Homebrew lives in /opt/homebrew, which is not on the default PATH
+    [ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
     echo "🤖 Updating Homebrew..."
     brew update && brew upgrade

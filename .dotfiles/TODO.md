@@ -15,7 +15,7 @@ Options, from least to most effort:
 
 - [ ] Use the `dotfiles` alias in the editor's terminal, or a Git TUI that accepts both paths, such as lazygit: `lazygit --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME`. Add an alias for it.
 - [ ] VS Code running locally (not over Remote-WSL or SSH): open a separate window with `GIT_DIR=$HOME/.dotfiles/.gitrepo GIT_WORK_TREE=$HOME code --new-window ~`. Everything in that window, its terminals included, then works on the dotfiles repository. Untested.
-- [ ] Switch to a regular repository, for example `~/.dotfiles` plus GNU Stow (symlinks) or chezmoi. Both editors then work natively. chezmoi also covers per-OS files (templates, `.chezmoiignore`) and can read secrets from a password manager, which overlaps with items 2 and 5.
+- [ ] Switch to a regular repository, for example `~/.dotfiles` plus GNU Stow (symlinks) or chezmoi. Both editors then work natively. chezmoi also covers per-OS files (templates, `.chezmoiignore`) and can read secrets from a password manager, which overlaps with item 4.
 
 Do not put a `.git` file in `~` that points at the bare repository. Every folder in the home directory would then belong to the dotfiles repository, and `git clean -dfx` in any of them would delete everything the `*` in `~/.gitignore` ignores: nearly the whole home directory.
 
@@ -46,20 +46,7 @@ Already aligned: the VS Code keymap in Zed, Vim mode in Zed and vscode-neovim in
 - [ ] Remove `.vscode/settings.json`, or move what helps when editing the dotfiles into `.dotfiles.code-workspace` (for example `files.exclude` for caches).
 - [ ] Consider a `~/.editorconfig` for what every editor reads (line endings, final newline, indentation). It also applies to projects under `~` that have no `.editorconfig` of their own.
 
-## 2. Instructions for agents
-
-- [ ] Add `AGENTS.md` to `~/.dotfiles/`. Not to `~`, where agents could pick it up for every project in the home directory.
-- [ ] Cover at least:
-  - Never commit secrets: API keys, tokens, passwords, private keys, `.env` files, SSH or GPG material, and editor or MCP settings that contain credentials.
-  - Never commit personal or identifying details: e-mail addresses other than the public commit identity, employer, client or project names, user names in paths (use `$HOME` or `~`), host names, internal URLs.
-  - Machine-specific settings go in untracked files, such as `~/.zshrc.local`.
-  - The `*` in `~/.gitignore` hides new files. Add them one at a time with `dotfiles add -f <path>`, never a whole directory.
-  - Check the diff for secrets and the commit identity before committing.
-- [ ] Move the `[user]` section and the `includeIf` blocks out of `.gitconfig` into an untracked `~/.gitconfig.local`, loaded with `[include] path = ~/.gitconfig.local`. The tracked file names project folders.
-- [ ] Add a secret scanner (gitleaks or trufflehog) as a pre-commit hook for this repository.
-- [ ] Align the agent instructions that exist in several places (Claude Code, Copilot, Zed's rules), for example on commit message style.
-
-## 3. Migrate from Vim to Neovim
+## 2. Migrate from Vim to Neovim
 
 Now: `.config/nvim/init.vim` sources `~/.vimrc`, whose plugins come from Vundle (a submodule). `$EDITOR` prefers `nvim`, and git follows it.
 
@@ -70,7 +57,7 @@ Now: `.config/nvim/init.vim` sources `~/.vimrc`, whose plugins come from Vundle 
 - [ ] vscode-neovim uses the same config; skip UI plugins with `if vim.g.vscode then … end`.
 - [ ] Remove Vundle (submodule, `update.zsh` step, README), and reduce `~/.vimrc` to a plugin-free fallback for machines without Neovim, or remove it.
 
-## 4. Maintained plugin managers
+## 3. Maintained plugin managers
 
 Antigen has been unmaintained since 2019 and the submodule pins a debug build; its cache has broken the prompt before. fzf is a submodule pinned to 0.28 (2021), and `submodule update` never moves it.
 
@@ -79,7 +66,7 @@ Antigen has been unmaintained since 2019 and the submodule pins a debug build; i
 - [ ] Install fzf with the system package manager (Homebrew, apt, nixpkgs), and replace `~/.fzf.zsh` with `source <(fzf --zsh)`. That needs fzf 0.48 or newer; older Debian and Ubuntu packages ship the scripts in `/usr/share/doc/fzf/examples/`. On NixOS, `programs.fzf.keybindings` and `programs.fzf.fuzzyCompletion` set it up system-wide.
 - [ ] Remove the `.antigen` and `.fzf` submodules and their steps in `update.zsh`, and update the README.
 
-## 5. NixOS- and WSL-specific files
+## 4. NixOS- and WSL-specific files
 
 OS-specific settings go in `~/.dotfiles/zsh/<os>.zsh`, loaded under "OS-specific configuration" in `.zshrc`. Machine-specific settings go in the untracked `~/.zshrc.local`.
 

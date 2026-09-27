@@ -1,0 +1,41 @@
+#!/bin/sh
+# Refuse commits that would publish secrets or personal details.
+# Enabled for the dotfiles repository through `core.hooksPath` (see install.zsh).
+
+added=$(git diff --cached --no-color -U0 | grep '^+' | grep -v '^+++')
+[ -n "$added" ] || exit 0
+
+# Secrets that look the same everywhere
+if printf '%s\n' "$added" | grep -Eq 'gh[pousr]_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{22,}|glpat-[A-Za-z0-9_-]{20}|xox[abprs]-[A-Za-z0-9-]{10,}|AKIA[0-9A-Z]{16}|(^|[^A-Za-z0-9_-])sk-[A-Za-z0-9_-]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----'; then
+  echo "pre-commit: the staged changes contain what looks like a secret." >&2
+  exit 1
+fi
+
+# Personal details: extended regular expressions, one per line and case-insensitive,
+# kept in a file outside the repository. Lines starting with "!" allow text that the
+# other patterns would block, such as e-mail addresses that are public anyway.
+patterns="$HOME/.config/dotfiles/private-patterns"
+if [ -r "$patterns" ]; then
+  found=$(printf '%s\n' "$added" | awk -v file="$patterns" '
+    BEGIN {
+      while ((getline line < file) > 0) {
+        if (line == "" || line ~ /^#/) continue
+        if (line ~ /^!/) allow[++allows] = tolower(substr(line, 2))
+        else deny[++denies] = tolower(line)
+      }
+    }
+    {
+      text = tolower($0)
+      for (i = 1; i <= allows; i++) gsub(allow[i], "", text)
+      for (i = 1; i <= denies; i++) if (text ~ deny[i]) { print; next }
+    }')
+  if [ -n "$found" ]; then
+    printf 'pre-commit: these staged lines match a pattern in %s:\n%s\n' "$patterns" "$found" >&2
+    exit 1
+  fi
+fi
+
+# A dedicated scanner, when one is installed
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --redact --no-banner || exit 1
+fi

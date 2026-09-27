@@ -4,6 +4,13 @@
 git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
 git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
 
+# Point the agents on this machine at the shared agent instructions,
+# unless a machine already has its own instruction file
+[[ -d ~/.claude && ! -e ~/.claude/CLAUDE.md ]] && print '@~/.dotfiles/agents/AGENTS.md' > ~/.claude/CLAUDE.md
+for file in ~/.copilot/copilot-instructions.md ~/.config/zed/AGENTS.md; do
+    [[ -d ${file:h} && ! -e $file ]] && ln -s ~/.dotfiles/agents/AGENTS.md $file
+done
+
 # Install fzf (fuzzy finder)
 if [ -x ~/.fzf/install ]; then
     echo "\n🤖 Installing/updating fuzzy finder (fzf)..."

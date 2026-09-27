@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 
 # Pulling repository and submodule updates
-git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull
+# (--ff-only: when histories diverge, stop instead of merging conflict markers into live dotfiles)
+git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull --ff-only || exit 1
 git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
 
 # Point the agents on this machine at the shared agent instructions,

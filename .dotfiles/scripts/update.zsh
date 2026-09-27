@@ -11,6 +11,14 @@ for file in ~/.copilot/copilot-instructions.md ~/.config/zed/AGENTS.md; do
     [[ -d ${file:h} && ! -e $file ]] && ln -s ~/.dotfiles/agents/AGENTS.md $file
 done
 
+# Claude Code plugins; installing one that is already there changes nothing
+if command -v claude > /dev/null; then
+    claude plugin marketplace add JuliusBrussee/caveman > /dev/null 2>&1
+    claude plugin marketplace add DietrichGebert/ponytail > /dev/null 2>&1
+    claude plugin install caveman@caveman > /dev/null 2>&1
+    claude plugin install ponytail@ponytail > /dev/null 2>&1
+fi
+
 # Install fzf (fuzzy finder)
 if [ -x ~/.fzf/install ]; then
     echo "\n🤖 Installing/updating fuzzy finder (fzf)..."

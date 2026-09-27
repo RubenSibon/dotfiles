@@ -15,12 +15,6 @@
 
 [alias]
 	hist = log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %C(red)%s %C(bold red){{%an}}%C(reset) %C(blue)%d%C(reset)' --graph --date=short
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %r
-	process = git-lfs filter-process
-	required = true
-
-# Machine-specific settings, such as [user] and [includeIf], stay out of the dotfiles repo
+# Machine-specific settings, such as [user], [includeIf] and the git-lfs filter, stay out of the dotfiles repo
 [include]
 	path = ~/.gitconfig.local

@@ -4,6 +4,8 @@ if [ ! -d "$HOME/.dotfiles/.gitrepo" ]; then
     git clone --bare --recursive https://github.com/RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo
     # Fetch over HTTPS, so update checks need no SSH key; push over SSH
     git --git-dir=$HOME/.dotfiles/.gitrepo remote set-url --push origin git@github.com:RubenSibon/dotfiles.git
+    # The work tree is the whole home directory: keep git's file watcher off it
+    git --git-dir=$HOME/.dotfiles/.gitrepo config core.fsmonitor false
     # Only on a fresh clone: overwrite the files a new system ships with, such as a default ~/.zshrc
     git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD --force
 else

@@ -35,7 +35,7 @@ This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-lik
 
 ## Author's note
 
-These configurations represent my personal preferences. I sync them between the various machines I use. macOS, Arch Linux (Yes, I use Arch, btw), NixOS and Debian-based distros such as Ubuntu, also on WSL, tend to be the main operating systems on those devices. If this setup is to your liking, feel free to use it as a starting point for your own config. Because these dotfiles have to work on both macOS and various Linux distros they are quite generic and environment-agnostic.
+These configurations represent my personal preferences. I sync them between the various machines I use. macOS, Arch Linux (Yes, I use Arch, btw), NixOS and Debian-based distros such as Ubuntu on WSL, tend to be the main operating systems on those devices. If this setup is to your liking, feel free to use it as a starting point for your own config. Because these dotfiles have to work on both macOS and various Linux distros they are quite generic and environment-agnostic.
 
 ## Requirements
 

@@ -82,6 +82,13 @@ alias git-sync='git fetch --prune; git pull'
 # Export constants and add to PATH
 #
 
+# Dutch formats for dates, paper, measurements, names, addresses and phone numbers;
+# messages stay in English. Not LC_NUMERIC and LC_MONETARY: a decimal comma breaks
+# scripts that print or parse numbers. Needs the nl_NL.UTF-8 locale on the machine.
+export LC_TIME=nl_NL.UTF-8 LC_PAPER=nl_NL.UTF-8 LC_MEASUREMENT=nl_NL.UTF-8 \
+  LC_NAME=nl_NL.UTF-8 LC_ADDRESS=nl_NL.UTF-8 LC_TELEPHONE=nl_NL.UTF-8 \
+  LC_IDENTIFICATION=nl_NL.UTF-8 PAPERSIZE=a4
+
 # pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in

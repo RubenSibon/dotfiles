@@ -96,8 +96,10 @@ set number
 " Quickly time out on keycodes, but never time out on mappings
 set notimeout ttimeout ttimeoutlen=200
 
-" Use <F11> to toggle between 'paste' and 'nopaste'
-set pastetoggle=<F11>
+" Use <F11> to toggle between 'paste' and 'nopaste' (Neovim 0.10 removed this option)
+if !has('nvim')
+  set pastetoggle=<F11>
+endif
 
 "------------------------------------------------------------
 " Indentation options {{{1

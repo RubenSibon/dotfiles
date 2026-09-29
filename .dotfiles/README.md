@@ -45,7 +45,7 @@ These configurations represent my personal preferences. I sync them between the 
 - Git (see: <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>)
 - Zsh (see: <https://wiki.archlinux.org/title/zsh>)
 - cURL (see: <https://curl.se/>)
-- On Debian-based distros: `sudo`, because the install script installs build tools with apt
+- On Debian-based distros: `sudo`, because the install script installs git, build tools and the `nl_NL.UTF-8` locale with apt
 
 ## Setup
 

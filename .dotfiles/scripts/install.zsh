@@ -25,7 +25,15 @@ if [ ! -d "$HOME/.dotfiles/.gitrepo" ]; then
     # The work tree is the whole home directory: keep git's file watcher off it
     # before the checkout below (update.zsh applies the other repository settings)
     git --git-dir=$HOME/.dotfiles/.gitrepo config core.fsmonitor false
-    # Only on a fresh clone: overwrite the files a new system ships with, such as a default ~/.zshrc
+
+    # Back up the files that the checkout below overwrites, such as a default ~/.zshrc
+    backup=$HOME/.dotfiles/backup-$(date +%Y%m%d-%H%M%S)
+    git --git-dir=$HOME/.dotfiles/.gitrepo ls-tree -r --name-only HEAD | while read -r file; do
+        [[ -f $HOME/$file ]] && mkdir -p $backup/${file:h} && cp -p $HOME/$file $backup/$file
+    done
+    [[ -d $backup ]] && echo "Backed up the files that the dotfiles replace to $backup"
+
+    # Only on a fresh clone: overwrite the files a new system ships with
     git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD --force || exit 1
 else
     echo "'~/.dotfiles/.gitrepo/' already exists."

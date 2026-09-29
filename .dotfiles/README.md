@@ -65,7 +65,7 @@ Run the install script:
 
 `curl -fsSL https://raw.githubusercontent.com/RubenSibon/dotfiles/master/.dotfiles/scripts/install.zsh | zsh`
 
-> **Warning**: On a fresh install, the script overwrites files in your home directory that this repository also contains, such as `.zshrc` and `.gitconfig`. Back them up first.
+> **Note**: On a fresh install, the script replaces files in your home directory that this repository also contains, such as `.zshrc` and `.gitconfig`. It copies them to `~/.dotfiles/backup-<date>/` first.
 
 You're done!
 

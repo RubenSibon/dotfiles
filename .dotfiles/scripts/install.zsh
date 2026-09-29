@@ -42,7 +42,7 @@ fi
 
 if [ -f "/etc/debian_version" ]; then
     # Read answers from the terminal: with `curl … | zsh`, stdin is this script
-    $HOME/.dotfiles/scripts/dev-env-debian.zsh </dev/tty
+    $HOME/.dotfiles/scripts/install-debian.zsh </dev/tty
 fi
 
 # Also from the terminal: installers such as Homebrew's can't ask for a password otherwise

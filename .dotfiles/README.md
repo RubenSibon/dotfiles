@@ -169,6 +169,16 @@ The `.gitignore` in your home directory ignores everything (`*`), so `dotfiles s
 - GitHub Copilot CLI: `~/.copilot/copilot-instructions.md` links to them.
 - Zed: `~/.config/zed/AGENTS.md` links to them. On Windows, Zed reads `%APPDATA%\Zed\AGENTS.md`; copy the file there.
 
+### Claude Code plugins
+
+`dotfiles-update` installs the Claude Code plugins [caveman](https://github.com/JuliusBrussee/caveman) and [ponytail](https://github.com/DietrichGebert/ponytail) from `~/.dotfiles/claude-plugins`, a marketplace that pins each plugin to a release tag and its commit (`ref` and `sha`). Their hooks run with your permissions at every session start and prompt, so nothing reaches your machines until you have reviewed it and changed the pin here. Claude Code doesn't update this marketplace in the background; leave its auto-update off.
+
+To move a plugin to a newer release:
+
+1. Clone the plugin's repository and compare the release with the pinned one, at least the parts that run code: `git diff <old-tag> <new-tag> -- .claude-plugin hooks src/hooks bin agents .mcp.json settings.json`. Look for network access, child processes, and writes outside `~/.claude`.
+2. Set `ref` to the new tag and `sha` to its full commit: `git rev-parse <new-tag>^{commit}`.
+3. Check the file with `claude plugin validate ~/.dotfiles/claude-plugins`, run `dotfiles-update`, commit and push. Other machines follow at their next update.
+
 ### Pre-commit hook
 
 `~/.dotfiles/hooks/pre-commit` refuses a commit when its changes look like a secret, or match a pattern in `~/.config/dotfiles/private-patterns`: one extended regular expression per line, for the names and paths that must stay private. Lines starting with `!` allow text that the other patterns would block, such as e-mail addresses that are public anyway. When gitleaks is installed, the hook runs it as well.

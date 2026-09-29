@@ -37,12 +37,24 @@ for file in ~/.copilot/copilot-instructions.md ~/.config/zed/AGENTS.md; do
     [[ -d ${file:h} && ! -e $file ]] && ln -s ~/.dotfiles/agents/AGENTS.md $file
 done
 
-# Claude Code plugins; installing one that is already there changes nothing
+# Claude Code plugins from ~/.dotfiles/claude-plugins, where each is pinned to a
+# reviewed commit (see the README before changing a pin)
 if command -v claude > /dev/null; then
-    claude plugin marketplace add JuliusBrussee/caveman > /dev/null 2>&1
-    claude plugin marketplace add DietrichGebert/ponytail > /dev/null 2>&1
-    claude plugin install caveman@caveman > /dev/null 2>&1
-    claude plugin install ponytail@ponytail > /dev/null 2>&1
+    echo "🤖 Installing/updating Claude Code plugins..."
+    # Earlier versions of this script installed them from their own, unpinned
+    # marketplaces; removing those also uninstalls the plugins that came from them
+    grep -Eq '"(caveman|ponytail)"' ~/.claude/plugins/known_marketplaces.json 2> /dev/null &&
+        for marketplace in caveman ponytail; do
+            claude plugin marketplace remove $marketplace > /dev/null 2>&1
+        done
+    claude plugin marketplace add ~/.dotfiles/claude-plugins > /dev/null
+    for plugin in caveman ponytail; do
+        # install does nothing when the plugin is there; update follows a changed pin
+        claude plugin install $plugin@dotfiles > /dev/null &&
+            claude plugin update $plugin@dotfiles > /dev/null ||
+            echo "Could not install or update the Claude Code plugin $plugin."
+    done
+    echo "✔ done installing/updating Claude Code plugins.\n"
 fi
 
 # Install fzf (fuzzy finder)

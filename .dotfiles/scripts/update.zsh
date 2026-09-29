@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 # git submodule only works from inside the work tree, which is the home directory
+script=${0:A}
 cd ~ || exit 1
 
 # Repository settings; clones made by an older install script lack them
@@ -14,8 +15,17 @@ $GIT_DOTFILES config core.hooksPath ~/.dotfiles/hooks
 
 # Pulling repository and submodule updates
 # (--ff-only: when histories diverge, stop instead of merging conflict markers into live dotfiles)
-git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull --ff-only || exit 1
-git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME submodule update --init --recursive
+before=$($GIT_DOTFILES rev-parse HEAD)
+$GIT_DOTFILES --work-tree=$HOME pull --ff-only || exit 1
+
+# zsh keeps running the version of this script it started with: when the pull
+# changed it, start the new version, once
+if [[ -z $DOTFILES_UPDATE_RESTARTED ]] &&
+    ! $GIT_DOTFILES diff --quiet $before HEAD -- .dotfiles/scripts/update.zsh; then
+    DOTFILES_UPDATE_RESTARTED=1 exec zsh $script
+fi
+
+$GIT_DOTFILES --work-tree=$HOME submodule update --init --recursive
 
 # Point the agents on this machine at the shared agent instructions,
 # unless a machine already has its own instruction file

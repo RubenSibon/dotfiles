@@ -25,4 +25,5 @@ if [ -f "/etc/debian_version" ]; then
     $HOME/.dotfiles/scripts/dev-env-debian.zsh </dev/tty
 fi
 
-$HOME/.dotfiles/scripts/update.zsh
+# Also from the terminal: installers such as Homebrew's can't ask for a password otherwise
+$HOME/.dotfiles/scripts/update.zsh </dev/tty

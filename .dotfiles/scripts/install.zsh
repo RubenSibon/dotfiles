@@ -1,5 +1,16 @@
 #!/usr/bin/env zsh
 
+# Git is needed for the clone below
+if ! command -v git > /dev/null; then
+    if [ -f "/etc/debian_version" ]; then
+        # Read answers from the terminal: with `curl … | zsh`, stdin is this script
+        sudo apt update </dev/tty && sudo apt install git </dev/tty || exit 1
+    elif [[ $OSTYPE != darwin* ]]; then
+        echo "Install git, then run this script again."
+        exit 1
+    fi
+fi
+
 # macOS: git comes with the Xcode Command Line Tools. Until they are installed,
 # /usr/bin/git only offers to install them, so start that and stop here.
 if [[ $OSTYPE == darwin* ]] && ! xcode-select -p > /dev/null 2>&1; then
@@ -9,12 +20,13 @@ if [[ $OSTYPE == darwin* ]] && ! xcode-select -p > /dev/null 2>&1; then
 fi
 
 if [ ! -d "$HOME/.dotfiles/.gitrepo" ]; then
-    git clone --bare --recursive https://github.com/RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo
+    # update.zsh checks out the submodules
+    git clone --bare https://github.com/RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo || exit 1
     # The work tree is the whole home directory: keep git's file watcher off it
     # before the checkout below (update.zsh applies the other repository settings)
     git --git-dir=$HOME/.dotfiles/.gitrepo config core.fsmonitor false
     # Only on a fresh clone: overwrite the files a new system ships with, such as a default ~/.zshrc
-    git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD --force
+    git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME checkout HEAD --force || exit 1
 else
     echo "'~/.dotfiles/.gitrepo/' already exists."
     echo "Continuing to update the configuration..."

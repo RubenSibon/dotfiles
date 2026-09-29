@@ -63,7 +63,14 @@ else
     echo "Vim is not installed. Not installing Vundle plugins."
 fi
 
-echo "🤖 Dotfiles install/update is done!\n\nOpen a new terminal or run 'exec zsh' to load the changes."
+# Make zsh the login shell, unless it already is. On macOS the system's /bin/zsh:
+# it is always listed in /etc/shells and keeps working when Homebrew breaks.
+if [[ $SHELL != */zsh ]]; then
+    if [[ $OSTYPE == darwin* ]]; then
+        chsh -s /bin/zsh
+    else
+        chsh -s $(command -v zsh)
+    fi
+fi
 
-# Make zsh the login shell, unless it already is
-[[ $SHELL == */zsh ]] || chsh -s $(command -v zsh)
+echo "🤖 Dotfiles install/update is done!\n\nOpen a new terminal or run 'exec zsh' to load the changes."

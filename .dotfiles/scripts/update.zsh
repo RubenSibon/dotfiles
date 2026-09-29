@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# git submodule only works from inside the work tree, which is the home directory
+cd ~ || exit 1
+
 # Repository settings; clones made by an older install script lack them
 GIT_DOTFILES=(git --git-dir=$HOME/.dotfiles/.gitrepo)
 # Fetch over HTTPS, so update checks need no SSH key; push over SSH

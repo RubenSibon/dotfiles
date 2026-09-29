@@ -31,6 +31,8 @@ On macOS, the install and update scripts also install:
 
 - [Homebrew](https://brew.sh/) (package manager for macOS)
 
+On a Mac without the Xcode Command Line Tools, which include git, the install script starts their installer and stops; run it again once they are installed.
+
 This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-like) systems such as Linux or macOS, including Linux on Windows through [WSL](https://learn.microsoft.com/windows/wsl/).
 
 ## Author's note
@@ -125,7 +127,7 @@ To undo and remove these dotfiles, first check `~/.dotfiles` for files of your o
 
 You may want to remove the git files pulled by this repo, but be sure to check the contents before you do:
 
-`rm -rf ~/.gitmodules ~/.gitignore`
+`rm -rf ~/.gitmodules ~/.gitignore ~/.zshenv`
 
 And edit your `.gitconfig` file: be sure to remove references to the `.dotfiles` directory and this repo.
 
@@ -148,6 +150,7 @@ The `.gitignore` in your home directory ignores everything (`*`), so `dotfiles s
 ### Per-OS and per-machine settings
 
 - Settings for one operating system go in `~/.dotfiles/zsh/<os>.zsh`, such as `macos.zsh` and `debian.zsh`. `.zshrc` loads the ones that apply, under "OS-specific configuration".
+- `~/.zshenv` is read by every zsh, before the system's `/etc/zshrc`. It only holds what has to be set that early, such as turning off the per-window history of the macOS Terminal.
 - Settings for one machine go in `~/.zshrc.local`, which `.zshrc` loads last. The repository doesn't track it, so it can hold paths and names that shouldn't be published.
 - Your git identity and other machine-specific git settings, such as `includeIf` blocks, go in `~/.gitconfig.local`, which `.gitconfig` includes last. The repository doesn't track it either. Create it on every machine:
 

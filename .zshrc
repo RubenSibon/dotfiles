@@ -1,3 +1,8 @@
+# OS-specific configuration. First, so that the update check and the plugins below
+# already see what it sets up, such as Homebrew's commands and completions on macOS.
+[[ $OSTYPE == darwin* ]] && source ~/.dotfiles/zsh/macos.zsh
+[[ -f /etc/debian_version ]] && source ~/.dotfiles/zsh/debian.zsh
+
 # Check for updates if a certain number of hours have passed
 source $HOME/.dotfiles/scripts/check-for-update.zsh
 
@@ -14,7 +19,8 @@ if [[ -r $HOME/.antigen/antigen.zsh ]]; then
 
   # ZSH Bundles
   # -- essential
-  antigen bundle ssh-agent
+  # macOS already runs an agent (launchd) that reads key passphrases from the Keychain
+  [[ $OSTYPE == darwin* ]] || antigen bundle ssh-agent
   antigen bundle command-not-found
   antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle clarketm/zsh-completions
@@ -96,10 +102,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
-
-# OS-specific configuration
-[[ $OSTYPE == darwin* ]] && source ~/.dotfiles/zsh/macos.zsh
-[[ -f /etc/debian_version ]] && source ~/.dotfiles/zsh/debian.zsh
 
 export PATH="$HOME/.local/bin:$PATH"
 

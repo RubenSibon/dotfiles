@@ -66,10 +66,14 @@ Antigen has been unmaintained since 2019 and the submodule pins a debug build; i
 - [ ] Install fzf with the system package manager (Homebrew, apt, nixpkgs), and replace `~/.fzf.zsh` with `source <(fzf --zsh)`. That needs fzf 0.48 or newer; older Debian and Ubuntu packages ship the scripts in `/usr/share/doc/fzf/examples/`. On NixOS, `programs.fzf.keybindings` and `programs.fzf.fuzzyCompletion` set it up system-wide.
 - [ ] Remove the `.antigen` and `.fzf` submodules and their steps in `update.zsh`, and update the README.
 
-## 4. NixOS- and WSL-specific files
+## 4. OS-specific files: NixOS, WSL and macOS
 
 OS-specific settings go in `~/.dotfiles/zsh/<os>.zsh`, loaded under "OS-specific configuration" in `.zshrc`. Machine-specific settings go in the untracked `~/.zshrc.local`.
 
 - [ ] NixOS: when something NixOS-specific comes up, add `nixos.zsh` and `[[ -e /etc/NIXOS ]] && source ~/.dotfiles/zsh/nixos.zsh`. In the system configuration: `programs.zsh.enable = true`, `users.users.<name>.shell = pkgs.zsh` (`chsh` does not stick on NixOS) and `programs.zsh.enableGlobalCompInit = false`.
 - [ ] NixOS: decide whether Home Manager deploys these files or the bare repository stays. The install and update scripts assume apt or Homebrew and download binaries (fzf); on NixOS, packages belong in the system configuration.
 - [ ] WSL: add `wsl.zsh` with `[[ -n $WSL_DISTRO_NAME ]] && source ~/.dotfiles/zsh/wsl.zsh` when needed. Candidates: `BROWSER=wslview` (package `wslu`) as a default, and `appendWindowsPath = false` in `/etc/wsl.conf` with only the Windows tools you use (such as `code`) added back, because every Windows folder in `PATH` slows down command lookups. Windows paths that contain a user name stay in `~/.zshrc.local`.
+- [x] macOS: `macos.zsh` loads Homebrew on Apple Silicon and Intel, including its zsh completions, and is sourced before the plugins; the oh-my-zsh `ssh-agent` plugin is skipped in favour of the macOS agent and Keychain; `.zshenv` turns off the Terminal's per-window history; `update.zsh` applies the repository settings to clones made by older install scripts; `install.zsh` starts the Command Line Tools installer when git is missing.
+- [ ] macOS: a `Brewfile` for the formulae and casks every Mac should have (`brew bundle --file ~/.dotfiles/Brewfile` in `update.zsh`). It overlaps with item 3 (fzf) and item 2 (Neovim).
+- [ ] macOS: `defaults write` settings (Finder, Dock, key repeat) in a script that is run on request, not on every update, because some need a logout.
+- [ ] macOS: the default `/bin/zsh` works; decide whether Homebrew's newer zsh should be the login shell (it must then be listed in `/etc/shells`).

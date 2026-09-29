@@ -1,5 +1,14 @@
 #!/usr/bin/env zsh
 
+# Repository settings; clones made by an older install script lack them
+GIT_DOTFILES=(git --git-dir=$HOME/.dotfiles/.gitrepo)
+# Fetch over HTTPS, so update checks need no SSH key; push over SSH
+$GIT_DOTFILES remote set-url --push origin git@github.com:RubenSibon/dotfiles.git
+# The work tree is the whole home directory: keep git's file watcher off it
+$GIT_DOTFILES config core.fsmonitor false
+# Refuse commits that would publish secrets or personal details
+$GIT_DOTFILES config core.hooksPath ~/.dotfiles/hooks
+
 # Pulling repository and submodule updates
 # (--ff-only: when histories diverge, stop instead of merging conflict markers into live dotfiles)
 git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME pull --ff-only || exit 1

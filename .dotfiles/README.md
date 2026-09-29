@@ -30,6 +30,7 @@ For Vim/Vundle it installs the following plugins:
 On macOS, the install and update scripts also install:
 
 - [Homebrew](https://brew.sh/) (package manager for macOS)
+- the formulae in `~/.dotfiles/Brewfile`, such as Neovim and gitleaks; `update-macos.zsh` installs them with `brew bundle`, then upgrades everything Homebrew installed
 
 On a Mac without the Xcode Command Line Tools, which include git, the install script starts their installer and stops; run it again once they are installed.
 

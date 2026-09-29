@@ -27,6 +27,9 @@ fi
 
 $GIT_DOTFILES --work-tree=$HOME submodule update --init --recursive
 
+# System packages first: the steps below can use what they install
+[[ $OSTYPE == darwin* ]] && ~/.dotfiles/scripts/update-macos.zsh
+
 # Point the agents on this machine at the shared agent instructions,
 # unless a machine already has its own instruction file
 [[ -d ~/.claude && ! -e ~/.claude/CLAUDE.md ]] && print '@~/.dotfiles/agents/AGENTS.md' > ~/.claude/CLAUDE.md
@@ -58,22 +61,6 @@ if command -v vim > /dev/null; then
     echo "✔ done installing/updating Vundle plugins.\n"
 else
     echo "Vim is not installed. Not installing Vundle plugins."
-fi
-
-# Update Homebrew on macOS
-if [[ $OSTYPE == 'darwin'* ]]; then
-    if ! command -v brew > /dev/null && [ ! -x /opt/homebrew/bin/brew ]; then
-        echo "🤖 Installing Homebrew..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        echo "✔ done installing Homebrew.\n"
-    fi
-
-    # On Apple Silicon, Homebrew lives in /opt/homebrew, which is not on the default PATH
-    [ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
-
-    echo "🤖 Updating Homebrew..."
-    brew update && brew upgrade
-    echo "✔ done updating Homebrew.\n"
 fi
 
 echo "🤖 Dotfiles install/update is done!\n\nOpen a new terminal or run 'exec zsh' to load the changes."

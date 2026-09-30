@@ -16,6 +16,8 @@ Keep secrets and personal details out of it.
   Keep them tool-neutral; anything specific to one employer or client belongs in an untracked local file.
 - The pre-commit hook `~/.dotfiles/hooks/pre-commit` refuses staged changes that look like secrets, or that match the patterns in the untracked `~/.config/dotfiles/private-patterns`.
   Never bypass it with `--no-verify`.
+- Claude Code plugins come from `~/.dotfiles/claude-plugins`, each pinned to a reviewed commit.
+  Change a pin only after Ruben has reviewed the new release, and never replace a pin with an unpinned source or a branch.
 
 ## Never commit
 

@@ -1,0 +1,31 @@
+{
+  "name": "dotfiles",
+  "owner": {
+    "name": "Ruben Sibon"
+  },
+  "metadata": {
+    "description": "Third-party Claude Code plugins, each pinned to a reviewed commit"
+  },
+  "plugins": [
+    {
+      "name": "caveman",
+      "description": "Ultra-compressed communication mode",
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman",
+        "ref": "v2.7.0",
+        "sha": "8b0c1d3699b8d83e87fe4605b378da20c41555e0"
+      }
+    },
+    {
+      "name": "ponytail",
+      "description": "Lazy senior dev mode: the simplest solution that works",
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail",
+        "ref": "v4.10.0",
+        "sha": "1d95ff7d39de12d87014ea40d4e22201bddc501b"
+      }
+    }
+  ]
+}

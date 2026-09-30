@@ -30,6 +30,9 @@ For Vim/Vundle it installs the following plugins:
 On macOS, the install and update scripts also install:
 
 - [Homebrew](https://brew.sh/) (package manager for macOS)
+- the formulae in `~/.dotfiles/Brewfile`, such as Neovim and gitleaks; `update-macos.zsh` installs them with `brew bundle`, then upgrades everything Homebrew installed
+
+On a Mac without the Xcode Command Line Tools, which include git, the install script starts their installer and stops; run it again once they are installed.
 
 This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-like) systems such as Linux or macOS, including Linux on Windows through [WSL](https://learn.microsoft.com/windows/wsl/).
 
@@ -43,7 +46,7 @@ These configurations represent my personal preferences. I sync them between the 
 - Git (see: <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>)
 - Zsh (see: <https://wiki.archlinux.org/title/zsh>)
 - cURL (see: <https://curl.se/>)
-- On Debian-based distros: `sudo`, because the install script installs build tools with apt
+- On Debian-based distros: `sudo`, because the install script installs git, build tools and the `nl_NL.UTF-8` locale with apt
 
 ## Setup
 
@@ -63,7 +66,7 @@ Run the install script:
 
 `curl -fsSL https://raw.githubusercontent.com/RubenSibon/dotfiles/master/.dotfiles/scripts/install.zsh | zsh`
 
-> **Warning**: On a fresh install, the script overwrites files in your home directory that this repository also contains, such as `.zshrc` and `.gitconfig`. Back them up first.
+> **Note**: On a fresh install, the script replaces files in your home directory that this repository also contains, such as `.zshrc` and `.gitconfig`. It copies them to `~/.dotfiles/backup-<date>/` first.
 
 You're done!
 
@@ -125,7 +128,7 @@ To undo and remove these dotfiles, first check `~/.dotfiles` for files of your o
 
 You may want to remove the git files pulled by this repo, but be sure to check the contents before you do:
 
-`rm -rf ~/.gitmodules ~/.gitignore`
+`rm -rf ~/.gitmodules ~/.gitignore ~/.zshenv`
 
 And edit your `.gitconfig` file: be sure to remove references to the `.dotfiles` directory and this repo.
 
@@ -148,6 +151,7 @@ The `.gitignore` in your home directory ignores everything (`*`), so `dotfiles s
 ### Per-OS and per-machine settings
 
 - Settings for one operating system go in `~/.dotfiles/zsh/<os>.zsh`, such as `macos.zsh` and `debian.zsh`. `.zshrc` loads the ones that apply, under "OS-specific configuration".
+- `~/.zshenv` is read by every zsh, before the system's `/etc/zshrc`. It only holds what has to be set that early, such as turning off the per-window history of the macOS Terminal.
 - Settings for one machine go in `~/.zshrc.local`, which `.zshrc` loads last. The repository doesn't track it, so it can hold paths and names that shouldn't be published.
 - Your git identity and other machine-specific git settings, such as `includeIf` blocks, go in `~/.gitconfig.local`, which `.gitconfig` includes last. The repository doesn't track it either. Create it on every machine:
 
@@ -164,6 +168,16 @@ The `.gitignore` in your home directory ignores everything (`*`), so `dotfiles s
 - Claude Code: `~/.claude/CLAUDE.md` imports them with `@~/.dotfiles/agents/AGENTS.md`. Add machine-specific instructions below that line.
 - GitHub Copilot CLI: `~/.copilot/copilot-instructions.md` links to them.
 - Zed: `~/.config/zed/AGENTS.md` links to them. On Windows, Zed reads `%APPDATA%\Zed\AGENTS.md`; copy the file there.
+
+### Claude Code plugins
+
+`dotfiles-update` installs the Claude Code plugins [caveman](https://github.com/JuliusBrussee/caveman) and [ponytail](https://github.com/DietrichGebert/ponytail) from `~/.dotfiles/claude-plugins`, a marketplace that pins each plugin to a release tag and its commit (`ref` and `sha`). Their hooks run with your permissions at every session start and prompt, so nothing reaches your machines until you have reviewed it and changed the pin here. Claude Code doesn't update this marketplace in the background; leave its auto-update off.
+
+To move a plugin to a newer release:
+
+1. Clone the plugin's repository and compare the release with the pinned one, at least the parts that run code: `git diff <old-tag> <new-tag> -- .claude-plugin hooks src/hooks bin agents .mcp.json settings.json`. Look for network access, child processes, and writes outside `~/.claude`.
+2. Set `ref` to the new tag and `sha` to its full commit: `git rev-parse <new-tag>^{commit}`.
+3. Check the file with `claude plugin validate ~/.dotfiles/claude-plugins`, run `dotfiles-update`, commit and push. Other machines follow at their next update.
 
 ### Pre-commit hook
 

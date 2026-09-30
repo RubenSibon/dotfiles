@@ -114,7 +114,18 @@ elif command -v nano >/dev/null 2>&1; then
   export VISUAL=nano
 fi
 
+# Miniconda, when installed: loaded on the first `conda` command, so shells start fast.
+# Don't run `conda init`: it would add a slower block with absolute paths here.
+if [[ -x ~/.miniconda3/bin/conda ]]; then
+  conda() {
+    unfunction conda
+    eval "$(~/.miniconda3/bin/conda shell.zsh hook)"
+    conda "$@"
+  }
+fi
+
 # Machine-specific configuration, not tracked in the dotfiles repo
 if [[ -r ~/.zshrc.local ]]; then
   source ~/.zshrc.local
 fi
+

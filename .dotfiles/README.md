@@ -161,6 +161,42 @@ The `.gitignore` in your home directory ignores everything (`*`), so `dotfiles s
         email = you@example.com
     ```
 
+### NixOS
+
+`~/.dotfiles/nixos` is a flake with the system configuration for my NixOS machines. The dotfiles hold the configuration of the tools; the flake installs them.
+
+- `base.nix`: every machine, including servers without a desktop.
+- `desktop.nix`: every machine with a graphical session, whichever desktop environment it runs.
+- `gnome.nix`: GNOME, next to `desktop.nix`.
+- `hosts/<host name>/`: one machine. The repository doesn't track these directories, because they hold host names, user names and disk IDs.
+
+On a new machine, create `hosts/<host name>/default.nix`, copy `/etc/nixos/hardware-configuration.nix` next to it, and import the modules the machine needs:
+
+```nix
+{ ... }:
+
+{
+  imports = [
+    ./hardware-configuration.nix
+    ../../base.nix
+  ];
+
+  boot.loader.systemd-boot.enable = true;
+  networking.hostName = "<host name>";
+  users.users.<name> = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+  };
+  system.stateVersion = "<release of the first install>";
+}
+```
+
+Then build and activate it; the configuration is picked by the machine's current host name, or name it with `#<host name>`:
+
+`sudo nixos-rebuild switch --flake ~/.dotfiles/nixos`
+
+`flake.lock` pins nixpkgs, so every machine builds the same versions. Move it along with `nix flake update --flake ~/.dotfiles/nixos`, rebuild, and commit the lock file.
+
 ### Agent instructions
 
 `~/.dotfiles/agents/AGENTS.md` holds my instructions for coding agents, whichever tool runs them, and `~/.dotfiles/AGENTS.md` adds the rules for working on this repository. `dotfiles-update` points the agents it finds at the shared instructions, unless a machine already has its own instruction file:

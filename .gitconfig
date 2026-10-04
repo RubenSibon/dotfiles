@@ -1,14 +1,14 @@
 [core]
 	excludesFile = ~/.dotfiles/.gitignore_global
 	fsmonitor = true
-        untrackedCache = true
+	untrackedCache = true
 
 [init]
 	defaultBranch = main
 [pull]
 	rebase = false
 [push]
-        autoSetupRemote = true
+	autoSetupRemote = true
 [rerere]
 	enabled = true
 	autoUpdate = true

@@ -18,3 +18,6 @@
 # Machine-specific settings, such as [user], [includeIf] and the git-lfs filter, stay out of the dotfiles repo
 [include]
 	path = ~/.gitconfig.local
+[user]
+	email = mail+git@rubensibon.nl
+	name = Ruben J. Sibon

@@ -2,5 +2,62 @@
   {
     "key": "ctrl+shift+/",
     "command": "workbench.action.closeSidebar"
+  },
+  // Chat input
+  {
+    "args": {
+      "text": "\n"
+    },
+    "command": "default:type",
+    "key": "enter",
+    "when": "chatInputHasFocus"
+  },
+  {
+    "args": {
+      "text": "\n"
+    },
+    "command": "default:type",
+    "key": "alt+enter",
+    "when": "chatInputHasFocus"
+  },
+  {
+    "args": {
+      "text": "\n"
+    },
+    "command": "default:type",
+    "key": "shift+enter",
+    "when": "chatInputHasFocus"
+  },
+  {
+    "command": "-workbench.action.chat.submitWithCodebase",
+    "key": "ctrl+enter",
+    "when": "chatInputHasFocus"
+  },
+  {
+    "command": "workbench.action.chat.submit",
+    "key": "ctrl+enter",
+    "when": "chatInputHasFocus && chatInputHasSendableContent"
+  },
+  // Editor utilities
+  {
+    "command": "writeTimestamp.perform",
+    "key": "shift+alt+t",
+    "when": "editorTextFocus"
+  },
+  {
+    "command": "-writeTimestamp.perform",
+    "key": "ctrl+shift+t",
+    "when": "editorTextFocus"
+  },
+  // Merge editor
+  {
+    "command": "mergeEditor.toggleBetweenInputs",
+    "key": "ctrl+alt+t",
+    "when": "isMergeEditor"
+  },
+  {
+    "command": "-mergeEditor.toggleBetweenInputs",
+    "key": "ctrl+shift+t",
+    "when": "isMergeEditor"
   }
 ]

@@ -1,5 +1,4 @@
 aaron-bond.better-comments
-anthropic.claude-code
 asvetliakov.vscode-neovim
 bierner.color-info
 bierner.markdown-mermaid

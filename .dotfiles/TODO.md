@@ -23,7 +23,7 @@ Do not put a `.git` file in `~` that points at the bare repository. Every folder
 
 What a WSL machine showed in September 2026:
 
-- VS Code has its built-in Settings Sync on (settings, keybindings, extensions, MCP servers). Don't also track its user settings here: two sync mechanisms fight. If work and personal devices sign in with different accounts, decide whether a small shared subset belongs here.
+- VS Code and VSCodium share the settings, keybindings and extensions in `~/.dotfiles/vscode` (see the README). Keep the built-in Settings Sync off for those three: two sync mechanisms fight.
 - Zed has no settings sync. Its files live in `~/.config/zed/` on Linux and macOS, and in `%APPDATA%\Zed` on Windows.
 - Zed's `settings.json` can hold API tokens (MCP servers) and machine-specific entries (WSL connections, projects), and it has no include mechanism. A tracked copy must be secret-free; machine-specific parts belong in project `.zed/settings.json` files, or in environment variables that MCP servers read.
 - `.vscode/settings.json` in this repository is a workspace file: it only applies when `~` itself is opened as a folder, and it contradicts the user settings (minimap, whitespace, word wrap).
@@ -41,6 +41,7 @@ Differences between the VS Code and Zed user settings:
 
 Already aligned: the VS Code keymap in Zed, Vim mode in Zed and vscode-neovim in VS Code, unified diffs, format on save, Copilot edit predictions, and a modifier key to send chat messages.
 
+- [ ] Turn off Settings Sync for settings, keybindings and extensions on every machine that still has it on, then run `dotfiles-update` there.
 - [ ] Decide which differences to align, and in which direction.
 - [ ] Track a secret-free `.config/zed/settings.json` and `.config/zed/keymap.json` for Linux and macOS.
 - [ ] Remove `.vscode/settings.json`, or move what helps when editing the dotfiles into `.dotfiles.code-workspace` (for example `files.exclude` for caches).

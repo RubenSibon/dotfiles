@@ -197,6 +197,16 @@ Then build and activate it; the configuration is picked by the machine's current
 
 `flake.lock` pins nixpkgs, so every machine builds the same versions. Move it along with `nix flake update --flake ~/.dotfiles/nixos`, rebuild, and commit the lock file.
 
+### VS Code and VSCodium
+
+Both editors share `~/.dotfiles/vscode`: `settings.json`, `keybindings.json` and `extensions.txt` (one extension ID per line, in lower case). `dotfiles-update` applies them through `~/.dotfiles/scripts/vscode.zsh`. Keep the editor's built-in Settings Sync off for settings, keybindings and extensions.
+
+- An editor ignores the settings it doesn't know, so settings for an extension that one of the two lacks can stay in the shared file. Keep `settings.json` free of comments and trailing commas: `jq` reads it.
+- On Linux and macOS the editor's own files become symlinks, so a setting changed in the editor shows up in `dotfiles status`. The files a machine had before are kept as `<file>.before-dotfiles`.
+- On WSL the editor runs on Windows, so the script copies the files to `%APPDATA%\Code\User` instead. Change settings in `~/.dotfiles/vscode`, not in the editor: when the Windows copy has changed, the script shows the difference and leaves the file alone, until you run `zsh ~/.dotfiles/scripts/vscode.zsh --force`.
+- What only one machine needs goes in the untracked `~/.config/dotfiles/vscode`: `settings.local.json` is merged into the Windows copy (Windows paths, anything that names an employer), and `extensions.local.txt` lists extra extensions, such as Remote-WSL and Copilot, which VSCodium's marketplace doesn't offer.
+- The script only installs missing extensions; it never removes one. From a WSL shell it installs them on the WSL side: install the ones that run on the Windows side, such as themes, once by hand.
+
 ### Agent instructions
 
 `~/.dotfiles/agents/AGENTS.md` holds my instructions for coding agents, whichever tool runs them, and `~/.dotfiles/AGENTS.md` adds the rules for working on this repository. `dotfiles-update` points the agents it finds at the shared instructions, unless a machine already has its own instruction file:

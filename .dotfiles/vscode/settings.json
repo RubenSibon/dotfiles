@@ -1,0 +1,144 @@
+{
+  "[dockercompose]": {
+    "editor.autoIndent": "advanced",
+    "editor.insertSpaces": true,
+    "editor.quickSuggestions": {
+      "comments": false,
+      "other": true,
+      "strings": true
+    },
+    "editor.tabSize": 2
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "[mdx]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "chat.mcp.discovery.enabled": {
+    "claude-desktop": true,
+    "copilot": true
+  },
+  "chat.mcp.gallery.enabled": true,
+  "cSpell.enabled": false,
+  "cSpell.enabledFileTypes": {
+    "markdown": true,
+    "typescriptreact": true
+  },
+  "cSpell.language": "en,en-GB,en-US,lorem,nl,nl-NL",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.maxComputationTime": 0,
+  "diffEditor.renderSideBySide": false,
+  "dineug.erd-editor.theme.accentColor": "indigo",
+  "dineug.erd-editor.theme.appearance": "light",
+  "dineug.erd-editor.theme.grayColor": "slate",
+  "editor.accessibilitySupport": "off",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.fixAll.stylelint": "always"
+  },
+  "editor.codeLensFontFamily": "FiraCode, 'Fira Code', fira-code-nerd, 'FiraCode Nerd Font', Consolas, 'Courier New', monospace",
+  "editor.fontFamily": "FiraCode, 'Fira Code', fira-code-nerd, 'FiraCode Nerd Font', Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "editor.inlineSuggest.showToolbar": "always",
+  "editor.linkedEditing": true,
+  "editor.minimap.enabled": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.renderWhitespace": "all",
+  "errorLens.enabled": true,
+  "errorLens.enabledDiagnosticLevels": [
+    "error",
+    "info",
+    "warning"
+  ],
+  "eslint.format.enable": true,
+  "eslint.useFlatConfig": true,
+  "explorer.confirmDelete": false,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "extensions.ignoreRecommendations": true,
+  "files.associations": {
+    "*.mdx": "markdown"
+  },
+  "files.eol": "\n",
+  "git.autofetch": true,
+  "git.blame.editorDecoration.enabled": true,
+  "git.enableSmartCommit": true,
+  "git.replaceTagsWhenPull": true,
+  "github.copilot.chat.githubMcpServer.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": false,
+    "scminput": false,
+    "sql": false,
+    "yaml": true
+  },
+  "githubPullRequests.pullBranch": "never",
+  "make-task-provider.telemetry": false,
+  "markdown.links.openLocation": "beside",
+  "markdown.preview.fontFamily": "'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif",
+  "markdown.preview.typographer": true,
+  "redhat.telemetry.enabled": false,
+  "remote.autoForwardPortsSource": "hybrid",
+  "remote.extensionKind": {
+    "alefragnani.project-manager": [
+      "workspace"
+    ],
+    "pub.name": [
+      "ui"
+    ]
+  },
+  "search.ripgrep.maxThreads": 1,
+  "sonarlint.disableTelemetry": true,
+  "stylelint.packageManager": "pnpm",
+  "telemetry.editStats.enabled": false,
+  "telemetry.feedback.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.stickyScroll.enabled": false,
+  "terminal.integrated.tabs.location": "left",
+  "testing.automaticallyOpenTestResults": "neverOpen",
+  "testing.defaultGutterClickAction": "contextMenu",
+  "window.menuBarVisibility": "toggle",
+  "workbench.activityBar.location": "top",
+  "workbench.editor.enablePreviewFromCodeNavigation": true,
+  "workbench.editor.enablePreviewFromQuickOpen": true,
+  "workbench.quickOpen.closeOnFocusLost": false,
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "workbench.startupEditor": "newUntitledFile",
+  "zenMode.showTabs": "single",
+  "vscode-neovim.neovimClean": true,
+  "chat.viewSessions.orientation": "stacked",
+  "workbench.sideBar.location": "right",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "chat.tools.terminal.autoApprove": {
+    "pnpm": true
+  },
+  "workbench.colorTheme": "Adwaita Dark",
+  "claudeCode.hideOnboarding": true,
+  "workbench.productIconTheme": "adwaita",
+  "claudeCode.preferredLocation": "panel",
+  "containers.containerClient": "com.microsoft.visualstudio.containers.docker",
+  "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose"
+}

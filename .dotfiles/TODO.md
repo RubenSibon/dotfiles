@@ -41,7 +41,12 @@ Differences between the VS Code and Zed user settings:
 
 Already aligned: the VS Code keymap in Zed, Vim mode in Zed and vscode-neovim in VS Code, unified diffs, format on save, Copilot edit predictions, and a modifier key to send chat messages.
 
-- [ ] Turn off Settings Sync for settings, keybindings and extensions on every machine that still has it on, then run `dotfiles-update` there.
+- [ ] Set up the shared VS Code settings on the work laptop (Windows with WSL):
+    1. Turn off Settings Sync for settings, keybindings and extensions.
+    2. Create `~/.config/dotfiles/vscode/settings.local.json` with what only that machine needs: `firefox.executable` (the Windows path of the browser) and `"vscode-neovim.useWSL": true`.
+    3. Create `~/.config/dotfiles/vscode/extensions.local.txt` with `ms-vscode-remote.remote-wsl`, `github.copilot-chat` and `github.vscode-pull-request-github`.
+    4. Run `dotfiles-update`. The first run shows how the Windows copy differs and leaves it alone: move what is worth keeping to the shared or the local file, then run `zsh ~/.dotfiles/scripts/vscode.zsh --force`.
+    5. Install the extensions that run on the Windows side, such as the theme and vscode-neovim, by hand: from a WSL shell the script only installs on the WSL side.
 - [ ] Decide which differences to align, and in which direction.
 - [ ] Track a secret-free `.config/zed/settings.json` and `.config/zed/keymap.json` for Linux and macOS.
 - [ ] Remove `.vscode/settings.json`, or move what helps when editing the dotfiles into `.dotfiles.code-workspace` (for example `files.exclude` for caches).

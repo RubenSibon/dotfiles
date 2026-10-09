@@ -24,7 +24,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "chat.agent.collapseCompletedResponses": false,
-  "chat.agent.sandbox.network.allowLocalNetwork": true,
   "chat.instructionsFilesLocations": {
     "~/.dotfiles/agents/": true
   },
@@ -32,9 +31,6 @@
     "copilot": true
   },
   "chat.mcp.gallery.enabled": true,
-  "chat.tools.terminal.autoApprove": {
-    "pnpm": true
-  },
   "claudeCode.hideOnboarding": true,
   "claudeCode.preferredLocation": "panel",
   "cSpell.enabled": false,

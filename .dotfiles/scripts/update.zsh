@@ -48,7 +48,7 @@ if command -v claude > /dev/null; then
             claude plugin marketplace remove $marketplace > /dev/null 2>&1
         done
     claude plugin marketplace add ~/.dotfiles/claude-plugins > /dev/null
-    for plugin in caveman ponytail; do
+    for plugin in caveman figma frontend-design ponytail typescript-lsp; do
         # install does nothing when the plugin is there; update follows a changed pin
         claude plugin install $plugin@dotfiles > /dev/null &&
             claude plugin update $plugin@dotfiles > /dev/null ||

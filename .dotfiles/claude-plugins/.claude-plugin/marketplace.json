@@ -26,6 +26,56 @@
         "ref": "v4.10.0",
         "sha": "1d95ff7d39de12d87014ea40d4e22201bddc501b"
       }
+    },
+    {
+      "name": "figma",
+      "description": "Figma MCP server and skills: design to code, Code Connect, variables and libraries",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/figma/mcp-server-guide.git",
+        "sha": "f0493295acf5f7cbdebcbcc483c06de814420cb1"
+      }
+    },
+    {
+      "name": "frontend-design",
+      "description": "Design guidance for building or reshaping UI",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/frontend-design",
+        "ref": "main",
+        "sha": "b8e53f1c05dff3b6d751297f6527990ffc81c2f4"
+      }
+    },
+    {
+      "name": "typescript-lsp",
+      "description": "TypeScript and JavaScript language server; needs typescript-language-server on PATH",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/typescript-lsp",
+        "ref": "main",
+        "sha": "b8e53f1c05dff3b6d751297f6527990ffc81c2f4"
+      },
+      "strict": false,
+      "lspServers": {
+        "typescript": {
+          "command": "typescript-language-server",
+          "args": [
+            "--stdio"
+          ],
+          "extensionToLanguage": {
+            ".ts": "typescript",
+            ".tsx": "typescriptreact",
+            ".js": "javascript",
+            ".jsx": "javascriptreact",
+            ".mts": "typescript",
+            ".cts": "typescript",
+            ".mjs": "javascript",
+            ".cjs": "javascript"
+          }
+        }
+      }
     }
   ]
 }

@@ -67,6 +67,7 @@
     jq
     nodejs
     pnpm
+    typescript-language-server # For the Claude Code plugin typescript-lsp
     unzip
     wget
   ];

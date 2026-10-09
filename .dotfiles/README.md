@@ -232,7 +232,14 @@ VSCodium leads, and Claude Code is for VSCodium only:
 
 ### Claude Code plugins
 
-`dotfiles-update` installs the Claude Code plugins [caveman](https://github.com/JuliusBrussee/caveman) and [ponytail](https://github.com/DietrichGebert/ponytail) from `~/.dotfiles/claude-plugins`, a marketplace that pins each plugin to a release tag and its commit (`ref` and `sha`). Their hooks run with your permissions at every session start and prompt, so nothing reaches your machines until you have reviewed it and changed the pin here. Claude Code doesn't update this marketplace in the background; leave its auto-update off.
+`dotfiles-update` installs the Claude Code plugins from `~/.dotfiles/claude-plugins`, a marketplace that pins each plugin to a commit (`sha`), and to a release tag (`ref`) where the plugin has releases:
+
+- [caveman](https://github.com/JuliusBrussee/caveman) and [ponytail](https://github.com/DietrichGebert/ponytail): how the agent answers and works. Their hooks run at every session start and prompt.
+- [figma](https://github.com/figma/mcp-server-guide): Figma's MCP server (`mcp.figma.com`, you log in once per machine) and its skills. No hooks.
+- [frontend-design](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design): one skill, no code.
+- [typescript-lsp](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/typescript-lsp): starts `typescript-language-server` from your `PATH`; the plugin itself holds no code, and the language server is not pinned here. NixOS installs it; elsewhere: `npm install -g typescript-language-server typescript`.
+
+Hooks and servers run with your permissions, so nothing reaches your machines until you have reviewed it and changed the pin here. The two plugins from `claude-plugins-official` are pinned to a commit of that whole repository: compare only their own directory. Claude Code doesn't update this marketplace in the background; leave its auto-update off.
 
 To move a plugin to a newer release:
 

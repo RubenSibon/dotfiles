@@ -35,6 +35,7 @@
   "chat.tools.terminal.autoApprove": {
     "pnpm": true
   },
+  "claudeCode.hideOnboarding": true,
   "claudeCode.preferredLocation": "panel",
   "cSpell.enabled": false,
   "cSpell.enabledFileTypes": {

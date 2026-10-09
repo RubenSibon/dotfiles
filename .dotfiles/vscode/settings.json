@@ -1,14 +1,4 @@
 {
-  "[dockercompose]": {
-    "editor.autoIndent": "advanced",
-    "editor.insertSpaces": true,
-    "editor.quickSuggestions": {
-      "comments": false,
-      "other": true,
-      "strings": true
-    },
-    "editor.tabSize": 2
-  },
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
@@ -120,7 +110,6 @@
   "workbench.startupEditor": "newUntitledFile",
   "zenMode.showTabs": "single",
   "vscode-neovim.neovimClean": true,
-  "chat.viewSessions.orientation": "stacked",
   "workbench.sideBar.location": "right",
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -136,6 +125,9 @@
   },
   "workbench.colorTheme": "Adwaita Dark",
   "workbench.productIconTheme": "adwaita",
-  "containers.containerClient": "com.microsoft.visualstudio.containers.docker",
-  "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.dockercompose"
+  "chat.agent.collapseCompletedResponses": false,
+  "chat.agent.sandbox.network.allowLocalNetwork": true,
+  "chat.instructionsFilesLocations": {
+    "~/.dotfiles/agents/": true
+  }
 }

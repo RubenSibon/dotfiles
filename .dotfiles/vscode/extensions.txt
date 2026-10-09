@@ -25,10 +25,6 @@ kisstkondoros.vscode-gutter-preview
 ldez.ignore-files
 mikestead.dotenv
 moshfeu.diff-merge
-ms-azuretools.vscode-containers
-ms-azuretools.vscode-docker
-ms-kubernetes-tools.kind-vscode
-ms-kubernetes-tools.vscode-kubernetes-tools
 oxc.oxc-vscode
 piousdeer.adwaita-theme
 redhat.vscode-yaml

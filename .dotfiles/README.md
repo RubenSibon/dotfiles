@@ -31,7 +31,7 @@ This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-lik
 
 ## Author's note
 
-These configurations represent my personal preferences. I sync them between the various machines I use. macOS, Arch Linux (Yes, I use Arch, btw), NixOS and Debian-based distros such as Ubuntu on WSL, tend to be the main operating systems on those devices. If this setup is to your liking, feel free to use it as a starting point for your own config. Because these dotfiles have to work on both macOS and various Linux distros they are quite generic and environment-agnostic.
+These configurations represent my personal preferences. I sync them between the various machines I use. NixOS, macOS and Debian, tend to be the main operating systems on those devices. If this setup is to your liking, feel free to use it as a starting point for your own config. Because these dotfiles have to work on both macOS and various Linux distros they are quite generic and environment-agnostic.
 
 ## Requirements
 
@@ -53,15 +53,15 @@ The dotfiles configure tools; they do not install them. The install and update s
 | NixOS           | everything, through `~/.dotfiles/nixos/base.nix`                         | `sudo nixos-rebuild switch --flake ~/.dotfiles/nixos`             |
 | Other Linux     | `git`, `zsh`, `curl`                                                     | your package manager                                              |
 
-Optional, on any system: Neovim or Vim (the editor), [gitleaks](https://github.com/gitleaks/gitleaks) (a second check in the pre-commit hook), `jq` (VS Code settings on WSL) and [bubblewrap](https://github.com/containers/bubblewrap) (Linux only, for [developing the dotfiles](#developing-the-dotfiles)).
+Optional, on any system: Neovim or Vim (the editor), [gitleaks](https://github.com/gitleaks/gitleaks) (a second check in the pre-commit hook), `jq` (VS Code settings) and [bubblewrap](https://github.com/containers/bubblewrap) (Linux only, for [developing the dotfiles](#developing-the-dotfiles)).
 
 On a Mac without the Xcode Command Line Tools, the install script starts their installer and stops; run it again once they are installed.
 
 ## Setup
 
-> **Protip**: Try these scripts out in a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or [suitable Docker image](https://hub.docker.com/_/ubuntu) first.
+> **Tip**: Try these scripts out in a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or [suitable Docker image](https://hub.docker.com/_/ubuntu) first.
 
-> **Protip**: First fork this repo if you want to use it as the basis for your own dotfiles and replace the username in all commands and the `.dotfiles/scripts/install.zsh` script with your own.
+> **Tip**: First fork this repo if you want to use it as the basis for your own dotfiles and replace the username in all commands and the `.dotfiles/scripts/install.zsh` script with your own.
 
 The git configuration and setup methods are based on the following tutorial: [Simplest Way to Sync Dotfiles and Config Using Git by Victor Augusteo](https://medium.com/@augusteo/simplest-way-to-sync-dotfiles-and-config-using-git-14051af8703a)
 

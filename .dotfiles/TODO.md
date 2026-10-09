@@ -32,7 +32,6 @@ What a WSL machine showed in September 2026:
 - VS Code and VSCodium share the settings, keybindings and extensions in `~/.dotfiles/vscode` (see the README). Keep the built-in Settings Sync off for those three: two sync mechanisms fight.
 - Zed has no settings sync. Its files live in `~/.config/zed/` on Linux and macOS, and in `%APPDATA%\Zed` on Windows.
 - Zed's `settings.json` can hold API tokens (MCP servers) and machine-specific entries (WSL connections, projects), and it has no include mechanism. A tracked copy must be secret-free; machine-specific parts belong in project `.zed/settings.json` files, or in environment variables that MCP servers read.
-- `.vscode/settings.json` in this repository is a workspace file: it only applies when `~` itself is opened as a folder, and it contradicts the user settings (minimap, whitespace, word wrap).
 
 Differences between the VS Code and Zed user settings:
 
@@ -55,7 +54,6 @@ Already aligned: the VS Code keymap in Zed, Vim mode in Zed and vscode-neovim in
     5. Install the extensions that run on the Windows side, such as the theme and vscode-neovim, by hand: from a WSL shell the script only installs on the WSL side.
 - [ ] Decide which differences to align, and in which direction.
 - [ ] Track a secret-free `.config/zed/settings.json` and `.config/zed/keymap.json` for Linux and macOS.
-- [ ] Remove `.vscode/settings.json`, or move what helps when editing the dotfiles into `.dotfiles.code-workspace` (for example `files.exclude` for caches).
 - [ ] Consider a `~/.editorconfig` for what every editor reads (line endings, final newline, indentation). It also applies to projects under `~` that have no `.editorconfig` of their own.
 
 ## 2. Migrate from Vim to Neovim

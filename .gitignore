@@ -1,7 +1,6 @@
 *
 !.antigen/
 !.config/nvim/
-!.dotfiles.code-workspace
 !.dotfiles/
 !.fzf/
 !.gitconfig
@@ -11,6 +10,5 @@
 !.hidden
 !.vim/
 !.vimrc
-!.vscode/
 !.zshenv
 !.zshrc

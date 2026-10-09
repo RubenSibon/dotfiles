@@ -86,6 +86,5 @@
     vivaldi
     vscode-fhs
     vscodium-fhs
-    zed-editor-fhs
   ];
 }

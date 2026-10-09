@@ -2,6 +2,9 @@
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
@@ -14,10 +17,24 @@
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "chat.agent.collapseCompletedResponses": false,
+  "chat.agent.sandbox.network.allowLocalNetwork": true,
+  "chat.instructionsFilesLocations": {
+    "~/.dotfiles/agents/": true
+  },
   "chat.mcp.discovery.enabled": {
     "copilot": true
   },
   "chat.mcp.gallery.enabled": true,
+  "chat.tools.terminal.autoApprove": {
+    "pnpm": true
+  },
   "cSpell.enabled": false,
   "cSpell.enabledFileTypes": {
     "markdown": true,
@@ -101,33 +118,16 @@
   "terminal.integrated.tabs.location": "left",
   "testing.automaticallyOpenTestResults": "neverOpen",
   "testing.defaultGutterClickAction": "contextMenu",
+  "vscode-neovim.neovimClean": true,
   "window.menuBarVisibility": "toggle",
   "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "Adwaita Dark",
   "workbench.editor.enablePreviewFromCodeNavigation": true,
   "workbench.editor.enablePreviewFromQuickOpen": true,
+  "workbench.productIconTheme": "adwaita",
   "workbench.quickOpen.closeOnFocusLost": false,
   "workbench.secondarySideBar.defaultVisibility": "hidden",
-  "workbench.startupEditor": "newUntitledFile",
-  "zenMode.showTabs": "single",
-  "vscode-neovim.neovimClean": true,
   "workbench.sideBar.location": "right",
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "chat.tools.terminal.autoApprove": {
-    "pnpm": true
-  },
-  "workbench.colorTheme": "Adwaita Dark",
-  "workbench.productIconTheme": "adwaita",
-  "chat.agent.collapseCompletedResponses": false,
-  "chat.agent.sandbox.network.allowLocalNetwork": true,
-  "chat.instructionsFilesLocations": {
-    "~/.dotfiles/agents/": true
-  }
+  "workbench.startupEditor": "newUntitledFile",
+  "zenMode.showTabs": "single"
 }

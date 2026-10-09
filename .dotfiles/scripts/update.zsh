@@ -57,8 +57,8 @@ if command -v claude > /dev/null; then
     echo "✔ done installing/updating Claude Code plugins.\n"
 fi
 
-# Settings, keybindings and extensions for VS Code and VSCodium
-zsh ~/.dotfiles/scripts/vscode.zsh
+# Settings, keybindings and extensions for VSCodium and VS Code
+zsh ~/.dotfiles/scripts/vscodium.zsh
 
 # Install fzf (fuzzy finder)
 if [ -x ~/.fzf/install ]; then

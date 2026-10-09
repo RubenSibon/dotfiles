@@ -29,7 +29,7 @@ Do not put a `.git` file in `~` that points at the bare repository. Every folder
 
 What a WSL machine showed in September 2026:
 
-- VS Code and VSCodium share the settings, keybindings and extensions in `~/.dotfiles/vscode` (see the README). Keep the built-in Settings Sync off for those three: two sync mechanisms fight.
+- VSCodium and VS Code take their settings, keybindings and extensions from `~/.dotfiles/vscodium`; VSCodium leads, and only VSCodium gets Claude Code (see the README). Keep the built-in Settings Sync off for those three: two sync mechanisms fight.
 - Zed has no settings sync. Its files live in `~/.config/zed/` on Linux and macOS, and in `%APPDATA%\Zed` on Windows.
 - Zed's `settings.json` can hold API tokens (MCP servers) and machine-specific entries (WSL connections, projects), and it has no include mechanism. A tracked copy must be secret-free; machine-specific parts belong in project `.zed/settings.json` files, or in environment variables that MCP servers read.
 
@@ -48,9 +48,9 @@ Already aligned: the VS Code keymap in Zed, Vim mode in Zed and vscode-neovim in
 
 - [ ] Set up the shared VS Code settings on the work laptop (Windows with WSL):
     1. Turn off Settings Sync for settings, keybindings and extensions.
-    2. Create `~/.config/dotfiles/vscode/settings.local.json` with what only that machine needs: `firefox.executable` (the Windows path of the browser), `"vscode-neovim.useWSL": true` and `vscode-neovim.neovimExecutablePaths.linux` (where Neovim lives in WSL).
-    3. Create `~/.config/dotfiles/vscode/extensions.local.txt` with `ms-vscode-remote.remote-wsl`, `github.copilot-chat` and `github.vscode-pull-request-github`.
-    4. Run `dotfiles-update`. The first run shows how the Windows copy differs and leaves it alone: move what is worth keeping to the shared or the local file, then run `zsh ~/.dotfiles/scripts/vscode.zsh --force`.
+    2. Create `~/.config/dotfiles/vscodium/settings.local.json` with what only that machine needs: `firefox.executable` (the Windows path of the browser), `"vscode-neovim.useWSL": true` and `vscode-neovim.neovimExecutablePaths.linux` (where Neovim lives in WSL).
+    3. Create `~/.config/dotfiles/vscodium/extensions.local.txt` with `ms-vscode-remote.remote-wsl`, `github.copilot-chat` and `github.vscode-pull-request-github`.
+    4. Run `dotfiles-update`. The first run shows how the Windows copy differs and leaves it alone: move what is worth keeping to the shared or the local file, then run `zsh ~/.dotfiles/scripts/vscodium.zsh --force`.
     5. Install the extensions that run on the Windows side, such as the theme and vscode-neovim, by hand: from a WSL shell the script only installs on the WSL side.
 - [ ] Decide which differences to align, and in which direction.
 - [ ] Track a secret-free `.config/zed/settings.json` and `.config/zed/keymap.json` for Linux and macOS.

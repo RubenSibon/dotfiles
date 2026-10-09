@@ -27,13 +27,6 @@ For Vim/Vundle it installs the following plugins:
 
 (*) Neovim is the default editor; when it isn't installed, `$EDITOR` falls back to Vim, then nano. For now Neovim reads the Vim configuration (`.config/nvim/init.vim` sources `.vimrc`). A Neovim-native configuration is planned: see the [to-do list](../.dotfiles/TODO.md).
 
-On macOS, the install and update scripts also install:
-
-- [Homebrew](https://brew.sh/) (package manager for macOS)
-- the formulae in `~/.dotfiles/Brewfile`, such as Neovim and gitleaks; `update-macos.zsh` installs them with `brew bundle`, then upgrades everything Homebrew installed
-
-On a Mac without the Xcode Command Line Tools, which include git, the install script starts their installer and stops; run it again once they are installed.
-
 This project is to be used on [Unix-like](https://en.wikipedia.org/wiki/Unix-like) systems such as Linux or macOS, including Linux on Windows through [WSL](https://learn.microsoft.com/windows/wsl/).
 
 ## Author's note
@@ -46,7 +39,23 @@ These configurations represent my personal preferences. I sync them between the 
 - Git (see: <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>)
 - Zsh (see: <https://wiki.archlinux.org/title/zsh>)
 - cURL (see: <https://curl.se/>)
-- On Debian-based distros: `sudo`, because the install script installs git, build tools and the `nl_NL.UTF-8` locale with apt
+
+### Required packages
+
+The dotfiles configure tools; they do not install them. The install and update scripts check what is missing, print the command that installs it, and run that command only when you answer `y`. They never upgrade other packages.
+
+| Environment     | Packages                                                                 | Command                                                           |
+| --------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| Debian, Ubuntu  | `git`, `zsh`, `curl`, `build-essential`, `locales`                       | `sudo apt update && sudo apt install git zsh curl build-essential locales` |
+| Debian, Ubuntu  | the `nl_NL.UTF-8` locale, for the Dutch formats in `.zshrc`              | `sudo locale-gen nl_NL.UTF-8` (Debian: first uncomment the line in `/etc/locale.gen`) |
+| macOS           | the Xcode Command Line Tools, which include git                          | `xcode-select --install`                                          |
+| macOS           | [Homebrew](https://brew.sh/), and the formulae in `~/.dotfiles/Brewfile` (git, gitleaks, Neovim) | `brew bundle --file ~/.dotfiles/Brewfile`  |
+| NixOS           | everything, through `~/.dotfiles/nixos/base.nix`                         | `sudo nixos-rebuild switch --flake ~/.dotfiles/nixos`             |
+| Other Linux     | `git`, `zsh`, `curl`                                                     | your package manager                                              |
+
+Optional, on any system: Neovim or Vim (the editor), [gitleaks](https://github.com/gitleaks/gitleaks) (a second check in the pre-commit hook), `jq` (VS Code settings on WSL) and [bubblewrap](https://github.com/containers/bubblewrap) (Linux only, for [developing the dotfiles](#developing-the-dotfiles)).
+
+On a Mac without the Xcode Command Line Tools, the install script starts their installer and stops; run it again once they are installed.
 
 ## Setup
 

@@ -1,4 +1,4 @@
-# Formulae every Mac should have; update.zsh installs them with `brew bundle`.
+# Formulae every Mac should have; update.zsh offers to install them with `brew bundle`.
 # Machine-specific ones stay out of here: install those with `brew install`.
 
 brew "git"

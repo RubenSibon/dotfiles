@@ -27,7 +27,7 @@ fi
 
 $GIT_DOTFILES --work-tree=$HOME submodule update --init --recursive
 
-# System packages first: the steps below can use what they install
+# Missing system packages first: the steps below can use them
 [[ $OSTYPE == darwin* ]] && ~/.dotfiles/scripts/update-macos.zsh
 
 # Point the agents on this machine at the shared agent instructions,

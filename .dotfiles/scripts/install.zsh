@@ -1,14 +1,10 @@
 #!/usr/bin/env zsh
 
 # Git is needed for the clone below
-if ! command -v git > /dev/null; then
-    if [ -f "/etc/debian_version" ]; then
-        # Read answers from the terminal: with `curl … | zsh`, stdin is this script
-        sudo apt update </dev/tty && sudo apt install git </dev/tty || exit 1
-    elif [[ $OSTYPE != darwin* ]]; then
-        echo "Install git, then run this script again."
-        exit 1
-    fi
+if ! command -v git > /dev/null && [[ $OSTYPE != darwin* ]]; then
+    echo "Git is missing. Install it, then run this script again."
+    [ -f "/etc/debian_version" ] && echo "    sudo apt update && sudo apt install git"
+    exit 1
 fi
 
 # macOS: git comes with the Xcode Command Line Tools. Until they are installed,
@@ -45,5 +41,5 @@ if [ -f "/etc/debian_version" ]; then
     $HOME/.dotfiles/scripts/install-debian.zsh </dev/tty
 fi
 
-# Also from the terminal: installers such as Homebrew's can't ask for a password otherwise
+# Also from the terminal: the update script asks before it installs anything
 $HOME/.dotfiles/scripts/update.zsh </dev/tty

@@ -66,6 +66,9 @@ alias dotfiles='git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME'
 # Update dotfiles
 alias dotfiles-update='~/.dotfiles/scripts/update.zsh'
 
+# Run a program, such as an editor or an agent, in the sandbox for working on the dotfiles
+alias dotfiles-dev='~/.dotfiles/scripts/dotfiles-dev.zsh'
+
 # Git
 alias git-checkout-develop='git checkout develop'
 alias git-checkout-prev='git checkout -'

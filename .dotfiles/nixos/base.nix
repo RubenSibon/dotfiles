@@ -59,6 +59,7 @@
   #
 
   environment.systemPackages = with pkgs; [
+    bubblewrap # Sandbox for dotfiles-dev (see the README)
     claude-code
     git
     gitleaks # Scans commits in the dotfiles pre-commit hook

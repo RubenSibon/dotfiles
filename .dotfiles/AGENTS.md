@@ -7,6 +7,9 @@ Keep secrets and personal details out of it.
 
 - It is a bare repository at `~/.dotfiles/.gitrepo` with the home directory as its work tree.
   Run git as `git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME`; the `dotfiles` alias does that in zsh.
+- Changes are made in the clone `~/.dotfiles-src`, opened in a sandbox with `dotfiles-dev` (see "Developing the dotfiles" in the README).
+  In the sandbox the clone is the home directory, plain `git` works instead of the `dotfiles` alias, and `.git` is read-only: Ruben commits outside it.
+  If you find yourself in the real home directory instead, say so before reading or changing anything outside `~/.dotfiles`.
 - `~/.gitignore` ignores everything (`*`), so `status` only shows changes to tracked files.
   Add a new file deliberately, one path at a time: `dotfiles add -f <path>`.
   Never add a directory with `-f`: directories such as `~/.dotfiles`, `~/.claude` and `~/.config` also hold private, untracked files.

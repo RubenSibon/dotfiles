@@ -126,6 +126,8 @@ To undo and remove these dotfiles, first check `~/.dotfiles` for files of your o
 
 `rm -rf ~/.dotfiles`
 
+The same goes for `~/.dotfiles-src`, when you made that clone for [developing the dotfiles](#developing-the-dotfiles).
+
 You may want to remove the git files pulled by this repo, but be sure to check the contents before you do:
 
 `rm -rf ~/.gitmodules ~/.gitignore ~/.zshenv`
@@ -229,31 +231,65 @@ To move a plugin to a newer release:
 
 `~/.dotfiles/hooks/pre-commit` refuses a commit when its changes look like a secret, or match a pattern in `~/.config/dotfiles/private-patterns`: one extended regular expression per line, for the names and paths that must stay private. Lines starting with `!` allow text that the other patterns would block, such as e-mail addresses that are public anyway. When gitleaks is installed, the hook runs it as well.
 
-### Example
+## Developing the dotfiles
 
-1. Go to your home folder:
+The work tree of the repository is the home directory. An editor or a coding agent that opens it can read and change everything there: SSH keys, tokens, browser profiles, and the shell startup files. So change the dotfiles in a second, ordinary clone, and open that clone in a sandbox.
+
+`dotfiles-dev <program>` starts a program in a [bubblewrap](https://github.com/containers/bubblewrap) sandbox, in which:
+
+- the clone `~/.dotfiles-src` is the home directory, so the shell, the editors and the agents in the sandbox run with the dotfiles you are changing;
+- the clone's `.git` is read-only: the sandbox can show the status and the diff, but it cannot commit, and it cannot plant hooks or git settings that would run outside the sandbox;
+- the system (`/nix`, `/usr`, `/etc`) is read-only;
+- the real home directory, the other processes, the SSH agent, the session's D-Bus and the environment variables of the calling shell do not exist;
+- the network and, for graphical editors, the Wayland socket and the GPU are available.
+
+It works the same for every program: `dotfiles-dev codium`, `dotfiles-dev zeditor`, `dotfiles-dev nvim`, `dotfiles-dev claude`, or `dotfiles-dev` alone for a shell. The script that builds the sandbox is the deployed `~/.dotfiles/scripts/dotfiles-dev.zsh`, not the copy in the clone, so the sandbox cannot loosen itself.
+
+It needs Linux with bubblewrap, and Wayland for graphical editors. The `.gitignore` of the clone ignores everything untracked, so what programs keep in the sandbox's home directory, such as editor extensions and an agent's login, stays out of `git status`. It also stays readable for everything else in the sandbox.
+
+### One-time setup
+
+```zsh
+git clone --recurse-submodules https://github.com/RubenSibon/dotfiles.git ~/.dotfiles-src
+git -C ~/.dotfiles-src remote set-url --push origin git@github.com:RubenSibon/dotfiles.git
+# The reviewed, deployed pre-commit hook; not the copy that the sandbox can change
+git -C ~/.dotfiles-src config core.hooksPath ~/.dotfiles/hooks
+```
+
+Editors start empty in the sandbox. For VS Code or VSCodium, start the editor once, close it, and run `dotfiles-dev zsh ~/.dotfiles/scripts/vscode.zsh` for the shared settings and extensions. Agents ask you to log in once.
+
+### Workflow
+
+1. Edit in the sandbox:
 
     ```zsh
-    cd ~
+    dotfiles-dev codium ~
     ```
 
-2. Update the repo to make sure that you have the latest changes.
-This also pulls in the latest changes from the git server (i.e. GitHub):
+2. Review and commit outside the sandbox. This review is the security boundary: after the next step, files such as `.zshrc` and the scripts run with your full permissions.
 
     ```zsh
+    cd ~/.dotfiles-src
+    git diff
+    git add -u && git commit
+    ```
+
+3. Deploy to the real home directory. Either try the commits on this machine first:
+
+    ```zsh
+    dotfiles pull --ff-only ~/.dotfiles-src master
+    ```
+
+    or push them, and update as on every other machine:
+
+    ```zsh
+    git push
     dotfiles-update
     ```
 
-3. Edit a dotfile, such as this README for example.
+To add a file to the repository, use `git add -f <path>` in the clone, one file at a time. The NixOS configuration in `nixos/` can be edited in the sandbox; build it outside, after the review, because `nixos/hosts/` is not in the clone. `nixos-rebuild build-vm --flake ~/.dotfiles/nixos` boots the result in a throwaway virtual machine.
 
-4. Save your changes and commit them:
-
-    ```zsh
-    dotfiles status    # Make sure that everything is correct.
-    dotfiles add -u    # Stage the changes to tracked files.
-    dotfiles commit    # Commit the changes.
-    dotfiles push      # Push the changes to the git server.
-    ```
+Small changes on a machine without the clone still work the old way, with the `dotfiles` alias from the home directory: `dotfiles status`, `dotfiles add -u`, `dotfiles commit`, `dotfiles push`. Use a terminal editor for those, not an editor or agent with a project opened on `~`.
 
 That's how you can use these dotfiles.
 

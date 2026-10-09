@@ -11,13 +11,19 @@ Neither editor understands a bare repository with a separate work tree:
 - VS Code's Source Control does not detect bare repositories ([microsoft/vscode#80946](https://github.com/microsoft/vscode/issues/80946), closed as a duplicate without a fix).
 - Zed finds repositories by looking for `.git` inside the project ([Zed docs](https://zed.dev/docs/git)); bare repositories and `GIT_DIR` are not mentioned.
 
-Options, from least to most effort:
-
-- [ ] Use the `dotfiles` alias in the editor's terminal, or a Git TUI that accepts both paths, such as lazygit: `lazygit --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME`. Add an alias for it.
-- [ ] VS Code running locally (not over Remote-WSL or SSH): open a separate window with `GIT_DIR=$HOME/.dotfiles/.gitrepo GIT_WORK_TREE=$HOME code --new-window ~`. Everything in that window, its terminals included, then works on the dotfiles repository. Untested.
-- [ ] Switch to a regular repository, for example `~/.dotfiles` plus GNU Stow (symlinks) or chezmoi. Both editors then work natively. chezmoi also covers per-OS files (templates, `.chezmoiignore`) and can read secrets from a password manager, which overlaps with item 4.
+- [x] Edit in the ordinary clone `~/.dotfiles-src`, opened in a sandbox with `dotfiles-dev` (see "Developing the dotfiles" in the README). The clone has a `.git`, so both editors show the status and the diff; it is read-only in the sandbox, so commit from a terminal outside it. Do not open `~` itself in an editor or agent any more.
+- [ ] Switch to a regular repository, for example `~/.dotfiles` plus GNU Stow (symlinks) or chezmoi. The deployed copy and the clone would then have the same layout. chezmoi also covers per-OS files (templates, `.chezmoiignore`) and can read secrets from a password manager, which overlaps with item 4.
 
 Do not put a `.git` file in `~` that points at the bare repository. Every folder in the home directory would then belong to the dotfiles repository, and `git clean -dfx` in any of them would delete everything the `*` in `~/.gitignore` ignores: nearly the whole home directory.
+
+### Sandbox for developing the dotfiles
+
+`dotfiles-dev` uses bubblewrap, which only exists on Linux.
+
+- [ ] macOS and WSL without bubblewrap: fall back to a rootless Podman container with the clone mounted as its home directory, for example `podman run --rm -it --userns=keep-id -v ~/.dotfiles-src:$HOME -v ~/.dotfiles-src/.git:$HOME/.git:ro -w $HOME <image>`. It needs an image with zsh, git and Neovim, and covers terminal programs only: graphical editors need a remote connection into the container. Not Docker: membership of its group equals root.
+- [ ] The same container on NixOS, with a Debian image, to test `debian.zsh` and `install-debian.zsh`.
+- [ ] Try each program once in the sandbox: VSCodium and Zed (windows, GPU), Neovim, Claude Code (login without a browser or keyring).
+- [ ] Decide whether agents in the sandbox get the shared instructions and plugins: `update.zsh` sets those up, and does not run in the clone.
 
 ### Settings
 

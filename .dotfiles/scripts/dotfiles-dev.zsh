@@ -39,10 +39,12 @@ done
 # Wayland only: an X11 socket would let the sandbox read every window and key press
 [[ -n $WAYLAND_DISPLAY ]] && args+=(--ro-bind $runtime/$WAYLAND_DISPLAY $runtime/$WAYLAND_DISPLAY)
 
-# An empty environment plus what a program needs to start: tokens and agent
-# sockets that the calling shell exports stay outside
+# An empty environment plus what a program needs to start: agent sockets and
+# other tokens the calling shell exports stay outside. ANTHROPIC_API_KEY is the
+# one exception: without it, Claude Code's OAuth flow has no browser or stored
+# credentials to fall back on inside the sandbox.
 args+=(--clearenv --setenv XDG_RUNTIME_DIR $runtime)
-for name in HOME USER LOGNAME PATH TERM COLORTERM LANG WAYLAND_DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP; do
+for name in HOME USER LOGNAME PATH TERM COLORTERM LANG WAYLAND_DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP ANTHROPIC_API_KEY; do
     [[ -v $name ]] && args+=(--setenv $name ${(P)name})
 done
 

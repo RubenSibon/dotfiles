@@ -1,6 +1,22 @@
 # Every machine, including servers without a desktop.
 { pkgs, ... }:
 
+let
+  # RTK shortens command output for coding agents (see the README). nixpkgs has
+  # it from 26.05 on, not in 25.11: this is the project's static release binary,
+  # pinned by its hash. Replace it with pkgs.rtk when the flake moves to 26.05.
+  rtk = pkgs.stdenvNoCC.mkDerivation rec {
+    pname = "rtk";
+    version = "0.51.0";
+    src = pkgs.fetchurl {
+      url = "https://github.com/rtk-ai/rtk/releases/download/v${version}/rtk-x86_64-unknown-linux-musl.tar.gz";
+      hash = "sha256-UCjTsZqPCZDTD+yfuwfjJ4K8VpjmGPsYYarYqcy6TrU=";
+    };
+    sourceRoot = ".";
+    installPhase = "install -Dm755 rtk $out/bin/rtk";
+    meta.platforms = [ "x86_64-linux" ];
+  };
+in
 {
   #
   # Nix
@@ -67,6 +83,7 @@
     jq
     nodejs
     pnpm
+    rtk
     typescript-language-server # For the Claude Code plugin typescript-lsp
     unzip
     wget

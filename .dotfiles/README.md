@@ -247,6 +247,18 @@ To move a plugin to a newer release:
 2. Set `ref` to the new tag and `sha` to its full commit: `git rev-parse <new-tag>^{commit}`.
 3. Check the file with `claude plugin validate ~/.dotfiles/claude-plugins`, run `dotfiles-update`, commit and push. Other machines follow at their next update.
 
+### RTK (trial)
+
+[RTK](https://github.com/rtk-ai/rtk) shortens the output of commands such as `git` and test runners before a coding agent reads it. NixOS installs the project's static release binary, pinned by version and hash in `~/.dotfiles/nixos/base.nix`. Elsewhere on x86-64 Linux, install the same file by hand:
+
+```zsh
+curl -fsSLO https://github.com/rtk-ai/rtk/releases/download/v0.51.0/rtk-x86_64-unknown-linux-musl.tar.gz
+echo '5028d3b19a8f0990d30fec9fbb07e32782bc5698e618fb1861aad8a9ccba4eb5  rtk-x86_64-unknown-linux-musl.tar.gz' | sha256sum -c &&
+    mkdir -p ~/.local/bin && tar -xzf rtk-x86_64-unknown-linux-musl.tar.gz -C ~/.local/bin rtk
+```
+
+Then, once per machine, run `rtk init -g` and decline the telemetry question. It adds a hook to `~/.claude/settings.json` that rewrites the agent's shell commands to `rtk <command>`; `rtk init -g --uninstall` removes it. `rtk gain` shows what it saved.
+
 ### Pre-commit hook
 
 `~/.dotfiles/hooks/pre-commit` refuses a commit when its changes look like a secret, or match a pattern in `~/.config/dotfiles/private-patterns`: one extended regular expression per line, for the names and paths that must stay private. Lines starting with `!` allow text that the other patterns would block, such as e-mail addresses that are public anyway. When gitleaks is installed, the hook runs it as well.

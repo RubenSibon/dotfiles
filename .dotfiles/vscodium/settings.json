@@ -127,5 +127,5 @@
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "workbench.sideBar.location": "right",
   "workbench.startupEditor": "newUntitledFile",
-  "zenMode.showTabs": "single"
-}
+  "zenMode.showTabs": "single",
+ }

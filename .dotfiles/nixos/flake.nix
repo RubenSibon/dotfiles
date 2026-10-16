@@ -1,7 +1,7 @@
 {
   description = "NixOS configuration: shared modules, plus one untracked directory per machine";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
   outputs = { nixpkgs, ... }: {
     # One configuration per directory in ./hosts, named after the machine's host name.

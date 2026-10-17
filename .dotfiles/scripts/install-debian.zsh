@@ -10,6 +10,12 @@ for package in build-essential git locales; do
 done
 (( $#missing )) && steps+=("sudo apt update && sudo apt install $missing")
 
+# The pre-commit hook refuses to run without gitleaks. Not every apt release
+# carries it, so a failure here is not fatal: the hook names the alternative.
+if ! command -v gitleaks > /dev/null; then
+    steps+=("sudo apt install gitleaks || echo 'apt has no gitleaks: take a release from github.com/gitleaks/gitleaks'")
+fi
+
 # ~/.zshrc uses Dutch formats for dates, paper and addresses (Ubuntu's locale-gen
 # takes the name; Debian's reads the uncommented lines of /etc/locale.gen)
 if ! locale -a 2> /dev/null | grep -qix 'nl_NL\.utf-\?8'; then

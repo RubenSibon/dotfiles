@@ -90,15 +90,18 @@ in
     bubblewrap # Sandbox for dotfiles-dev (see the README)
     claude-code
     fastfetch
+    ffmpeg
     git
     gitleaks # Scans commits in the dotfiles pre-commit hook
     gnupg
     htop
     iotop
+    jc
     jq
     net-tools
     nmap
     nodejs
+    pandoc
     pnpm
     rtk
     sysstat

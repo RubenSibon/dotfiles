@@ -75,11 +75,15 @@
   };
 
   environment.systemPackages = with pkgs; [
+    blender
+    gimp
     figma-linux
     firefoxpwa
+    krita
     libreoffice
     libsecret
     nextcloud-client
+    planify
     spotify
     standardnotes
     thunderbird
@@ -87,5 +91,6 @@
     vivaldi
     vscode-fhs
     vscodium-fhs
+    zed-editor-fhs
   ];
 }

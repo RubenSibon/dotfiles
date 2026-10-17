@@ -26,8 +26,6 @@ args=(
     # in there would run outside the sandbox, at the next git command in the clone.
     --bind $src $HOME --ro-bind $src/.git $HOME/.git --chdir $HOME
     --perms 0700 --dir $runtime
-    # Graphics for the editors (Zed does not start without a GPU)
-    --dev-bind-try /dev/dri /dev/dri
 )
 
 # The system, read-only: /nix and /run on NixOS, /usr and its links elsewhere
@@ -53,6 +51,24 @@ done
 [[ $(< /proc/sys/dev/tty/legacy_tiocsti) == 0 ]] 2> /dev/null || args+=(--new-session)
 
 (( $# )) || set -- zsh
+
+# The editors hand their window to another process and return within a second.
+# bubblewrap's init is the program itself, and the kernel kills a PID namespace
+# as soon as its init exits, so the window died a second after it was asked for:
+# the terminal showed the editor's startup warnings and nothing else. Their own
+# foreground flags keep the init alive for as long as the window is open.
+case ${1:t} in
+    codium|code) set -- "$1" --wait "${@:2}" ;;
+    zeditor|zed) set -- "$1" --foreground "${@:2}" ;;
+esac
+
+# The GPU goes in only where a window needs it: Zed does not start without one,
+# while a shell, Neovim or an agent has no use for the device, whose driver is
+# kernel attack surface. DOTFILES_DEV_GPU=1 adds it for anything else; without
+# it, Electron falls back to software rendering.
+if [[ ${1:t} == (codium|code|zeditor|zed) || -n $DOTFILES_DEV_GPU ]]; then
+    args+=(--dev-bind-try /dev/dri /dev/dri)
+fi
 
 # Through zsh: /etc/zshenv and ~/.zshenv rebuild the environment that was cleared above
 exec bwrap $args -- zsh -c 'exec "$@"' zsh "$@"

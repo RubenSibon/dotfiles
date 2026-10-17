@@ -12,11 +12,28 @@ $GIT_DOTFILES remote set-url --push origin git@github.com:RubenSibon/dotfiles.gi
 $GIT_DOTFILES config core.fsmonitor false
 # Refuse commits that would publish secrets or personal details
 $GIT_DOTFILES config core.hooksPath ~/.dotfiles/hooks
+# Sign the commits made here, so that the pull below can verify them on the next
+# machine. The key itself is machine-specific: it belongs in ~/.gitconfig.local.
+$GIT_DOTFILES config commit.gpgsign true
 
 # Pulling repository and submodule updates
 # (--ff-only: when histories diverge, stop instead of merging conflict markers into live dotfiles)
+# (--verify-signatures: everything past this line runs what the pull brought in. This
+#  script re-execs itself below, and then runs vscodium.zsh, the plugin installers and
+#  the submodules' own install scripts. So a commit that no key in this machine's
+#  keyring vouches for must not get that far: whoever can write to the remote would
+#  otherwise have a shell on every machine at its next update.)
 before=$($GIT_DOTFILES rev-parse HEAD)
-$GIT_DOTFILES --work-tree=$HOME pull --ff-only || exit 1
+pull=(pull --ff-only)
+# For a machine that does not have the public key yet: DOTFILES_SKIP_VERIFY=1 dotfiles-update
+[[ -n $DOTFILES_SKIP_VERIFY ]] || pull+=(--verify-signatures)
+if ! $GIT_DOTFILES --work-tree=$HOME $pull; then
+    echo "\nupdate: the pull was refused, so nothing below it ran."
+    echo "If a missing or unverifiable signature is the reason, import the public key"
+    echo "(gpg --recv-keys <id>) and mark it trusted, or run the update once with"
+    echo "DOTFILES_SKIP_VERIFY=1 after reading the incoming commits yourself."
+    exit 1
+fi
 
 # zsh keeps running the version of this script it started with: when the pull
 # changed it, start the new version, once

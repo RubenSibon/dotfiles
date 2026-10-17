@@ -69,6 +69,7 @@
 
   programs.firefox = {
     enable = true;
+    package = pkgs.firefox;
     languagePacks = [ "nl" ];
     nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
   };

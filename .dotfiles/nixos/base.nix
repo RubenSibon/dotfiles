@@ -71,6 +71,18 @@ in
   };
 
   #
+  # Commit signing
+  #
+
+  # Signing a commit, and the update's `--verify-signatures`, need a passphrase
+  # prompt. Installing gnupg alone does not provide one: without the agent there
+  # is no pinentry on the machine at all, and gpg stops at "No pinentry". The
+  # default prompt is pkgs.pinentry-curses, which also works over SSH and on a
+  # machine without a desktop; gnome.nix replaces it with a graphical one, and
+  # ~/.zshrc exports the GPG_TTY that the terminal prompt needs.
+  programs.gnupg.agent.enable = true;
+
+  #
   # Packages
   #
 

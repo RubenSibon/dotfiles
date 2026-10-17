@@ -49,6 +49,10 @@
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
+  # A passphrase prompt in the session instead of base.nix's terminal one, so that
+  # signing a commit works from an editor or an agent as well as from a shell
+  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
+
   environment.systemPackages = with pkgs; [
     evolution-data-server
     gnome-boxes

@@ -98,6 +98,12 @@ export LC_TIME=nl_NL.UTF-8 LC_PAPER=nl_NL.UTF-8 LC_MEASUREMENT=nl_NL.UTF-8 \
   LC_NAME=nl_NL.UTF-8 LC_ADDRESS=nl_NL.UTF-8 LC_TELEPHONE=nl_NL.UTF-8 \
   LC_IDENTIFICATION=nl_NL.UTF-8 PAPERSIZE=a4
 
+# Where a terminal passphrase prompt should appear. Without it, gpg's curses
+# pinentry cannot reach the terminal ("Inappropriate ioctl for device") and the
+# commit it was signing fails too. A graphical pinentry has no need for this;
+# a machine without a desktop, or one reached over SSH, does.
+[[ -n $TTY ]] && export GPG_TTY=$TTY
+
 # pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in

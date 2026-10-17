@@ -89,13 +89,20 @@ in
   environment.systemPackages = with pkgs; [
     bubblewrap # Sandbox for dotfiles-dev (see the README)
     claude-code
+    fastfetch
     git
     gitleaks # Scans commits in the dotfiles pre-commit hook
     gnupg
+    htop
+    iotop
     jq
+    net-tools
+    nmap
     nodejs
     pnpm
     rtk
+    sysstat
+    tcpdump
     typescript-language-server # For the Claude Code plugin typescript-lsp
     unzip
     wget

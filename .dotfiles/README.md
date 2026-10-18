@@ -85,13 +85,15 @@ You're done!
 
     `git clone --bare --recursive https://github.com/RubenSibon/dotfiles.git $HOME/.dotfiles/.gitrepo`
 
-2. Push over SSH, while fetching stays on HTTPS so update checks need no SSH key, keep git's file watcher off your home directory, and enable the pre-commit hook that refuses secrets and personal details:
+2. Push over SSH, while fetching stays on HTTPS so update checks need no SSH key, keep git's file watcher off your home directory, enable the pre-commit hook that refuses secrets and personal details, and sign the commits made here so that the next machine can verify them:
 
     `git --git-dir=$HOME/.dotfiles/.gitrepo remote set-url --push origin git@github.com:RubenSibon/dotfiles.git`
 
     `git --git-dir=$HOME/.dotfiles/.gitrepo config core.fsmonitor false`
 
     `git --git-dir=$HOME/.dotfiles/.gitrepo config core.hooksPath $HOME/.dotfiles/hooks`
+
+    `git --git-dir=$HOME/.dotfiles/.gitrepo config commit.gpgsign true`
 
 3. Check out the cloned bare branch:
 
@@ -128,6 +130,19 @@ The update script can be run with a handy alias:
 Everything should be up-to-date.
 
 When you open a terminal and the dotfiles haven't been checked for updates in the last 72 hours, zsh offers to check for updates, and then to install them.
+
+### Signed commits
+
+The update pulls with `--verify-signatures` and stops when a commit carries no signature that a key in this machine's keyring vouches for. Nothing below the pull runs in that case: the update script re-executes itself, and then runs `vscodium.zsh`, the plugin installers and the submodules' own install scripts, so whoever could write to the remote would otherwise have a shell on every machine at its next update. The pre-commit hook guards the other direction, outward; this guards what comes in.
+
+So each machine needs a signing key, in `~/.gitconfig.local` because the key is machine-specific:
+
+```ini
+[user]
+    signingkey = <key id>
+```
+
+and the public key of every machine you commit from, imported and trusted wherever you update. On a machine that does not have a key yet, read the incoming commits yourself and run the update once as `DOTFILES_SKIP_VERIFY=1 dotfiles-update`.
 
 ## Undo & uninstall
 
@@ -261,7 +276,13 @@ Then, once per machine, run `rtk init -g` and decline the telemetry question. It
 
 ### Pre-commit hook
 
-`~/.dotfiles/hooks/pre-commit` refuses a commit when its changes look like a secret, or match a pattern in `~/.config/dotfiles/private-patterns`: one extended regular expression per line, for the names and paths that must stay private. Lines starting with `!` allow text that the other patterns would block, such as e-mail addresses that are public anyway. When gitleaks is installed, the hook runs it as well.
+`~/.dotfiles/hooks/pre-commit` refuses a commit when its changes look like a secret, or match a pattern in `~/.config/dotfiles/private-patterns`: one extended regular expression per line, for the names and paths that must stay private. Lines starting with `!` allow text that the other patterns would block, such as e-mail addresses that are public anyway. It then hands the staged changes to gitleaks.
+
+Every check fails closed, because a check that silently does nothing still reads as a check. The hook stops the commit when:
+
+- gitleaks, grep or awk is missing. The required packages install gitleaks on NixOS and macOS; on Debian, `apt install gitleaks` or a release from [the project](https://github.com/gitleaks/gitleaks).
+- `~/.config/dotfiles/private-patterns` is missing. Create it even when you have no patterns: an empty file is how you say so.
+- a staged file is binary. The checks read added lines, and a binary file has none, so a keyring, an editor's state file or a `.p12` would pass unread. Commit it with `--no-verify` once you have checked it yourself.
 
 ## Developing the dotfiles
 
@@ -273,9 +294,14 @@ The work tree of the repository is the home directory. An editor or a coding age
 - the clone's `.git` is read-only: the sandbox can show the status and the diff, but it cannot commit, and it cannot plant hooks or git settings that would run outside the sandbox;
 - the system (`/nix`, `/usr`, `/etc`) is read-only;
 - the real home directory, the other processes, the SSH agent, the session's D-Bus and the environment variables of the calling shell do not exist;
-- the network and, for graphical editors, the Wayland socket and the GPU are available.
+- nothing can raise its privileges: bubblewrap sets `no_new_privs` on everything it starts, so a setuid binary gains nothing;
+- the network is available, and for graphical editors the Wayland socket and the GPU. The GPU goes in only for `codium`, `code`, `zeditor` and `zed`: a shell, Neovim or an agent has no use for the device, whose driver is kernel attack surface. `DOTFILES_DEV_GPU=1` adds it for anything else.
+
+The network is the host's own, not a separate one, so a program in the sandbox reaches the services that listen on the host's `localhost` and on the LAN.
 
 It works the same for every program: `dotfiles-dev codium`, `dotfiles-dev zeditor`, `dotfiles-dev nvim`, `dotfiles-dev claude`, or `dotfiles-dev` alone for a shell. The script that builds the sandbox is the deployed `~/.dotfiles/scripts/dotfiles-dev.zsh`, not the copy in the clone, so the sandbox cannot loosen itself.
+
+The editors get a foreground flag of their own: `--wait` for VSCodium and VS Code, `--foreground` for Zed. Both hand their window to another process and return within a second, and the program is the sandbox's init, whose exit makes the kernel kill everything else in the sandbox — the window included, before it ever appeared. So the terminal that started the editor stays occupied until the window closes.
 
 It needs Linux with bubblewrap, and Wayland for graphical editors. The `.gitignore` of the clone ignores everything untracked, so what programs keep in the sandbox's home directory, such as editor extensions and an agent's login, stays out of `git status`. It also stays readable for everything else in the sandbox.
 
@@ -286,9 +312,12 @@ git clone --recurse-submodules https://github.com/RubenSibon/dotfiles.git ~/.dot
 git -C ~/.dotfiles-src remote set-url --push origin git@github.com:RubenSibon/dotfiles.git
 # The reviewed, deployed pre-commit hook; not the copy that the sandbox can change
 git -C ~/.dotfiles-src config core.hooksPath ~/.dotfiles/hooks
+# Sign what you commit here: this is where the commits are made, and the update
+# on every machine verifies them. `dotfiles-update` sets the same on the bare repo.
+git -C ~/.dotfiles-src config commit.gpgsign true
 ```
 
-Editors start empty in the sandbox. For VSCodium or VS Code, start the editor once, close it, and run `dotfiles-dev zsh ~/.dotfiles/scripts/vscodium.zsh` for the settings and extensions. Agents ask you to log in once.
+Editors start empty in the sandbox. For VSCodium or VS Code, start the editor once, close it, and run `DOTFILES_DEV_GPU=1 dotfiles-dev zsh ~/.dotfiles/scripts/vscodium.zsh` for the settings and extensions; the variable is there because the program is `zsh`, so the editor it starts to install the extensions would otherwise render in software. Agents ask you to log in once, and keep that login in the clone's ignored `.claude/`.
 
 ### Workflow
 

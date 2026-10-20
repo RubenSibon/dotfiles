@@ -5,8 +5,11 @@
 
 [init]
 	defaultBranch = main
+# Replay local commits on top of the remote ones, instead of a merge commit per pull
 [pull]
-	rebase = false
+	rebase = true
+[rebase]
+	autoStash = true
 [push]
 	autoSetupRemote = true
 [rerere]

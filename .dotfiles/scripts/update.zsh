@@ -44,8 +44,14 @@ fi
 
 $GIT_DOTFILES --work-tree=$HOME submodule update --init --recursive
 
+# Nix outside NixOS: an interactive shell puts it and its profile on PATH, but
+# this script is not one. The profile goes on PATH even before its first install.
+nix_env=/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+[[ -r $nix_env ]] && ! command -v nix > /dev/null && source $nix_env
+
 # Missing system packages first: the steps below can use them
 [[ $OSTYPE == darwin* ]] && ~/.dotfiles/scripts/update-macos.zsh
+[[ $OSTYPE == linux* && ! -e /etc/NIXOS ]] && ~/.dotfiles/scripts/update-nix.zsh
 
 # Point the agents on this machine at the shared agent instructions,
 # unless a machine already has its own instruction file

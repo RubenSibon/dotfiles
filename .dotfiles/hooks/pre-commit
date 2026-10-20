@@ -19,7 +19,7 @@ done
 if ! command -v gitleaks >/dev/null 2>&1; then
   echo 'pre-commit: gitleaks is missing, so the staged changes went unscanned.' >&2
   echo 'NixOS: nixos/base.nix installs it. macOS: the Brewfile does.' >&2
-  echo 'Debian: apt install gitleaks, or a release from github.com/gitleaks/gitleaks.' >&2
+  echo 'Other Linux: dotfiles-update installs it through Nix (see the README), or apt install gitleaks.' >&2
   exit 1
 fi
 

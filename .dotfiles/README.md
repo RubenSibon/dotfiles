@@ -50,6 +50,7 @@ The dotfiles configure tools; they do not install them. The install and update s
 | Debian, Ubuntu  | the `nl_NL.UTF-8` locale, for the Dutch formats in `.zshrc`              | `sudo locale-gen nl_NL.UTF-8` (Debian: first uncomment the line in `/etc/locale.gen`) |
 | macOS           | the Xcode Command Line Tools, which include git                          | `xcode-select --install`                                          |
 | macOS           | [Homebrew](https://brew.sh/), and the formulae in `~/.dotfiles/Brewfile` (git, gitleaks, Neovim) | `brew bundle --file ~/.dotfiles/Brewfile`  |
+| Debian, Ubuntu  | optional: [Nix](https://nixos.org/download), for what apt lacks or ships outdated (gitleaks, jq, Neovim, VSCodium) | `dotfiles-update` offers to install `~/.dotfiles/nix` (see [Nix outside NixOS](#nix-outside-nixos)) |
 | NixOS           | everything, through `~/.dotfiles/nixos/base.nix`                         | `sudo nixos-rebuild switch --flake ~/.dotfiles/nixos`             |
 | Other Linux     | `git`, `zsh`, `curl`                                                     | your package manager                                              |
 
@@ -230,7 +231,20 @@ Then build and activate it; the configuration is picked by the machine's current
 
 `sudo nixos-rebuild switch --flake ~/.dotfiles/nixos`
 
-`flake.lock` pins nixpkgs, so every machine builds the same versions. Move it along with `nix flake update --flake ~/.dotfiles/nixos`, rebuild, and commit the lock file.
+`flake.lock` pins nixpkgs, so every machine builds the same versions. Move it along with `nix flake update --flake ~/.dotfiles/nixos`, rebuild, copy the lock file to `~/.dotfiles/nix` (see below), and commit both.
+
+### Nix outside NixOS
+
+On other Linux distributions, [Nix](https://nixos.org/download) installs what the distribution lacks or ships outdated. `~/.dotfiles/nix` is a flake with one package, `dotfiles`, that bundles them: gitleaks, jq, Neovim and VSCodium. On Linux without NixOS, `dotfiles-update` offers to add it to your Nix profile, and upgrades it on later runs, following the flake's `flake.lock`. Without Nix it says so and carries on.
+
+- The script turns on the experimental `nix-command` and `flakes` features for its own commands only. To use `nix profile` yourself, add `experimental-features = nix-command flakes` to `/etc/nix/nix.conf`, or pass the same `--extra-experimental-features`.
+- `dotfiles-dev` puts the profile's programs on the sandbox's `PATH`. After an upgrade, start a new sandbox to get the new versions.
+- The VSCodium package is the FHS variant, which runs in a bubblewrap sandbox of its own. On an Ubuntu desktop that restricts unprivileged user namespaces through AppArmor, that sandbox may not start; WSL has no AppArmor.
+
+The flake is separate from `~/.dotfiles/nixos`: a flake can't read files outside its own directory, because the home directory is not a git checkout. So the two can't share a package list; keep them in step by hand:
+
+- A package goes in both: in `nix/flake.nix`, and in a module of `nixos/`.
+- Both pin the same nixpkgs. After `nix flake update --flake ~/.dotfiles/nixos`, run `cp ~/.dotfiles/nixos/flake.lock ~/.dotfiles/nix/`: their inputs are identical, so the lock file fits both.
 
 ### VSCodium and VS Code
 
@@ -289,7 +303,7 @@ Then, once per machine, run `rtk init -g` and decline the telemetry question. It
 
 Every check fails closed, because a check that silently does nothing still reads as a check. The hook stops the commit when:
 
-- gitleaks, grep or awk is missing. The required packages install gitleaks on NixOS and macOS; on Debian, `apt install gitleaks` or a release from [the project](https://github.com/gitleaks/gitleaks).
+- gitleaks, grep or awk is missing. The required packages install gitleaks on NixOS and macOS, and Nix does on other Linux; without Nix, `apt install gitleaks` or a release from [the project](https://github.com/gitleaks/gitleaks).
 - `~/.config/dotfiles/private-patterns` is missing. Create it even when you have no patterns: an empty file is how you say so.
 - a staged file is binary. The checks read added lines, and a binary file has none, so a keyring, an editor's state file or a `.p12` would pass unread. Commit it with `--no-verify` once you have checked it yourself.
 

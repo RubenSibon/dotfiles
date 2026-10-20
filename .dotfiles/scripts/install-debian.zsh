@@ -12,7 +12,8 @@ done
 
 # The pre-commit hook refuses to run without gitleaks. Not every apt release
 # carries it, so a failure here is not fatal: the hook names the alternative.
-if ! command -v gitleaks > /dev/null; then
+# With Nix, update.zsh installs a newer one from ~/.dotfiles/nix instead.
+if ! command -v gitleaks > /dev/null && [[ ! -e /nix ]]; then
     steps+=("sudo apt install gitleaks || echo 'apt has no gitleaks: take a release from github.com/gitleaks/gitleaks'")
 fi
 

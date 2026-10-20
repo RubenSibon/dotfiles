@@ -155,7 +155,7 @@ The public key may travel over any channel, but the fingerprint must not come fr
 
 ## Undo & uninstall
 
-To undo and remove these dotfiles, first check `~/.dotfiles` for files of your own, because the repository ignores everything it doesn't track. Then:
+To undo and remove these dotfiles, first check `~/.dotfiles` for files of your own, because the repository ignores some files there that it doesn't track, such as backups and machine-specific settings. Then:
 
 `rm -rf ~/.dotfiles`
 
@@ -181,7 +181,7 @@ The alias is needed because this repository's `.git/` directory does not exist i
 
 Check your `.zshrc` for the alias.
 
-The `.gitignore` in your home directory ignores everything (`*`), so `dotfiles status` only shows files that the repository already tracks. Add a new file explicitly, one at a time: `dotfiles add -f <path>`.
+The `.gitignore` in your home directory ignores everything at the top level, then allows what the repository tracks, such as `~/.dotfiles/` and `~/.zshrc`. So `dotfiles status` shows new files in those places, and nothing else in your home directory. A new file elsewhere, or a private file in an allowed directory, gets its pattern in `.gitignore` first. Add files by path, not with `dotfiles add -A`.
 
 ### Per-OS and per-machine settings
 
@@ -312,7 +312,7 @@ It works the same for every program: `dotfiles-dev codium`, `dotfiles-dev zedito
 
 The editors get a foreground flag of their own: `--wait` for VSCodium and VS Code, `--foreground` for Zed. Both hand their window to another process and return within a second, and the program is the sandbox's init, whose exit makes the kernel kill everything else in the sandbox — the window included, before it ever appeared. So the terminal that started the editor stays occupied until the window closes.
 
-It needs Linux with bubblewrap, and Wayland for graphical editors. The `.gitignore` of the clone ignores everything untracked, so what programs keep in the sandbox's home directory, such as editor extensions and an agent's login, stays out of `git status`. It also stays readable for everything else in the sandbox.
+It needs Linux with bubblewrap, and Wayland for graphical editors. The `.gitignore` of the clone ignores what is not in the repository's directories, so what programs keep in the sandbox's home directory, such as editor extensions and an agent's login, stays out of `git status`. It also stays readable for everything else in the sandbox.
 
 ### One-time setup
 
@@ -357,7 +357,7 @@ Editors start empty in the sandbox. For VSCodium or VS Code, start the editor on
     dotfiles-update
     ```
 
-To add a file to the repository, use `git add -f <path>` in the clone, one file at a time. The NixOS configuration in `nixos/` can be edited in the sandbox; build it outside, after the review, because `nixos/hosts/` is not in the clone. `nixos-rebuild build-vm --flake ~/.dotfiles/nixos` boots the result in a throwaway virtual machine.
+A new file in an allowed directory, such as `~/.dotfiles/`, shows up in `git status`; add it with `git add <path>`. The NixOS configuration in `nixos/` can be edited in the sandbox; build it outside, after the review, because `nixos/hosts/` is not in the clone. `nixos-rebuild build-vm --flake ~/.dotfiles/nixos` boots the result in a throwaway virtual machine.
 
 Small changes on a machine without the clone still work the old way, with the `dotfiles` alias from the home directory: `dotfiles status`, `dotfiles add -u`, `dotfiles commit`, `dotfiles push`. Use a terminal editor for those, not an editor or agent with a project opened on `~`.
 

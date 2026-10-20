@@ -1,14 +1,34 @@
-*
-!.antigen/
-!.config/nvim/
-!.dotfiles/
-!.fzf/
-!.gitconfig
-!.github/
-!.gitignore
-!.gitmodules
-!.hidden
-!.vim/
-!.vimrc
-!.zshenv
-!.zshrc
+# The work tree is the whole home directory. Ignore everything at its top level,
+# then allow what the repository tracks; inside an allowed directory, everything
+# shows up unless it is ignored below.
+/*
+!/.antigen/
+!/.dotfiles/
+!/.fzf/
+!/.gitconfig
+!/.gitignore
+!/.gitmodules
+!/.hidden
+!/.vimrc
+!/.zshenv
+!/.zshrc
+
+!/.config/
+/.config/*
+!/.config/nvim/
+
+!/.github/
+/.github/*
+!/.github/README.md
+
+# Vundle installs the other plugins next to itself
+!/.vim/
+/.vim/bundle/*
+!/.vim/bundle/Vundle.vim
+
+# Untracked, in ~/.dotfiles: the bare repository, install.zsh's backups,
+# NixOS's per-machine configurations and machine-specific git settings
+/.dotfiles/.gitrepo/
+/.dotfiles/backup-*/
+/.dotfiles/nixos/hosts/
+/.dotfiles/.gitconfig_*

@@ -10,9 +10,9 @@ Keep secrets and personal details out of it.
 - Changes are made in the clone `~/.dotfiles-src`, opened in a sandbox with `dotfiles-dev` (see "Developing the dotfiles" in the README).
   In the sandbox the clone is the home directory, plain `git` works instead of the `dotfiles` alias, and `.git` is read-only: Ruben commits outside it.
   If you find yourself in the real home directory instead, say so before reading or changing anything outside `~/.dotfiles`.
-- `~/.gitignore` ignores everything (`*`), so `status` only shows changes to tracked files.
-  Add a new file deliberately, one path at a time: `dotfiles add -f <path>`.
-  Never add a directory with `-f`: directories such as `~/.dotfiles`, `~/.claude` and `~/.config` also hold private, untracked files.
+- `~/.gitignore` ignores the top level of the home directory, allows what the repository tracks, and ignores the private files inside those allowed directories, so `status` shows new files only where they belong.
+  Add files by path, never with `-A` or `-f`.
+  A file that belongs elsewhere gets an allow pattern in `~/.gitignore` first; a private file in an allowed directory gets an ignore pattern that names no person, employer or host.
 - Settings for one operating system go in `~/.dotfiles/zsh/<os>.zsh`.
   Settings for one machine go in untracked files, such as `~/.zshrc.local` and `~/.gitconfig.local`.
 - Shared instructions for coding agents live in `~/.dotfiles/agents/AGENTS.md`.

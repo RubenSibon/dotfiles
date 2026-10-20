@@ -40,6 +40,13 @@ done
 # An empty environment plus what a program needs to start: tokens and agent
 # sockets that the calling shell exports stay outside. Agents log in once inside
 # the sandbox and keep their credentials in the clone's ignored home directory.
+# Nix outside NixOS: the profile's link lives in the real home directory, which
+# the sandbox lacks. Its target in /nix/store is there, read-only; a program
+# that the profile gains after the sandbox started needs a new sandbox.
+for link in ~/.nix-profile ${XDG_STATE_HOME:-~/.local/state}/nix/profile; do
+    [[ -e $link ]] && PATH=${link:A}/bin:$PATH && break
+done
+
 args+=(--clearenv --setenv XDG_RUNTIME_DIR $runtime)
 for name in HOME USER LOGNAME PATH TERM COLORTERM LANG WAYLAND_DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP; do
     [[ -v $name ]] && args+=(--setenv $name ${(P)name})

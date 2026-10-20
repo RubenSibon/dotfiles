@@ -14,6 +14,9 @@ local_dir=~/.config/dotfiles/vscodium
 files=(settings.json keybindings.json)
 # Settings that VS Code does not get
 codium_only='^claudeCode\.'
+# On WSL, a Linux build's launcher asks whether to continue, on stderr, which
+# the extension step below hides: it would wait for an answer forever
+export DONT_PROMPT_WSL_INSTALL=1
 
 # VSCodium on Linux and macOS: symlinks, so changes made in the editor land in the tracked files
 for dir in ~/.config/VSCodium/User(N) ~/Library/Application\ Support/VSCodium/User(N); do

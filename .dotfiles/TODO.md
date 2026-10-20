@@ -2,7 +2,35 @@
 
 Follow-up work for these dotfiles, most important first. Like everything else in this repository, this file must stay free of secrets and personal details.
 
-## 1. Editors: Zed and VS Code
+## 1. Commit signing and hardening
+
+**Important: pick this up first.** Until the first item is done, commits made on the work laptop (WSL) are unsigned, and `dotfiles-update` refuses to pull them anywhere.
+
+### GPG
+
+- [ ] Give every machine its own signing subkey under the one primary key, instead of copying the primary key or making a key per machine. On the NixOS laptop, which holds the primary key:
+    1. `gpg --quick-add-key <primary fingerprint> ed25519 sign 2y`
+    2. `gpg --armor --export-secret-subkeys '<subkey id>!' > subkey.asc`: the `!` exports only that subkey's secret part, not the primary key.
+    3. Move `subkey.asc` to the other machine over a private channel, `gpg --import` it there, give the primary key ultimate trust, and delete the file with `shred -u`.
+    4. Set `signingkey = <subkey id>!` under `[user]` in that machine's `~/.gitconfig.local`.
+    5. Export the public key again, import it on every machine that runs `dotfiles-update`, and upload it to GitHub, so the new subkey shows as verified.
+- [ ] Support every e-mail address that commits are made with. GitHub marks a commit as verified only when its committer e-mail is a user ID on the signing key and a verified address on the GitHub account.
+    1. Add each personal address as a user ID to the primary key, on the NixOS laptop: `gpg --quick-add-uid <primary fingerprint> 'Ruben J. Sibon <address>'`. Subkeys need nothing: they sign for every user ID of their primary key.
+    2. Decide on the work address separately. As a user ID on the personal key, it publicly ties the work and the personal identity together, on GitHub and on any key server, and it stays on the key after the job ends (it can only be revoked, with `gpg --quick-revuid`). A separate work key avoids both, and the employer may have its own rules for keys.
+    3. Name the key per identity, next to `user.email` in the files that the `includeIf` blocks in `~/.gitconfig.local` include: `signingkey = <subkey id>!`. Git then signs with that key whatever the address, instead of looking for a key whose user ID matches the committer e-mail.
+    4. Export the public key again, and upload it to GitHub and wherever the update checks signatures.
+- [ ] Sign the commits that were made unsigned on the work laptop, on a local branch that is not pushed: `git rebase --force-rebase --gpg-sign origin/master`, check them with `git log --show-signature origin/master..`, then push and delete the branch.
+- [ ] Keep the primary key offline: once every machine has a subkey, move the primary key to an encrypted backup, and keep only the subkeys on the laptops (`gpg --export-secret-subkeys`, then delete and re-import). It is then needed only to add, extend or revoke a subkey.
+- [ ] Back up the revocation certificate that gpg made with the primary key (`~/.gnupg/openpgp-revocs.d/`) to the same offline place, and put a reminder in a calendar before the subkeys expire.
+
+### Update and commit checks
+
+- [ ] `git pull --verify-signatures` only checks the newest incoming commit: a signed commit on top vouches for every unsigned commit below it. Make `update.zsh` check every incoming commit instead, for example with `git log --format=%G? HEAD..FETCH_HEAD` before merging, and stop on anything but `G`. Until then, never sign on top of commits that you have not read.
+- [ ] One machine commits with the author e-mail `#`. Find it with `git config --show-origin user.email` in the clone, and correct `~/.gitconfig.local` there. The commits already pushed keep it: rewriting them would mean a force-push to every machine.
+- [ ] gitleaks: the pre-commit hook calls `gitleaks protect --staged`, which gitleaks 8.19 replaced with `gitleaks git --staged`. Switch when every machine has 8.19 or newer: Nix and Homebrew do, while Ubuntu 24.04's apt package is 8.16.
+- [ ] Move machine-specific git settings out of `~/.dotfiles` to `~/.config/dotfiles`: `.gitignore` now shows new files in `~/.dotfiles`, and only an ignore pattern keeps such a file out of a commit.
+
+## 2. Editors: Zed and VS Code
 
 ### Git integration with the bare repository
 
@@ -12,7 +40,7 @@ Neither editor understands a bare repository with a separate work tree:
 - Zed finds repositories by looking for `.git` inside the project ([Zed docs](https://zed.dev/docs/git)); bare repositories and `GIT_DIR` are not mentioned.
 
 - [x] Edit in the ordinary clone `~/.dotfiles-src`, opened in a sandbox with `dotfiles-dev` (see "Developing the dotfiles" in the README). The clone has a `.git`, so both editors show the status and the diff; it is read-only in the sandbox, so commit from a terminal outside it. Do not open `~` itself in an editor or agent any more.
-- [ ] Switch to a regular repository, for example `~/.dotfiles` plus GNU Stow (symlinks) or chezmoi. The deployed copy and the clone would then have the same layout. chezmoi also covers per-OS files (templates, `.chezmoiignore`) and can read secrets from a password manager, which overlaps with item 4.
+- [ ] Switch to a regular repository, for example `~/.dotfiles` plus GNU Stow (symlinks) or chezmoi. The deployed copy and the clone would then have the same layout. chezmoi also covers per-OS files (templates, `.chezmoiignore`) and can read secrets from a password manager, which overlaps with item 5.
 
 Do not put a `.git` file in `~` that points at the bare repository. Every folder in the home directory would then belong to the dotfiles repository, and `git clean -dfx` in any of them would delete everything the `*` in `~/.gitignore` ignores: nearly the whole home directory.
 
@@ -57,7 +85,7 @@ Already aligned: the VS Code keymap in Zed, Vim mode in Zed and vscode-neovim in
 - [ ] Track a secret-free `.config/zed/settings.json` and `.config/zed/keymap.json` for Linux and macOS.
 - [ ] Consider a `~/.editorconfig` for what every editor reads (line endings, final newline, indentation). It also applies to projects under `~` that have no `.editorconfig` of their own.
 
-## 2. Migrate from Vim to Neovim
+## 3. Migrate from Vim to Neovim
 
 Now: `.config/nvim/init.vim` sources `~/.vimrc`, whose plugins come from Vundle (a submodule). `$EDITOR` prefers `nvim`, and git follows it.
 
@@ -68,7 +96,7 @@ Now: `.config/nvim/init.vim` sources `~/.vimrc`, whose plugins come from Vundle 
 - [ ] vscode-neovim uses the same config; skip UI plugins with `if vim.g.vscode then … end`.
 - [ ] Remove Vundle (submodule, `update.zsh` step, README), and reduce `~/.vimrc` to a plugin-free fallback for machines without Neovim, or remove it.
 
-## 3. Maintained plugin managers
+## 4. Maintained plugin managers
 
 Antigen has been unmaintained since 2019 and the submodule pins a debug build; its cache has broken the prompt before. fzf is a submodule pinned to 0.28 (2021), and `submodule update` never moves it.
 
@@ -77,7 +105,7 @@ Antigen has been unmaintained since 2019 and the submodule pins a debug build; i
 - [ ] Install fzf with the system package manager (Homebrew, apt, nixpkgs), and replace `~/.fzf.zsh` with `source <(fzf --zsh)`. That needs fzf 0.48 or newer; older Debian and Ubuntu packages ship the scripts in `/usr/share/doc/fzf/examples/`. On NixOS, `programs.fzf.keybindings` and `programs.fzf.fuzzyCompletion` set it up system-wide.
 - [ ] Remove the `.antigen` and `.fzf` submodules and their steps in `update.zsh`, and update the README.
 
-## 4. OS-specific files: NixOS, WSL and macOS
+## 5. OS-specific files: NixOS, WSL and macOS
 
 OS-specific settings go in `~/.dotfiles/zsh/<os>.zsh`, loaded under "OS-specific configuration" in `.zshrc`. Machine-specific settings go in the untracked `~/.zshrc.local`.
 
@@ -87,9 +115,9 @@ OS-specific settings go in `~/.dotfiles/zsh/<os>.zsh`, loaded under "OS-specific
 - [ ] NixOS: move to the current release. `flake.lock` pins `nixos-25.11`, which no longer gets updates: change the branch in `flake.nix`, run `nix flake update`, and read the release notes before rebuilding. `system.stateVersion` stays as it is.
 - [ ] NixOS: keep the `hosts/` directories somewhere, such as a private repository; they are small but not synced.
 - [ ] NixOS: check whether the oh-my-zsh `ssh-agent` plugin gets in the way of the agent that GNOME starts (`SSH_AUTH_SOCK` points at `gcr`), and skip it there as on macOS.
-- [ ] NixOS: fzf moves to nixpkgs together with item 3 (`programs.fzf.keybindings` and `programs.fzf.fuzzyCompletion` in `base.nix`); until then the submodule's binary and key bindings stay a matching pair.
+- [ ] NixOS: fzf moves to nixpkgs together with item 4 (`programs.fzf.keybindings` and `programs.fzf.fuzzyCompletion` in `base.nix`); until then the submodule's binary and key bindings stay a matching pair.
 - [ ] WSL: add `wsl.zsh` with `[[ -n $WSL_DISTRO_NAME ]] && source ~/.dotfiles/zsh/wsl.zsh` when needed. Candidates: `BROWSER=wslview` (package `wslu`) as a default, and `appendWindowsPath = false` in `/etc/wsl.conf` with only the Windows tools you use (such as `code`) added back, because every Windows folder in `PATH` slows down command lookups. Windows paths that contain a user name stay in `~/.zshrc.local`.
 - [x] macOS: `macos.zsh` loads Homebrew on Apple Silicon and Intel, including its zsh completions, and is sourced before the plugins; the oh-my-zsh `ssh-agent` plugin is skipped in favour of the macOS agent and Keychain; `.zshenv` turns off the Terminal's per-window history; `update.zsh` applies the repository settings to clones made by older install scripts; `install.zsh` starts the Command Line Tools installer when git is missing, backs up the files a fresh checkout replaces, and gives the update script the terminal so Homebrew's installer can ask for a password; `update-macos.zsh` holds the Homebrew steps.
-- [x] macOS: a `Brewfile` for the formulae every Mac should have (git, gitleaks, Neovim), installed by `update-macos.zsh` with `brew bundle`. Add fzf with item 3; until then the submodule's older key bindings would run against a newer binary.
+- [x] macOS: a `Brewfile` for the formulae every Mac should have (git, gitleaks, Neovim), installed by `update-macos.zsh` with `brew bundle`. Add fzf with item 4; until then the submodule's older key bindings would run against a newer binary.
 - [ ] macOS: `defaults write` settings (Finder, Dock, key repeat) in `scripts/macos-defaults.zsh`, run on request, not on every update, because some need a logout. Pick the settings first.
 - [x] macOS: the login shell stays the system's `/bin/zsh`, not Homebrew's: it is always listed in `/etc/shells` and keeps working when Homebrew breaks. `update.zsh` sets it with `chsh`.

@@ -32,11 +32,12 @@ Conventional Commits, in English:
 <type>(<scope>)<!>: <Subject>
 ```
 
-- Write the subject in the imperative mood, starting with a capital letter, with no full stop, on one line, under about 80 characters.
+- Write the subject in the imperative mood, starting with a capital letter, with no full stop, on one line, and as short as you can: aim for 80 characters.
 - Describe the goal or the outcome of the change, not its mechanics, and not what the diff already shows.
 - Do not repeat the scope in the subject.
 - The scope is optional; when the repository uses scopes, follow the grouping its history already uses.
 - Add context, reasoning or rejected alternatives in a body after a blank line, but only when the "why" is not obvious.
+  Write each paragraph of the body on one line, and let the tool that shows it wrap the text.
 - Append `!` after the scope for a breaking change.
 
 Within a working branch, any Conventional Commit type is fine: `docs`, `refactor`, `test`, `ci`, and so on.

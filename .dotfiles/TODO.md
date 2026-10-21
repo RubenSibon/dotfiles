@@ -4,30 +4,25 @@ Follow-up work for these dotfiles, most important first. Like everything else in
 
 ## 1. Commit signing and hardening
 
-**Important: pick this up first.** Until the first item is done, commits made on the work laptop (WSL) are unsigned, and `dotfiles-update` refuses to pull them anywhere.
+What is left here is hardening with the pressure off: every machine signs what it commits, and `dotfiles-update` verifies every commit it is about to run.
 
 ### GPG
 
-- [ ] Give every machine its own signing subkey under the one primary key, instead of copying the primary key or making a key per machine. On the NixOS laptop, which holds the primary key:
+- [x] Every machine has its own signing subkey under the one primary key, instead of a copy of the primary key or a key per machine. To add the next machine, on the NixOS laptop, which holds the primary key:
     1. `gpg --quick-add-key <primary fingerprint> ed25519 sign 2y`
     2. `gpg --armor --export-secret-subkeys '<subkey id>!' > subkey.asc`: the `!` exports only that subkey's secret part, not the primary key.
     3. Move `subkey.asc` to the other machine over a private channel, `gpg --import` it there, give the primary key ultimate trust, and delete the file with `shred -u`.
     4. Set `signingkey = <subkey id>!` under `[user]` in that machine's `~/.gitconfig.local`.
     5. Export the public key again, import it on every machine that runs `dotfiles-update`, and upload it to GitHub, so the new subkey shows as verified.
-- [ ] Support every e-mail address that commits are made with. GitHub marks a commit as verified only when its committer e-mail is a user ID on the signing key and a verified address on the GitHub account.
-    1. Add each personal address as a user ID to the primary key, on the NixOS laptop: `gpg --quick-add-uid <primary fingerprint> 'Ruben J. Sibon <address>'`. Subkeys need nothing: they sign for every user ID of their primary key.
-    2. Decide on the work address separately. As a user ID on the personal key, it publicly ties the work and the personal identity together, on GitHub and on any key server, and it stays on the key after the job ends (it can only be revoked, with `gpg --quick-revuid`). A separate work key avoids both, and the employer may have its own rules for keys.
-    3. Name the key per identity, next to `user.email` in the files that the `includeIf` blocks in `~/.gitconfig.local` include: `signingkey = <subkey id>!`. Git then signs with that key whatever the address, instead of looking for a key whose user ID matches the committer e-mail.
-    4. Export the public key again, and upload it to GitHub and wherever the update checks signatures.
-- [ ] Sign the commits that were made unsigned on the work laptop, on a local branch that is not pushed: `git rebase --force-rebase --gpg-sign origin/master`, check them with `git log --show-signature origin/master..`, then push and delete the branch.
-- [ ] Keep the primary key offline: once every machine has a subkey, move the primary key to an encrypted backup, and keep only the subkeys on the laptops (`gpg --export-secret-subkeys`, then delete and re-import). It is then needed only to add, extend or revoke a subkey.
-- [ ] Back up the revocation certificate that gpg made with the primary key (`~/.gnupg/openpgp-revocs.d/`) to the same offline place, and put a reminder in a calendar before the subkeys expire.
+- [x] The commits that the work laptop made unsigned carry signatures: `git rebase --force-rebase --gpg-sign origin/master` on the branch they sat on, checked with `git log --show-signature`, then folded into `master` and the branch deleted on both sides. The commits pushed unsigned before that stay as they are; rewriting them would mean a force-push to every machine.
+- [x] `~/.gnupg` is in an encrypted backup on two separate media (`tar -C ~ -cf - .gnupg | gpg --symmetric --cipher-algo AES256`), which includes the revocation certificate in `~/.gnupg/openpgp-revocs.d/`. The passphrase is in the password manager: a passphrase remembered now and forgotten in two years makes the backup worth nothing. A calendar reminder sits before the subkeys expire.
+- [ ] Keep the primary key off the laptops, now that the backup exists: `gpg --export-secret-subkeys`, `gpg --delete-secret-keys`, re-import, and check that `gpg --list-secret-keys` shows `sec#`. The primary is then needed only to add, extend or revoke a subkey, and a compromised laptop costs one subkey instead of the identity. Lower priority than the rest of this section: it makes recovery cheaper, it does not stop anything.
 
 ### Update and commit checks
 
-- [ ] `git pull --verify-signatures` only checks the newest incoming commit: a signed commit on top vouches for every unsigned commit below it. Make `update.zsh` check every incoming commit instead, for example with `git log --format=%G? HEAD..FETCH_HEAD` before merging, and stop on anything but `G`. Until then, never sign on top of commits that you have not read.
+- [x] `update.zsh` fetches, reads one `%G?` per commit over `HEAD..FETCH_HEAD`, and merges `--ff-only` only when every one of them is `G`. `U` (good signature, untrusted key), `E` (no key to check it with) and `N` (no signature) each stop the update before the merge, so before anything it brought in runs, and the refusal names the commits. `git pull --verify-signatures` checked only the commit the pull ended at, so one signed commit on top vouched for every unsigned commit below it.
 - [ ] One machine commits with the author e-mail `#`. Find it with `git config --show-origin user.email` in the clone, and correct `~/.gitconfig.local` there. The commits already pushed keep it: rewriting them would mean a force-push to every machine.
-- [ ] gitleaks: the pre-commit hook calls `gitleaks protect --staged`, which gitleaks 8.19 replaced with `gitleaks git --staged`. Switch when every machine has 8.19 or newer: Nix and Homebrew do, while Ubuntu 24.04's apt package is 8.16.
+- [x] gitleaks: the pre-commit hook asks the version on the machine which subcommand it has, newest name first, instead of picking one for every machine. gitleaks 8.19 renamed `protect --staged` to `git --staged`; 8.30 still accepts the old name as a deprecated alias, but Ubuntu 24.04's apt package is 8.16, which predates the rename, and a gitleaks 9 without the alias would block every commit.
 - [ ] Move machine-specific git settings out of `~/.dotfiles` to `~/.config/dotfiles`: `.gitignore` now shows new files in `~/.dotfiles`, and only an ignore pattern keeps such a file out of a commit.
 
 ## 2. Editors: Zed and VS Code

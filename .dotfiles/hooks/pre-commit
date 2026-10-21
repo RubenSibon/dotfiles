@@ -70,5 +70,13 @@ if [ -n "$found" ]; then
   exit 1
 fi
 
-# A dedicated scanner, for the shapes the patterns above do not know
-gitleaks protect --staged --redact --no-banner || exit 1
+# A dedicated scanner, for the shapes the patterns above do not know.
+# gitleaks 8.19 renamed `protect --staged` to `git --staged`. The old name still
+# works as a deprecated alias in 8.30, but Ubuntu 24.04's package is 8.16, which
+# predates the rename, and a gitleaks 9 that drops the alias would otherwise block
+# every commit. So ask this machine's version which one it has, newest name first.
+if gitleaks git --help >/dev/null 2>&1; then
+  gitleaks git --staged --redact --no-banner || exit 1
+else
+  gitleaks protect --staged --redact --no-banner || exit 1
+fi

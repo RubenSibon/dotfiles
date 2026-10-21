@@ -17,21 +17,49 @@ $GIT_DOTFILES config core.hooksPath ~/.dotfiles/hooks
 $GIT_DOTFILES config commit.gpgsign true
 
 # Pulling repository and submodule updates
-# (--ff-only: when histories diverge, stop instead of merging conflict markers into live dotfiles)
-# (--verify-signatures: everything past this line runs what the pull brought in. This
-#  script re-execs itself below, and then runs vscodium.zsh, the plugin installers and
-#  the submodules' own install scripts. So a commit that no key in this machine's
-#  keyring vouches for must not get that far: whoever can write to the remote would
-#  otherwise have a shell on every machine at its next update.)
+# (Everything past this point runs what the fetch brought in: this script re-execs
+#  itself below, and then runs vscodium.zsh, the plugin installers and the
+#  submodules' own install scripts. So a commit that no trusted key in this
+#  machine's keyring vouches for must not get that far: whoever can write to the
+#  remote would otherwise have a shell on every machine at its next update.)
+# (Fetch, check, then merge, rather than pull --verify-signatures: that checks only
+#  the commit the pull ends at, so one signed commit on top vouches for every
+#  unsigned commit below it.)
 before=$($GIT_DOTFILES rev-parse HEAD)
-pull=(pull --ff-only)
+if ! branch=$($GIT_DOTFILES symbolic-ref --short HEAD 2> /dev/null); then
+    echo "\nupdate: the dotfiles repository is not on a branch, so nothing was pulled."
+    exit 1
+fi
+if ! $GIT_DOTFILES fetch origin $branch; then
+    echo "\nupdate: the fetch failed, so nothing below it ran."
+    exit 1
+fi
+
+# One %G? per incoming commit. Only G passes: a good signature from a key this
+# machine trusts. U (good signature, untrusted key), E (no key to check it with)
+# and N (no signature at all) all stop the update here, before the merge.
 # For a machine that does not have the public key yet: DOTFILES_SKIP_VERIFY=1 dotfiles-update
-[[ -n $DOTFILES_SKIP_VERIFY ]] || pull+=(--verify-signatures)
-if ! $GIT_DOTFILES --work-tree=$HOME $pull; then
-    echo "\nupdate: the pull was refused, so nothing below it ran."
-    echo "If a missing or unverifiable signature is the reason, import the public key"
-    echo "(gpg --recv-keys <id>) and mark it trusted, or run the update once with"
-    echo "DOTFILES_SKIP_VERIFY=1 after reading the incoming commits yourself."
+if [[ -z $DOTFILES_SKIP_VERIFY ]]; then
+    unverified=()
+    for commit in ${(f)"$($GIT_DOTFILES log --format='%G? %h %s' HEAD..FETCH_HEAD)"}; do
+        [[ -z $commit || $commit == 'G '* ]] || unverified+=$commit
+    done
+    if (( $#unverified )); then
+        echo "\nupdate: these incoming commits carry no signature this machine trusts:"
+        print -l $unverified
+        echo "\nNothing below this check ran, and the dotfiles are unchanged."
+        echo "Import the public key (gpg --recv-keys <id>) and mark it trusted, or run"
+        echo "the update once with DOTFILES_SKIP_VERIFY=1 after reading the commits above"
+        echo "yourself."
+        exit 1
+    fi
+fi
+
+# (--ff-only: when histories diverge, stop instead of merging conflict markers into live dotfiles)
+if ! $GIT_DOTFILES --work-tree=$HOME merge --ff-only FETCH_HEAD; then
+    echo "\nupdate: the merge was refused, so nothing below it ran."
+    echo "When the histories have diverged, the commits on each side are listed by"
+    echo "git --git-dir=\$HOME/.dotfiles/.gitrepo log --oneline --left-right HEAD...FETCH_HEAD"
     exit 1
 fi
 

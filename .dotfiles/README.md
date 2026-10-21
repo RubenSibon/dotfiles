@@ -134,7 +134,9 @@ When you open a terminal and the dotfiles haven't been checked for updates in th
 
 ### Signed commits
 
-The update pulls with `--verify-signatures` and stops when a commit carries no signature that a key in this machine's keyring vouches for. Nothing below the pull runs in that case: the update script re-executes itself, and then runs `vscodium.zsh`, the plugin installers and the submodules' own install scripts, so whoever could write to the remote would otherwise have a shell on every machine at its next update. The pre-commit hook guards the other direction, outward; this guards what comes in.
+The update fetches, checks every commit it is about to merge, and only then merges. It stops when any of them carries no signature that a trusted key in this machine's keyring vouches for. Nothing below the check runs in that case, and the dotfiles stay as they are: the update script re-executes itself, and then runs `vscodium.zsh`, the plugin installers and the submodules' own install scripts, so whoever could write to the remote would otherwise have a shell on every machine at its next update. The pre-commit hook guards the other direction, outward; this guards what comes in.
+
+`git pull --verify-signatures` would not be enough: it checks only the commit the pull ends at, so a single signed commit on top of a run of unsigned ones vouches for all of them. The check reads one `%G?` per commit over `HEAD..FETCH_HEAD` instead, and only `G` passes. Commits pushed before October 2026 are unsigned, which costs nothing here: the range covers what an update brings in, never the history already in the clone.
 
 A machine you commit from needs the secret key and a line in `~/.gitconfig.local`, which stays out of this repository because the fingerprint says which key this machine holds:
 

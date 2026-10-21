@@ -135,14 +135,23 @@ When you open a terminal and the dotfiles haven't been checked for updates in th
 
 The update pulls with `--verify-signatures` and stops when a commit carries no signature that a key in this machine's keyring vouches for. Nothing below the pull runs in that case: the update script re-executes itself, and then runs `vscodium.zsh`, the plugin installers and the submodules' own install scripts, so whoever could write to the remote would otherwise have a shell on every machine at its next update. The pre-commit hook guards the other direction, outward; this guards what comes in.
 
-So each machine needs a signing key, in `~/.gitconfig.local` because the key is machine-specific:
+A machine you commit from needs the secret key and a line in `~/.gitconfig.local`, which stays out of this repository because the fingerprint says which key this machine holds:
 
 ```ini
 [user]
-    signingkey = <key id>
+    signingkey = <fingerprint>
 ```
 
-and the public key of every machine you commit from, imported and trusted wherever you update. On a machine that does not have a key yet, read the incoming commits yourself and run the update once as `DOTFILES_SKIP_VERIFY=1 dotfiles-update`.
+A machine you update on needs the public key, both imported and marked trusted. Importing alone is not enough: gpg leaves a fresh import at unknown validity, git rates such a signature `U`, and the pull refuses it with "has an untrusted GPG signature".
+
+```zsh
+gpg --import --import-options show-only pubkey.asc   # imports nothing; shows the fingerprint
+# compare it with the fingerprint from somewhere other than this repository, then
+gpg --import pubkey.asc
+gpg --import-ownertrust <<< "<fingerprint>:6:"
+```
+
+The public key may travel over any channel, but the fingerprint must not come from this repository: the key is what vouches for these commits, so it cannot take its authority from them. On a machine without the key yet, read the incoming commits yourself and run the update once as `DOTFILES_SKIP_VERIFY=1 dotfiles-update`.
 
 ## Undo & uninstall
 

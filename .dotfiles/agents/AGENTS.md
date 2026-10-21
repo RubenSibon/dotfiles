@@ -55,5 +55,4 @@ If you come across any, tell me.
 
 ## My dotfiles
 
-My dotfiles are a bare git repository at `~/.dotfiles/.gitrepo` with my home directory as its work tree; the `dotfiles` alias runs git on it.
-When you work on them, also follow `~/.dotfiles/AGENTS.md`.
+When you work on my dotfiles (the bare repository `~/.dotfiles/.gitrepo`, or a clone of it), also follow `.dotfiles/AGENTS.md` in its work tree.

@@ -262,11 +262,15 @@ VSCodium leads, and Claude Code is for VSCodium only:
 
 ### Agent instructions
 
-`~/.dotfiles/agents/AGENTS.md` holds my instructions for coding agents, whichever tool runs them, and `~/.dotfiles/AGENTS.md` adds the rules for working on this repository. `dotfiles-update` points the agents it finds at the shared instructions, unless a machine already has its own instruction file:
+`~/.dotfiles/agents/AGENTS.md` holds my instructions for coding agents, whichever tool runs them, and `~/.dotfiles/AGENTS.md` adds the rules for working on this repository. Keep the shared file free of anything specific to one employer or client: that goes in a machine's own, untracked instruction file. `dotfiles-update` points the agents it finds at the shared instructions, unless a machine already has its own instruction file:
 
-- Claude Code: `~/.claude/CLAUDE.md` imports them with `@~/.dotfiles/agents/AGENTS.md`. Add machine-specific instructions below that line.
-- GitHub Copilot CLI: `~/.copilot/copilot-instructions.md` links to them.
-- Zed: `~/.config/zed/AGENTS.md` links to them. On Windows, Zed reads `%APPDATA%\Zed\AGENTS.md`; copy the file there.
+| Tool               | Reads                                  | How it gets the shared instructions                                                           |
+| ------------------ | -------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Claude Code        | `~/.claude/CLAUDE.md`                  | Imports them with `@~/.dotfiles/agents/AGENTS.md`; add machine-specific rules below that line |
+| GitHub Copilot CLI | `~/.copilot/copilot-instructions.md`   | Symlink                                                                                       |
+| VS Code            | `~/.copilot/copilot-instructions.md`   | The Copilot CLI symlink                                                                       |
+| VSCodium           | `~/.dotfiles/agents/*.instructions.md` | `chat.instructionsFilesLocations` in `settings.json`; `shared.instructions.md` links to them  |
+| Zed                | `~/.config/zed/AGENTS.md`              | Symlink                                                                                       |
 
 ### Claude Code plugins
 

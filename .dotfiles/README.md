@@ -199,6 +199,15 @@ The `.gitignore` in your home directory ignores everything at the top level, the
         email = you@example.com
     ```
 
+- The files those `includeIf` blocks point at go in `~/.config/dotfiles/`, named `gitconfig-<identity>`, next to `private-patterns` and the `vscodium` overrides:
+
+    ```gitconfig
+    [includeIf "gitdir:~/projects/"]
+        path = ~/.config/dotfiles/gitconfig-projects
+    ```
+
+    Not in `~/.dotfiles/`: the work tree is the home directory, and `.gitignore` allows everything inside `/.dotfiles/`, so a settings file there shows up as untracked and nothing but an ignore pattern keeps it out of a commit. Everything under `~/.config/dotfiles` is ignored with the rest of `~/.config`. Keep the path in the `includeIf` block in step with the file: git ignores an include path that does not exist without a word, and the identity then quietly falls back to whatever `[user]` is set globally.
+
 ### NixOS
 
 `~/.dotfiles/nixos` is a flake with the system configuration for my NixOS machines. The dotfiles hold the configuration of the tools; the flake installs them.

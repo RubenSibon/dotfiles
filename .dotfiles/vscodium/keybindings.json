@@ -59,5 +59,16 @@
     "command": "-mergeEditor.toggleBetweenInputs",
     "key": "ctrl+shift+t",
     "when": "isMergeEditor"
+  },
+  // Terminal: send shift+enter as ESC+CR, the only way a terminal program can tell
+  // it from a bare enter. Claude Code binds it to a newline; without this it submits.
+  // What /terminal-setup writes by hand, kept here so no update removes it again.
+  {
+    "args": {
+      "text": "\u001b\r"
+    },
+    "command": "workbench.action.terminal.sendSequence",
+    "key": "shift+enter",
+    "when": "terminalFocus"
   }
 ]

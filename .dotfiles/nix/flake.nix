@@ -21,7 +21,7 @@
             jq # Makes VS Code's settings in vscodium.zsh
             neovim
             # Its sandbox replaces /usr, and with it the distribution's fonts
-            (vscodium.fhsWithPackages (ps: [ ps.dejavu_fonts ]))
+            (vscodium.fhsWithPackages (ps: [ ps.noto-fonts ]))
           ];
         };
       });

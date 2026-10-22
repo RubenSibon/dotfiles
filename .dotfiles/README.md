@@ -240,6 +240,7 @@ Then build and activate it; the configuration is picked by the machine's current
 On other Linux distributions, [Nix](https://nixos.org/download) installs what the distribution lacks or ships outdated. `~/.dotfiles/nix` is a flake with one package, `dotfiles`, that bundles them: gitleaks, jq, Neovim and VSCodium. On Linux without NixOS, `dotfiles-update` offers to add it to your Nix profile, and upgrades it on later runs, following the flake's `flake.lock`. Without Nix it says so and carries on.
 
 - `~/.config/nix/nix.conf` turns on the experimental `nix-command` and `flakes` features for your user, so `nix search`, `nix profile` and the like work in your own shell. The script also passes them with `--extra-experimental-features`, so it works before that file is in place.
+- For packages that only one machine needs, write an untracked flake in `~/.config/nix-local` with a package named `local`, and add it with `nix profile add path:$HOME/.config/nix-local#local`. `dotfiles-update` upgrades it along with `dotfiles`, following its own `flake.lock`: copy the dotfiles' lock file there when it moves.
 - `dotfiles-dev` puts the profile's programs on the sandbox's `PATH`. After an upgrade, start a new sandbox to get the new versions.
 - The VSCodium package is the FHS variant, which runs in a bubblewrap sandbox of its own. On an Ubuntu desktop that restricts unprivileged user namespaces through AppArmor, that sandbox may not start; WSL has no AppArmor.
 

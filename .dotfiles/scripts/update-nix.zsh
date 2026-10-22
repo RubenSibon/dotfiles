@@ -15,9 +15,13 @@ fi
 nix=(nix --extra-experimental-features 'nix-command flakes')
 flake=path:$HOME/.dotfiles/nix#dotfiles
 
-if $nix profile list --json | grep -q '"dotfiles":{'; then
+profile=$($nix profile list --json)
+if grep -q '"dotfiles":{' <<< $profile; then
+    # Also the optional entry of an untracked ~/.config/nix-local, for one machine only
+    entries=(dotfiles)
+    grep -q '"local":{' <<< $profile && entries+=(local)
     echo "🤖 Updating the Nix packages..."
-    $nix profile upgrade dotfiles && echo "✔ done updating the Nix packages.\n"
+    $nix profile upgrade $entries && echo "✔ done updating the Nix packages.\n"
 else
     echo "The Nix packages of the dotfiles are not installed. To install them:"
     echo "    nix profile add $flake"

@@ -47,7 +47,8 @@ for link in ~/.nix-profile ${XDG_STATE_HOME:-~/.local/state}/nix/profile; do
     [[ -e $link ]] && PATH=${link:A}/bin:$PATH && break
 done
 
-args+=(--clearenv --setenv XDG_RUNTIME_DIR $runtime)
+# VSCodium asks on WSL whether to install the Windows version instead
+args+=(--clearenv --setenv XDG_RUNTIME_DIR $runtime --setenv DONT_PROMPT_WSL_INSTALL 1)
 for name in HOME USER LOGNAME PATH TERM COLORTERM LANG WAYLAND_DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP; do
     [[ -v $name ]] && args+=(--setenv $name ${(P)name})
 done
@@ -64,8 +65,11 @@ done
 # as soon as its init exits, so the window died a second after it was asked for:
 # the terminal showed the editor's startup warnings and nothing else. Their own
 # foreground flags keep the init alive for as long as the window is open.
+# Electron also needs to be told to use Wayland, the only display in the
+# sandbox: where XDG_SESSION_TYPE is unset, as on WSLg, it looks for X11 and
+# exits, while --wait keeps the terminal waiting for a window that never comes.
 case ${1:t} in
-    codium|code) set -- "$1" --wait "${@:2}" ;;
+    codium|code) set -- "$1" --wait --ozone-platform=wayland "${@:2}" ;;
     zeditor|zed) set -- "$1" --foreground "${@:2}" ;;
 esac
 

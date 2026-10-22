@@ -331,7 +331,7 @@ The network is the host's own, not a separate one, so a program in the sandbox r
 
 It works the same for every program: `dotfiles-dev codium`, `dotfiles-dev zeditor`, `dotfiles-dev nvim`, `dotfiles-dev claude`, or `dotfiles-dev` alone for a shell. The script that builds the sandbox is the deployed `~/.dotfiles/scripts/dotfiles-dev.zsh`, not the copy in the clone, so the sandbox cannot loosen itself.
 
-The editors get a foreground flag of their own: `--wait` for VSCodium and VS Code, `--foreground` for Zed. Both hand their window to another process and return within a second, and the program is the sandbox's init, whose exit makes the kernel kill everything else in the sandbox — the window included, before it ever appeared. So the terminal that started the editor stays occupied until the window closes.
+The editors get a foreground flag of their own: `--wait` for VSCodium and VS Code, `--foreground` for Zed. Both hand their window to another process and return within a second, and the program is the sandbox's init, whose exit makes the kernel kill everything else in the sandbox — the window included, before it ever appeared. So the terminal that started the editor stays occupied until the window closes. VSCodium and VS Code also get `--ozone-platform=wayland`: without it, Electron looks for X11 where `XDG_SESSION_TYPE` is unset, as on WSLg, and exits.
 
 It needs Linux with bubblewrap, and Wayland for graphical editors. The `.gitignore` of the clone ignores what is not in the repository's directories, so what programs keep in the sandbox's home directory, such as editor extensions and an agent's login, stays out of `git status`. It also stays readable for everything else in the sandbox.
 

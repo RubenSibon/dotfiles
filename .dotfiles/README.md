@@ -242,7 +242,7 @@ On other Linux distributions, [Nix](https://nixos.org/download) installs what th
 - `~/.config/nix/nix.conf` turns on the experimental `nix-command` and `flakes` features for your user, so `nix search`, `nix profile` and the like work in your own shell. The script also passes them with `--extra-experimental-features`, so it works before that file is in place.
 - For packages that only one machine needs, write an untracked flake in `~/.config/nix-local` with a package named `local`, and add it with `nix profile add path:$HOME/.config/nix-local#local`. `dotfiles-update` upgrades it along with `dotfiles`, following its own `flake.lock`: copy the dotfiles' lock file there when it moves.
 - `dotfiles-dev` puts the profile's programs on the sandbox's `PATH`. After an upgrade, start a new sandbox to get the new versions.
-- The VSCodium package is the FHS variant, which runs in a bubblewrap sandbox of its own. Its sandbox replaces `/usr`, which holds the distribution's fonts, so the flake adds Noto to it. On an Ubuntu desktop that restricts unprivileged user namespaces through AppArmor, that sandbox may not start; WSL has no AppArmor.
+- Outside NixOS, VSCodium is not the FHS variant: that runs in a sandbox of its own, which hides the distribution's `/usr`, with its git, shells and fonts.
 
 The flake is separate from `~/.dotfiles/nixos`: a flake can't read files outside its own directory, because the home directory is not a git checkout. So the two can't share a package list; keep them in step by hand:
 

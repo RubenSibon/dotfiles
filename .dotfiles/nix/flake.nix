@@ -20,8 +20,9 @@
             gitleaks # Scans commits in the dotfiles pre-commit hook
             jq # Makes VS Code's settings in vscodium.zsh
             neovim
-            # Its sandbox replaces /usr, and with it the distribution's fonts
-            (vscodium.fhsWithPackages (ps: [ ps.noto-fonts ]))
+            # Not the FHS variant, as on NixOS: its sandbox replaces /usr, and with it
+            # the distribution's git, shells and fonts
+            vscodium
           ];
         };
       });

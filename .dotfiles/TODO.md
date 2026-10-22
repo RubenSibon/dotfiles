@@ -42,7 +42,7 @@ Do not put a `.git` file in `~` that points at the bare repository. Every folder
 
 `dotfiles-dev` uses bubblewrap, which only exists on Linux.
 
-- [ ] macOS and WSL without bubblewrap: fall back to a rootless Podman container with the clone mounted as its home directory, for example `podman run --rm -it --userns=keep-id -v ~/.dotfiles-src:$HOME -v ~/.dotfiles-src/.git:$HOME/.git:ro -w $HOME <image>`. It needs an image with zsh, git and Neovim, and covers terminal programs only: graphical editors need a remote connection into the container. Not Docker: membership of its group equals root.
+- [ ] macOS without bubblewrap: fall back to a rootless Podman container with the clone mounted as its home directory, for example `podman run --rm -it --userns=keep-id -v ~/.dotfiles-src:$HOME -v ~/.dotfiles-src/.git:$HOME/.git:ro -w $HOME <image>`. It needs an image with zsh, git and Neovim, and covers terminal programs only: graphical editors need a remote connection into the container. Not Docker: membership of its group equals root.
 - [ ] The same container on NixOS, with a Debian image, to test `debian.zsh` and `install-debian.zsh`.
 - [ ] Try each program once in the sandbox: VSCodium and Zed (windows, GPU), Neovim.
 - [x] Claude Code runs in the sandbox on the subscription login, without a keyring: the token is plain JSON in the clone's ignored `.claude/.credentials.json`. It needs no `ANTHROPIC_API_KEY`; passing one in would move billing off the subscription and leave a long-lived secret in the sandbox.

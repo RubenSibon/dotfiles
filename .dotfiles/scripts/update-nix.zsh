@@ -10,7 +10,8 @@ if ! command -v nix > /dev/null; then
     exit 0
 fi
 
-# Flakes and the nix command are still experimental: enabled here, not in /etc/nix/nix.conf
+# Flakes and the nix command are still experimental: ~/.config/nix/nix.conf enables them,
+# but enable them here too, for a machine that does not have that file yet
 nix=(nix --extra-experimental-features 'nix-command flakes')
 flake=path:$HOME/.dotfiles/nix#dotfiles
 

@@ -3,6 +3,11 @@
 [[ $OSTYPE == darwin* ]] && source ~/.dotfiles/zsh/macos.zsh
 [[ -f /etc/debian_version ]] && source ~/.dotfiles/zsh/debian.zsh
 
+# Per-host configuration, from the private repository, so this level is tracked
+# somewhere instead of living on one disk (see the README). ~/.zshrc.local, at the
+# end of this file, stays for what must not leave this machine at all.
+[[ -r ~/.config/dotfiles/zsh/${HOST%%.*}.zsh ]] && source ~/.config/dotfiles/zsh/${HOST%%.*}.zsh
+
 # Check for updates if a certain number of hours have passed
 source $HOME/.dotfiles/scripts/check-for-update.zsh
 

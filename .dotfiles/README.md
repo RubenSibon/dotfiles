@@ -190,7 +190,8 @@ The `.gitignore` in your home directory ignores everything at the top level, the
 
 - Settings for one operating system go in `~/.dotfiles/zsh/<os>.zsh`, such as `macos.zsh` and `debian.zsh`. `.zshrc` loads the ones that apply, under "OS-specific configuration".
 - `~/.zshenv` is read by every zsh, before the system's `/etc/zshrc`. It only holds what has to be set that early, such as turning off the per-window history of the macOS Terminal.
-- Settings for one machine go in `~/.zshrc.local`, which `.zshrc` loads last. The repository doesn't track it, so it can hold paths and names that shouldn't be published.
+- Settings for one host go in `~/.config/dotfiles/zsh/<host>.zsh`, which `.zshrc` loads right after the OS file. That directory is the private repository below, so this level is tracked somewhere, unlike the one under it.
+- Settings for one machine go in `~/.zshrc.local`, which `.zshrc` loads last. No repository tracks it, so it can hold paths and names that must not leave the machine at all.
 - Your git identity and other machine-specific git settings, such as `includeIf` blocks, go in `~/.gitconfig.local`, which `.gitconfig` includes last. The repository doesn't track it either. Create it on every machine:
 
     ```gitconfig
@@ -205,6 +206,28 @@ The `.gitignore` in your home directory ignores everything at the top level, the
     [includeIf "gitdir:~/projects/"]
         path = ~/.config/dotfiles/gitconfig-projects
     ```
+
+### The private repository
+
+`~/.config/dotfiles` holds what every machine needs and no public repository may carry: the per-host zsh files, the `gitconfig-<identity>` files, `private-patterns`, the `vscodium` overrides, and the per-host NixOS directories. Without it each of those exists in one copy, on one disk, backed up by nothing.
+
+It is an ordinary git repository with a **private** remote, so editors and agents read it like any project, and nothing in it is ever published. Not encryption inside this public repository instead: a filter such as git-crypt that is not set up on some machine commits plaintext, and published ciphertext stays published and attackable however good the key.
+
+```zsh
+git init ~/.config/dotfiles
+git -C ~/.config/dotfiles remote add origin git@github.com:<you>/<private repo>.git
+printf '*\n' > ~/.config/dotfiles/.allowed-paths   # then narrow it, as in .dotfiles/allowed-paths
+```
+
+`dotfiles-update` picks it up from there: it sets `core.hooksPath` and `commit.gpgsign`, and takes it through the same fetch, verify-every-commit and merge as this repository, before the steps that read what it brings. A machine without the directory is left alone. The pre-commit hook applies there too, which is why it wants an `.allowed-paths` of its own.
+
+The NixOS host directories belong in it too, but they cannot simply be linked into the flake: `nix` copies a flake's directory into the store, and a symlink pointing outside it ends up dangling there. So keep them in the private repository and copy one into place before a rebuild:
+
+```zsh
+cp -r ~/.config/dotfiles/nixos-hosts/<host> ~/.dotfiles/nixos/hosts/<host>
+```
+
+`~/.dotfiles/nixos/hosts/` stays ignored, so the copy is never committed here. Editing the copy instead of the original is the way to lose work; edit in `~/.config/dotfiles/nixos-hosts/` and copy again. A flake input with a `path:` URL would avoid the copy, but it needs an absolute path that names a user, which is exactly what this repository must not contain.
 
     Not in `~/.dotfiles/`: the work tree is the home directory, and `.gitignore` allows everything inside `/.dotfiles/`, so a settings file there shows up as untracked and nothing but an ignore pattern keeps it out of a commit. Everything under `~/.config/dotfiles` is ignored with the rest of `~/.config`. Keep the path in the `includeIf` block in step with the file: git ignores an include path that does not exist without a word, and the identity then quietly falls back to whatever `[user]` is set globally.
 

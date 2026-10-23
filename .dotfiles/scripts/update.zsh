@@ -25,43 +25,57 @@ $GIT_DOTFILES config commit.gpgsign true
 # (Fetch, check, then merge, rather than pull --verify-signatures: that checks only
 #  the commit the pull ends at, so one signed commit on top vouches for every
 #  unsigned commit below it.)
-before=$($GIT_DOTFILES rev-parse HEAD)
-if ! branch=$($GIT_DOTFILES symbolic-ref --short HEAD 2> /dev/null); then
-    echo "\nupdate: the dotfiles repository is not on a branch, so nothing was pulled."
-    exit 1
-fi
-if ! $GIT_DOTFILES fetch origin $branch; then
-    echo "\nupdate: the fetch failed, so nothing below it ran."
-    exit 1
-fi
+#
+# $1 names the repository in the messages; the rest is the git invocation to use,
+# so this repository and the private one with the machine-specific files go
+# through the same check. Both hold commits that this script runs or sources.
+pull_verified() {
+    local name=$1
+    shift
+    local -a g=("$@")
+    local branch commit
+    local -a unverified
 
-# One %G? per incoming commit. Only G passes: a good signature from a key this
-# machine trusts. U (good signature, untrusted key), E (no key to check it with)
-# and N (no signature at all) all stop the update here, before the merge.
-# For a machine that does not have the public key yet: DOTFILES_SKIP_VERIFY=1 dotfiles-update
-if [[ -z $DOTFILES_SKIP_VERIFY ]]; then
-    unverified=()
-    for commit in ${(f)"$($GIT_DOTFILES log --format='%G? %h %s' HEAD..FETCH_HEAD)"}; do
-        [[ -z $commit || $commit == 'G '* ]] || unverified+=$commit
-    done
-    if (( $#unverified )); then
-        echo "\nupdate: these incoming commits carry no signature this machine trusts:"
-        print -l $unverified
-        echo "\nNothing below this check ran, and the dotfiles are unchanged."
-        echo "Import the public key (gpg --recv-keys <id>) and mark it trusted, or run"
-        echo "the update once with DOTFILES_SKIP_VERIFY=1 after reading the commits above"
-        echo "yourself."
-        exit 1
+    if ! branch=$($g symbolic-ref --short HEAD 2> /dev/null); then
+        echo "\nupdate: $name is not on a branch, so nothing was pulled."
+        return 1
     fi
-fi
+    if ! $g fetch origin $branch; then
+        echo "\nupdate: the fetch for $name failed, so nothing below it ran."
+        return 1
+    fi
 
-# (--ff-only: when histories diverge, stop instead of merging conflict markers into live dotfiles)
-if ! $GIT_DOTFILES --work-tree=$HOME merge --ff-only FETCH_HEAD; then
-    echo "\nupdate: the merge was refused, so nothing below it ran."
-    echo "When the histories have diverged, the commits on each side are listed by"
-    echo "git --git-dir=\$HOME/.dotfiles/.gitrepo log --oneline --left-right HEAD...FETCH_HEAD"
-    exit 1
-fi
+    # One %G? per incoming commit. Only G passes: a good signature from a key this
+    # machine trusts. U (good signature, untrusted key), E (no key to check it with)
+    # and N (no signature at all) all stop the update here, before the merge.
+    # For a machine that does not have the public key yet: DOTFILES_SKIP_VERIFY=1 dotfiles-update
+    if [[ -z $DOTFILES_SKIP_VERIFY ]]; then
+        unverified=()
+        for commit in ${(f)"$($g log --format='%G? %h %s' HEAD..FETCH_HEAD)"}; do
+            [[ -z $commit || $commit == 'G '* ]] || unverified+=$commit
+        done
+        if (( $#unverified )); then
+            echo "\nupdate: these commits coming into $name carry no signature this machine trusts:"
+            print -l $unverified
+            echo "\nNothing below this check ran, and the files are unchanged."
+            echo "Import the public key (gpg --recv-keys <id>) and mark it trusted, or run"
+            echo "the update once with DOTFILES_SKIP_VERIFY=1 after reading the commits above"
+            echo "yourself."
+            return 1
+        fi
+    fi
+
+    # (--ff-only: when histories diverge, stop instead of merging conflict markers into live files)
+    if ! $g merge --ff-only FETCH_HEAD; then
+        echo "\nupdate: the merge into $name was refused, so nothing below it ran."
+        echo "When the histories have diverged, the commits on each side are listed by"
+        echo "$g log --oneline --left-right HEAD...FETCH_HEAD"
+        return 1
+    fi
+}
+
+before=$($GIT_DOTFILES rev-parse HEAD)
+pull_verified "the dotfiles" $GIT_DOTFILES --work-tree=$HOME || exit 1
 
 # zsh keeps running the version of this script it started with: when the pull
 # changed it, start the new version, once
@@ -71,6 +85,18 @@ if [[ -z $DOTFILES_UPDATE_RESTARTED ]] &&
 fi
 
 $GIT_DOTFILES --work-tree=$HOME submodule update --init --recursive
+
+# The private repository, if this machine has it: an ordinary repository whose work
+# tree is ~/.config/dotfiles, holding what cannot be published (see "Per-OS and
+# per-machine settings" in the README). Before the steps below, because vscodium.zsh
+# and the pre-commit hook read what it brings. A machine without it keeps its
+# untracked local files, and nothing here changes.
+GIT_PRIVATE=(git -C $HOME/.config/dotfiles)
+if [[ -d $HOME/.config/dotfiles/.git ]]; then
+    $GIT_PRIVATE config core.hooksPath ~/.dotfiles/hooks
+    $GIT_PRIVATE config commit.gpgsign true
+    pull_verified "the private settings" $GIT_PRIVATE || exit 1
+fi
 
 # Nix outside NixOS: an interactive shell puts it and its profile on PATH, but
 # this script is not one. The profile goes on PATH even before its first install.

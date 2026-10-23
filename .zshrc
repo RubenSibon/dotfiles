@@ -65,8 +65,30 @@ bindkey -v
 # Aliases
 #
 
-# Allow git operations on select dotfiles in user's home
-alias dotfiles='git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME'
+# Allow git operations on select dotfiles in user's home. A function rather than an
+# alias, to put a fuse on the subcommands that would walk over the whole home
+# directory: the work tree is ~, so `clean -dfx` there deletes everything the `*` in
+# ~/.gitignore ignores, and `reset --hard` or `checkout .` overwrites live files
+# outside the dotfiles. DOTFILES_FORCE=1 passes them through.
+dotfiles() {
+  local -a args=("$@")
+  local refused=
+
+  case $1 in
+    clean) refused='clean' ;;
+    reset) (( ${args[(I)--hard]} )) && refused='reset --hard' ;;
+    checkout | restore) (( ${args[(I).]} || ${args[(I):/]} )) && refused="$1 ." ;;
+  esac
+
+  if [[ -n $refused && -z $DOTFILES_FORCE ]]; then
+    print -u2 "dotfiles: refusing '$refused', because the work tree is your home directory."
+    print -u2 "It would delete or overwrite files that have nothing to do with the dotfiles."
+    print -u2 "If that is really what you want: DOTFILES_FORCE=1 dotfiles $*"
+    return 1
+  fi
+
+  git --git-dir=$HOME/.dotfiles/.gitrepo --work-tree=$HOME "$@"
+}
 
 # Update dotfiles
 alias dotfiles-update='~/.dotfiles/scripts/update.zsh'

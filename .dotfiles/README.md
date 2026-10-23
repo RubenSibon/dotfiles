@@ -178,9 +178,11 @@ To uninstall Homebrew follow the [instructions in their frequently asked questio
 
 ## Usage
 
-`dotfiles` is an alias for `git` in the user's home directory (`~`). It should be used instead of the `git` command to make changes to the dotfiles' git repository.
+`dotfiles` stands in for `git` in the user's home directory (`~`). It should be used instead of the `git` command to make changes to the dotfiles' git repository.
 
-The alias is needed because this repository's `.git/` directory does not exist in the working directory (`~`), but in `~/.dotfiles/` as `.gitrepo/` instead.
+It is needed because this repository's `.git/` directory does not exist in the working directory (`~`), but in `~/.dotfiles/` as `.gitrepo/` instead.
+
+It is a shell function rather than an alias, so that a few subcommands can be refused: the work tree is the whole home directory, where `clean -dfx` deletes everything the `*` in `~/.gitignore` ignores, and `reset --hard`, `checkout .` or `restore .` overwrite live files that have nothing to do with the dotfiles. `DOTFILES_FORCE=1 dotfiles <subcommand>` passes them through for the rare case that really means it.
 
 Check your `.zshrc` for the alias.
 

@@ -23,6 +23,78 @@ if ! command -v gitleaks >/dev/null 2>&1; then
   exit 1
 fi
 
+# The identity and the signature this commit would carry. Both are wrong only in
+# ways that show up late: weeks later on a machine whose update refuses to pull an
+# unsigned commit, or as "Unverified" on a commit whose address the key does not
+# carry. A clone made by hand, or one whose ~/.gitconfig.local went missing, signs
+# nothing and says nothing about it.
+if [ "$(git config --get commit.gpgsign)" != "true" ]; then
+  echo 'pre-commit: commit.gpgsign is not true in this repository, so this commit would be unsigned.' >&2
+  echo 'Set it here: git config commit.gpgsign true' >&2
+  exit 1
+fi
+signingkey=$(git config --get user.signingkey)
+if [ -z "$signingkey" ]; then
+  echo 'pre-commit: user.signingkey is empty, so git has no key to sign with.' >&2
+  echo "Set it in ~/.gitconfig.local, to this machine's signing subkey." >&2
+  exit 1
+fi
+# Only OpenPGP keys carry the user IDs that the address is compared with
+gpgformat=$(git config --get gpg.format)
+if [ -z "$gpgformat" ] || [ "$gpgformat" = "openpgp" ]; then
+  if ! command -v gpg >/dev/null 2>&1; then
+    echo 'pre-commit: gpg is missing, so the signing key went unchecked.' >&2
+    exit 1
+  fi
+  # ${signingkey%!} drops the ! that pins git to one subkey; gpg looks up the key itself
+  committer=$(git var GIT_COMMITTER_IDENT | sed -n 's/.*<\(.*\)>.*/\1/p')
+  uids=$(gpg --list-keys --with-colons "${signingkey%!}" 2>/dev/null |
+    awk -F: '$1 == "uid" { print $10 }' | sed -n 's/.*<\(.*\)>.*/\1/p')
+  if ! printf '%s\n' "$uids" | grep -Fqix "$committer"; then
+    echo "pre-commit: $committer is not a user ID on the signing key ${signingkey%!}." >&2
+    echo 'GitHub shows such a commit as Unverified. Either add the address to the key' >&2
+    echo 'with gpg --quick-add-uid, or commit under an address the key carries:' >&2
+    printf '%s\n' "$uids" | sed 's/^/  /' >&2
+    exit 1
+  fi
+fi
+
+# Which paths may be committed at all. The work tree is the home directory, so the
+# allow-list in ~/.gitignore decides what shows up in `git status` -- and an ignore
+# rule is a filter, not a guard: a path the allow-list does not cover yet, or one
+# added with `git add -f`, travels on the next commit without anything objecting.
+toplevel=$(git rev-parse --show-toplevel 2>/dev/null)
+if [ -z "$toplevel" ]; then
+  echo 'pre-commit: no work tree here, so the staged paths went unchecked.' >&2
+  exit 1
+fi
+allowed="$toplevel/.dotfiles/allowed-paths"
+[ -r "$allowed" ] || allowed="$toplevel/.allowed-paths"
+if [ ! -r "$allowed" ]; then
+  echo "pre-commit: no allowed-paths file under $toplevel, so the staged paths went unchecked." >&2
+  echo 'Create .dotfiles/allowed-paths, or .allowed-paths: one path pattern per line.' >&2
+  exit 1
+fi
+# zsh keeps a pattern held in a variable literal unless this is set, and would
+# then refuse every path. Not reached under sh, where setopt does not exist.
+[ -n "${ZSH_VERSION:-}" ] && setopt glob_subst 2> /dev/null
+
+# Deletions need no permission; ACMR is what the commit would add or change.
+refused=$(git diff --cached --name-only --diff-filter=ACMR | while IFS= read -r path; do
+  ok=0
+  while IFS= read -r pattern; do
+    case "$pattern" in '' | \#*) continue ;; esac
+    # $pattern unquoted on purpose: it is a glob, and * spans / as well
+    case "$path" in $pattern) ok=1; break ;; esac
+  done < "$allowed"
+  [ "$ok" -eq 1 ] || printf '%s\n' "$path"
+done)
+if [ -n "$refused" ]; then
+  printf 'pre-commit: these staged paths are not in %s:\n%s\n' "$allowed" "$refused" >&2
+  echo 'When such a path belongs in the repository, add its pattern to that file in this same commit.' >&2
+  exit 1
+fi
+
 # Binary files next, before the early exit below: the other checks read added
 # lines, and a binary file contributes none, so a keyring, an editor's state file
 # or a .p12 added with `git add -f` would pass all of them unseen.

@@ -1,0 +1,55 @@
+# Paths that may be committed to this repository, one glob per line; `#` starts a
+# comment. The pre-commit hook refuses any staged path that no line here matches,
+# so a path arrives in the repository only when this file says it may.
+#
+# Why, when ~/.gitignore already allows the same set: the work tree is the home
+# directory, so that file decides what `git status` shows, which is a filter and
+# not a guard. A path it does not cover yet, or one staged with `git add -f`,
+# travels on the next commit unopposed. Hence the second list, enforced instead
+# of displayed.
+#
+# `*` spans `/` as well, so `.config/nix/*` covers everything below it. Keep the
+# lines as narrow as the content: `.dotfiles/*` would defeat the point of the file.
+
+# Top-level files
+.gitconfig
+.gitignore
+.gitmodules
+.hidden
+.vimrc
+.zshenv
+.zshrc
+
+# Submodules: the gitlink itself, never a path inside them
+.antigen
+.fzf
+.vim/bundle/Vundle.vim
+
+# Keybindings for the agents, read from the home directory
+.claude/keybindings.json
+
+# The parts of ~/.config this repository tracks
+.config/nix/*
+.config/nvim/*
+
+# GitHub reads the profile README through this symlink
+.github/README.md
+
+# The dotfiles, directory by directory. A new file placed straight in
+# ~/.dotfiles is refused on purpose: that is where machine-specific git
+# settings used to land, one ignore rule away from being published.
+.dotfiles/agents/*
+.dotfiles/claude-plugins/*
+.dotfiles/hooks/*
+.dotfiles/nix/*
+.dotfiles/nixos/*
+.dotfiles/scripts/*
+.dotfiles/vscodium/*
+.dotfiles/zsh/*
+.dotfiles/.gitignore_global
+.dotfiles/AGENTS.md
+.dotfiles/allowed-paths
+.dotfiles/Brewfile
+.dotfiles/LICENSE
+.dotfiles/README.md
+.dotfiles/TODO.md

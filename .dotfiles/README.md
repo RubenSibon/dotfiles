@@ -317,10 +317,16 @@ Then, once per machine, run `rtk init -g` and decline the telemetry question. It
 
 `~/.dotfiles/hooks/pre-commit` refuses a commit when its changes look like a secret, or match a pattern in `~/.config/dotfiles/private-patterns`: one extended regular expression per line, for the names and paths that must stay private. Lines starting with `!` allow text that the other patterns would block, such as e-mail addresses that are public anyway. It then hands the staged changes to gitleaks.
 
+It also refuses a staged path that no pattern in `.dotfiles/allowed-paths` matches. The allow-list in `~/.gitignore` decides what `git status` shows, which makes it a filter rather than a guard: a path it does not cover yet, or one staged with `git add -f`, would travel on the next commit with nothing objecting. So the same intent is written a second time, as a list that is enforced instead of displayed, with narrow patterns per directory — a new file placed straight in `~/.dotfiles` is refused, because that is where machine-specific git settings used to land, one ignore rule away from being published. When a path belongs in the repository, add its pattern to that file in the same commit. A repository that keeps its list elsewhere, such as the private one for machine-specific files, can put it at `.allowed-paths` in its own root.
+
+And it refuses a commit this machine would not sign, or GitHub would not call verified: `commit.gpgsign` not true, an empty `user.signingkey`, or a committer address that is not a user ID on that key. Those failures are otherwise invisible until another machine refuses to pull the commit, or until the badge on GitHub says "Unverified".
+
 Every check fails closed, because a check that silently does nothing still reads as a check. The hook stops the commit when:
 
 - gitleaks, grep or awk is missing. The required packages install gitleaks on NixOS and macOS, and Nix does on other Linux; without Nix, `apt install gitleaks` or a release from [the project](https://github.com/gitleaks/gitleaks).
 - `~/.config/dotfiles/private-patterns` is missing. Create it even when you have no patterns: an empty file is how you say so.
+- `.dotfiles/allowed-paths` is missing, or no work tree can be determined.
+- signing is off, no signing key is set, or gpg is missing while the key is an OpenPGP one.
 - a staged file is binary. The checks read added lines, and a binary file has none, so a keyring, an editor's state file or a `.p12` would pass unread. Commit it with `--no-verify` once you have checked it yourself.
 
 ## Developing the dotfiles

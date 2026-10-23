@@ -2,6 +2,8 @@
 
 This repository is public: anyone can read what is committed here.
 Keep secrets and personal details out of it.
+Everything committed here is published under the MIT licence in `.dotfiles/LICENSE`, the files outside `~/.dotfiles` included.
+So never copy in code whose licence does not allow that, and keep the notice and the attribution that a licence asks for.
 
 ## How the repository works
 

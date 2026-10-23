@@ -32,7 +32,8 @@
 .config/nix/*
 .config/nvim/*
 
-# GitHub reads the profile README through this symlink
+# GitHub reads the README through this symlink, and the licence sits next to it
+.github/LICENSE
 .github/README.md
 
 # The dotfiles, directory by directory. A new file placed straight in

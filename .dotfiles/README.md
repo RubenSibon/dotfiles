@@ -422,6 +422,12 @@ A new file in an allowed directory, such as `~/.dotfiles/`, shows up in `git sta
 
 Small changes on a machine without the clone still work the old way, with the `dotfiles` alias from the home directory: `dotfiles status`, `dotfiles add -u`, `dotfiles commit`, `dotfiles push`. Use a terminal editor for those, not an editor or agent with a project opened on `~`.
 
+## Licence
+
+Everything this repository tracks is published under the MIT licence in [`LICENSE`](LICENSE), including the files outside `~/.dotfiles` such as `.zshrc`, `.gitconfig`, `.vimrc` and `.config/nvim/init.vim`. The work tree is the home directory, so the licence cannot sit at the root of the repository where a licence is normally looked for, and `.github/LICENSE` links to it for anyone browsing on GitHub.
+
+Copying a configuration file from here needs nothing beyond that. The part worth reading before running `install.zsh` is the warranty disclaimer: the script replaces files in your home directory, and comes with no warranty of any kind.
+
 That's how you can use these dotfiles.
 
 Enjoy!

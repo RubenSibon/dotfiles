@@ -2,6 +2,7 @@
 # already see what it sets up, such as Homebrew's commands and completions on macOS.
 [[ $OSTYPE == darwin* ]] && source ~/.dotfiles/zsh/macos.zsh
 [[ -f /etc/debian_version ]] && source ~/.dotfiles/zsh/debian.zsh
+[[ -n $WSL_DISTRO_NAME ]] && source ~/.dotfiles/zsh/wsl.zsh
 
 # Per-host configuration, from the private repository, so this level is tracked
 # somewhere instead of living on one disk (see the README). ~/.zshrc.local, at the

@@ -17,6 +17,12 @@ if ! command -v gitleaks > /dev/null && [[ ! -e /nix ]]; then
     steps+=("sudo apt install gitleaks || echo 'apt has no gitleaks: take a release from github.com/gitleaks/gitleaks'")
 fi
 
+# wslu gives wslview, so BROWSER (see ~/.dotfiles/zsh/wsl.zsh) opens links with
+# the Windows browser instead of failing for lack of one in WSL
+if [[ -n $WSL_DISTRO_NAME ]] && ! command -v wslview > /dev/null; then
+    steps+=("sudo apt install wslu")
+fi
+
 # ~/.zshrc uses Dutch formats for dates, paper and addresses (Ubuntu's locale-gen
 # takes the name; Debian's reads the uncommented lines of /etc/locale.gen)
 if ! locale -a 2> /dev/null | grep -qix 'nl_NL\.utf-\?8'; then

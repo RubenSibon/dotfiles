@@ -76,11 +76,11 @@ Already aligned: the VS Code keymap in Zed, Vim mode in Zed and vscode-neovim in
 
 - [ ] Set up the shared VS Code settings on the work laptop (Windows with WSL):
     1. Turn off Settings Sync for settings, keybindings and extensions.
-    2. Create `~/.config/dotfiles/vscodium/settings.local.json` with what only that machine needs: `firefox.executable` (the Windows path of the browser), `"vscode-neovim.useWSL": true` and `vscode-neovim.neovimExecutablePaths.linux` (where Neovim lives in WSL).
+    2. Create `~/.config/dotfiles/vscodium/settings.local.json` with what only that machine needs: `firefox.executable` (the Windows path of the browser), `"vscode-neovim.useWSL": true` and `vscode-neovim.neovimExecutablePaths.linux` (where Neovim lives in WSL). Done on one WSL laptop (October 2026).
     3. Create `~/.config/dotfiles/vscodium/extensions.local.txt` with `ms-vscode-remote.remote-wsl`, `github.copilot-chat` and `github.vscode-pull-request-github`.
-    4. Run `dotfiles-update`. The first run shows how the Windows copy differs and leaves it alone: move what is worth keeping to the shared or the local file, then run `zsh ~/.dotfiles/scripts/vscodium.zsh --force`.
+    4. Run `dotfiles-update`. The first run shows how the Windows copy differs and leaves it alone: move what is worth keeping to the shared or the local file, then run `zsh ~/.dotfiles/scripts/vscodium.zsh --force`. The check compares the live file to the snapshot the script wrote last, not to what it would write now, so it keeps objecting until every difference is resolved, even ones already fixed.
     5. Install the extensions that run on the Windows side, such as the theme and vscode-neovim, by hand: from a WSL shell the script only installs on the WSL side.
-- [ ] Decide which differences to align, and in which direction.
+- [ ] Decide which differences to align, and in which direction. What one WSL laptop's live `settings.json` carried that neither tracked file did (October 2026): several Copilot Chat tool- and URL-approval lists, one with what look like employer-specific URLs (keep those, if at all, in `settings.local.json`, never in the tracked file); the colour theme; `diffEditor.ignoreTrimWhitespace`; `git.confirmSync`.
 - [ ] Track a secret-free `.config/zed/settings.json` and `.config/zed/keymap.json` for Linux and macOS.
 - [ ] Generalise `vscodium.zsh` into one deploy step driven by a manifest: tracked source, target, shadow copy, a warning when the live copy was changed by hand, `--force` to overwrite — and the most specific source of `<name>##host.<host>`, `<name>##os.<os>` and `<name>`. Zed needs it first, since its `settings.json` has no include mechanism, and a `dotfiles-drift` command could then report every deployed copy that has diverged.
 - [ ] Consider a `~/.editorconfig` for what every editor reads (line endings, final newline, indentation). It also applies to projects under `~` that have no `.editorconfig` of their own.

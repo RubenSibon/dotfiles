@@ -104,6 +104,7 @@ in
     pandoc
     pnpm
     rtk
+    smartmontools
     sysstat
     tcpdump
     typescript-language-server # For the Claude Code plugin typescript-lsp

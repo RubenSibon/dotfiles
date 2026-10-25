@@ -240,6 +240,7 @@ cp -r ~/.config/dotfiles/nixos-hosts/<host> ~/.dotfiles/nixos/hosts/<host>
 - `base.nix`: every machine, including servers without a desktop.
 - `desktop.nix`: every machine with a graphical session, whichever desktop environment it runs.
 - `gnome.nix`: GNOME, next to `desktop.nix`.
+- `intel.nix`: an Intel CPU and its integrated graphics, next to `base.nix`.
 - `hosts/<host name>/`: one machine. The repository doesn't track these directories, because they hold host names, user names and disk IDs.
 
 On a new machine, create `hosts/<host name>/default.nix`, copy `/etc/nixos/hardware-configuration.nix` next to it, and import the modules the machine needs:
@@ -268,6 +269,25 @@ Then build and activate it; the configuration is picked by the machine's current
 `sudo nixos-rebuild switch --flake ~/.dotfiles/nixos`
 
 `flake.lock` pins nixpkgs, so every machine builds the same versions. Move it along with `nix flake update --flake ~/.dotfiles/nixos`, rebuild, copy the lock file to `~/.dotfiles/nix` (see below), and commit both.
+
+Some of what a laptop wants is already on without being configured here, and setting it again would only suggest otherwise: GNOME enables `power-profiles-daemon`, which puts the three profiles in the quick settings menu, and `fstrim.timer` runs weekly by default. TLP tunes more, but it cannot run next to `power-profiles-daemon` — nixpkgs asserts against it — and it would take the menu away, so it stays off until a machine actually needs it.
+
+### Firmware updates
+
+`base.nix` turns on fwupd, which applies the firmware vendors publish on [LVFS](https://fwupd.org), a BIOS among it. Before the first run, turn on *UEFI Capsule Firmware Updates* in the BIOS setup, keep the charger connected, and unplug the dock and the external monitor.
+
+```sh
+fwupdmgr refresh
+fwupdmgr get-devices   # what has an update path at all: system firmware, Thunderbolt, TPM
+fwupdmgr get-updates
+fwupdmgr update        # stages the firmware; the reboot right after flashes it
+```
+
+The flash happens during that reboot, behind the vendor's own progress bar, and may restart the machine once or twice more: leave it alone until it is back. `fwupdmgr get-history` then says whether it took, and "no updatable devices" means this machine is already on the last BIOS its vendor shipped.
+
+If fwupd cannot find the EFI partition, name the mount point in `services.fwupd.uefiCapsuleSettings.OverrideESPMountPoint`; with systemd-boot it is `/boot`, which fwupd finds on its own. Failing that, the vendor's `.exe` on a FAT32 stick flashes from the firmware's own boot menu.
+
+A rebuild can be undone from the boot menu or with `sudo nixos-rebuild switch --rollback`. A firmware flash cannot, which is the one step here with no way back.
 
 ### Nix outside NixOS
 

@@ -83,6 +83,16 @@ in
   programs.gnupg.agent.enable = true;
 
   #
+  # Firmware
+  #
+
+  # fwupd applies the firmware its vendor publishes on LVFS, a BIOS among it (see
+  # "Firmware updates" in the README). GNOME's Software app already brings fwupd's
+  # library along for the update notifications; the daemon that does the work is
+  # what this turns on, and without it `fwupdmgr` has nothing to talk to.
+  services.fwupd.enable = true;
+
+  #
   # Packages
   #
 

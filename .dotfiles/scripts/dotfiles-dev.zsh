@@ -34,8 +34,13 @@ for dir in /etc /usr /bin /sbin /lib /lib32 /lib64 /nix /run/current-system \
     args+=(--ro-bind-try $dir $dir)
 done
 
-# Wayland only: an X11 socket would let the sandbox read every window and key press
-[[ -n $WAYLAND_DISPLAY ]] && args+=(--ro-bind $runtime/$WAYLAND_DISPLAY $runtime/$WAYLAND_DISPLAY)
+# Wayland only: an X11 socket would let the sandbox read every window and key press.
+# WSLg keeps its socket in its own runtime directory when /run/user/$UID is missing.
+if [[ -n $WAYLAND_DISPLAY ]]; then
+    socket=$runtime/$WAYLAND_DISPLAY
+    [[ -S $socket ]] || socket=/mnt/wslg/runtime-dir/$WAYLAND_DISPLAY
+    args+=(--ro-bind $socket $runtime/$WAYLAND_DISPLAY)
+fi
 
 # An empty environment plus what a program needs to start: tokens and agent
 # sockets that the calling shell exports stay outside. Agents log in once inside

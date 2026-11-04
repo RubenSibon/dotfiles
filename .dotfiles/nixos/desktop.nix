@@ -79,6 +79,7 @@
     gimp
     figma-linux
     firefoxpwa
+    kitty # Terminal: the Kitty keyboard protocol disambiguates Shift+Enter in CLI chat tools
     krita
     libreoffice
     libsecret

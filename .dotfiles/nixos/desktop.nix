@@ -85,6 +85,7 @@
     libsecret
     nextcloud-client
     planify
+    ptyxis # GTK4/libadwaita terminal, Console's successor; also speaks the Kitty keyboard protocol
     spotify
     standardnotes
     thunderbird
